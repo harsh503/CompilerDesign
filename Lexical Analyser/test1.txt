@@ -1,0 +1,8 @@
+this is int 0251
+float main the work is 48562 do
+if 1.23 -2.5 1e-1 -5e-3
+baka return
+automatic
+a + b
+{
+]
