@@ -30,6 +30,9 @@ arithop [\+\-\*\/\%]
 {keyword} {printf("keyword,%s\n",yytext);}
 {number} {printf("number,%s\n",yytext);}
 {identifier} {printf("identifier,%s\n",yytext);}
+{spclsymb} {printf("spcl symbol,%s\n",yytext);}
+{arithop} {printf("arithop,%s\n",yytext);}
+
 {ws} ;
 
 
