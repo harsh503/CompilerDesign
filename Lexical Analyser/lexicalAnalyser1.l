@@ -17,6 +17,18 @@ ws [ |	|\n]
 {number} {printf("number,%s\n",yytext);}
 {identifier} {printf("identifier,%s\n",yytext);}
 
+%x BLOCKCOMMENT
+"/*"                 { yy_push_state(BLOCKCOMMENT); }
+<BLOCKCOMMENT>"*/"   { if(yy_top_state() == BLOCKCOMMENT)
+                           yy_pop_state();
+                       else
+                           fprintf(stderr,
+                            "Error: comment close `*/` found while not in comment\n");
+                     }
+<BLOCKCOMMENT>.      { /* consume */ }
+
+.                    { return yytext[0]; }
+
 %%
 
 int main()
