@@ -2,15 +2,15 @@
 /* harsh 
 harshs */
 tirth */
-dj
+1dj
  2.5
 /*hathi 
 and*/ 
 
 
 a+c-b
-
+// 	msdakldmklasasmalks %$@#$#  ;  comment
 1+2
 
-
-// comment
+/* int hello 
+*/
