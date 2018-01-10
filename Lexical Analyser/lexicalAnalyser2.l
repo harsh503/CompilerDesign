@@ -6,7 +6,7 @@ int comment_nesting = 0;
 
 keyword "auto"|"double"|"int"|"struct"|"break"|"else"|"long"|"switch"|"case"|"enum"|"register"|"typedef"|"char"|"extern"|"return"|"union"|"const"|"float"|"short"|"unsigned"|"continue"|"flor"|"signed"|"void"|"default"|"goto"|"sizeof"|"volatile"|"do"|"if"|"static"|"while"
 identifier [A-Za-z_]([A-Za-z_]|[0-9])*
-number (([0-9])+)(\.(([0-9])+))?(([eE])([\+\-]?)(([0-9])+))?
+number (([0-9])*)(\.(([0-9])+))?(([eE])([\+\-]?)(([0-9])+))?
 ws [ |	|\n]
 
 spclsymb ";"|","|"#"|"("|")"|"["|"]"|"{"|"}"
@@ -29,11 +29,11 @@ op "+"|"-"|"*"|"/"|"%"|"="|"=="|"!="|"<"|">"|"<="|">="|"!"|"<>"|"?"|":"|"++"|"--
 
 \/\/[^\n]*\n ;
 
-{keyword} {printf("keyword,%s\n",yytext);}
-{number} {printf("number,%s\n",yytext);}
-{identifier} {printf("identifier,%s\n",yytext);}
-{spclsymb} {printf("spcl symbol,%s\n",yytext);}
-{op} {printf("op,%s\n",yytext);}
+{keyword} {printf("%s - keyword\n",yytext);}
+{number} {printf("%s - constant\n",yytext);}
+{identifier} {printf("%s - identifier\n",yytext);}
+{spclsymb} {printf("%s - special character\n",yytext);}
+{op} {printf("%s - operator\n",yytext);}
 {ws} ;
 
 %%
