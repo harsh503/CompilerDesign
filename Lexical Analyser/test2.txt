@@ -1,3 +1,1 @@
-int abc;
 printf("hello %d",abc);
-"baka"
