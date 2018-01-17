@@ -1,1 +1,12 @@
 printf("hello %d",abc);
+{
+int bchj;
+3ab2
+78.5
+$
+/*
+$
+*/
+//sakdsaakds
+dbakb
+}

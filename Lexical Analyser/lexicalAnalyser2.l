@@ -1,6 +1,7 @@
 %{
 
 int comment_nesting = 0; 
+int lineno=1;
 
 %}
 
@@ -8,7 +9,7 @@ keyword "auto"|"double"|"int"|"struct"|"break"|"else"|"long"|"switch"|"case"|"en
 identifier [A-Za-z_]([A-Za-z_]|[0-9])*
 notid [0-9]+([A-Za-z_]|[0-9])*
 number (([0-9])*)(\.(([0-9])+))?(([eE])([\+\-]?)(([0-9])+))?
-ws [ |	|\n]
+ws " "|"	"|"\n"
 
 spclsymb ";"|","|"#"|"("|")"|"["|"]"|"{"|"}"
 op "&"|"+"|"-"|"*"|"/"|"%"|"="|"=="|"!="|"<"|">"|"<="|">="|"!"|"<>"|"?"|":"|"++"|"--"|"+="|"-="|"*="|"/="|"." 
@@ -25,21 +26,21 @@ op "&"|"+"|"-"|"*"|"/"|"%"|"="|"=="|"!="|"<"|">"|"<="|">="|"!"|"<>"|"?"|":"|"++"
   "*"+           ;
   [^/*\n]+       ;
   [/]            ;
-  \n             ;
+  \n             {lineno++;}
 }
 
 \"[^\n]*\" {printf("%s - string\n",yytext);}
 
-\/\/[^\n]*\n ;
+\/\/[^\n]*\n {lineno++;}
 
 {keyword} {printf("%s - keyword\n",yytext);}
 {number} {printf("%s - constant\n",yytext);}
-{notid} {printf("ERROR : %s - ill-formed identifier\n",yytext);}
+{notid} {printf("ERROR - %s : ill-formed identifier at line [%d]\n",yytext,lineno);}
 {identifier} {printf("%s - identifier\n",yytext);}
 {spclsymb} {printf("%s - special character\n",yytext);}
 {op} {printf("%s - operator\n",yytext);}
-{ws} ;
-. {printf("ERROR - %s : invalid character\n",yytext);}
+{ws} { if(yytext[0]=='\n') {lineno++;} }
+. {printf("ERROR - %s : invalid character at line [%d]\n",yytext,lineno);}
 
 %%
 
