@@ -29,7 +29,9 @@ int hash_cal(char * str)
 }
 %}
 
-keyword "auto"|"double"|"int"|"struct"|"break"|"else"|"long"|"switch"|"case"|"enum"|"register"|"typedef"|"char"|"extern"|"return"|"union"|"const"|"float"|"short"|"unsigned"|"continue"|"for"|"signed"|"void"|"default"|"goto"|"sizeof"|"volatile"|"do"|"if"|"static"|"while"
+keyword "auto"|"double"|"int"|"struct"|"break"|"else"|"long"|"switch"|"case"|"enum"|"register"|"typedef"|"char"|"extern"|
+		"return"|"union"|"const"|"float"|"short"|"unsigned"|"continue"|"for"|"signed"|"void"|"default"|"goto"|"sizeof"|
+		"volatile"|"do"|"if"|"static"|"while"
 identifier [A-Za-z_]([A-Za-z_]|[0-9])*
 notid [0-9]+([A-Za-z_]|[0-9])*
 number (([0-9])*)(\.(([0-9])+))?(([eE])([\+\-]?)(([0-9])+))?
