@@ -182,7 +182,7 @@ WHITESPACE " "|"	"|"\n"
 			}
 
 "+="|"-="|"*="|"/="|"%="|"="	{ return(ASSIGN_OP); }
-"<="|">="|">"|"<""				{ return(REL_OP); }
+"<="|">="|">"|"<"				{ return(REL_OP); }
 "+"|"-"							{ return(ADD_OP); }
 "*"|"/"|"%"						{ return(MUL_OP); }
 "++"|"--"						{ return(INCDEC_OP); }
