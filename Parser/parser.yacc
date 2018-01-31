@@ -1,4 +1,5 @@
-%token ID NUM op spclsymb
+%token ID NUM 
+
 %{
 #include<stdio.h>
 %}
