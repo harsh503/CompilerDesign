@@ -1,0 +1,9 @@
+int main()
+{
+    int a;
+    a = (5*3)+(6/2))+1;
+    return 0;
+}
+
+Expected Output :-
+The program should return an error at line number 4 saying that the syntax is inappropriate. (Unmatched brace)

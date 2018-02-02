@@ -1,15 +1,14 @@
 %token ID NUM 
-
 %{
 #include<stdio.h>
 %}
 %%
-STATEMENT: E spclsymb
+STATEMENT: E
 E:E K E
 |ID
 |NUM
 ;
-K:op
+K:ID
 ;
 
 %%

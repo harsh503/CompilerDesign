@@ -1,0 +1,8 @@
+void main()
+{
+    int int;
+    return 0;
+}
+
+Expected Output  :- 
+The program should return an error at line number 3 saying the syntax is inappropriate. (No rule matching 'int' as identifier)

@@ -1,0 +1,12 @@
+int main()
+{
+    int count=1;
+    while (count <= 4)
+    {
+        count++;
+    }
+    return 0;
+}
+
+Expected Output :-
+This program should run properly and give the symbol and constant table as output. OK

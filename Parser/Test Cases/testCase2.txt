@@ -1,0 +1,16 @@
+int add(int a, int b)
+{
+    int x = a + b;
+    return x;
+}
+void main()
+{
+    int a,b;
+    a=2;
+    b=3;
+    int c = add(2,3);
+    return 0;
+}
+
+Expected Output :-
+This program should run properly and give the symbol and constant table as output. OK
