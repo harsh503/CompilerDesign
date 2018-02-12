@@ -181,12 +181,13 @@ WHITESPACE " "|"	"|"\n"
 				return(STRING_LITERAL);
 			}
 
-"+="|"-="|"*="|"/="|"%="|"="	{ return(ASSIGN_OP); }
+"+="|"-="|"*="|"/="|"%="	{ return(ASSIGN_OP); }
 "<="|">="|">"|"<"				{ return(REL_OP); }
 "+"|"-"							{ return(ADD_OP); }
 "*"|"/"|"%"						{ return(MUL_OP); }
 "++"|"--"						{ return(INCDEC_OP); }
 "=="|"!="						{ return(EQU_OP); }
+"=" 		{ return('='); }
 "{"			{ return('{'); }
 "}"			{ return('}'); }
 "("			{ return('('); }

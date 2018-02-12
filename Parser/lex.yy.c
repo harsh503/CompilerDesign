@@ -360,8 +360,8 @@ static void yynoreturn yy_fatal_error (yyconst char* msg  );
 	*yy_cp = '\0'; \
 	(yy_c_buf_p) = yy_cp;
 
-#define YY_NUM_RULES 62
-#define YY_END_OF_BUFFER 63
+#define YY_NUM_RULES 63
+#define YY_END_OF_BUFFER 64
 /* This struct is not used in this scanner,
    but its presence is necessary. */
 struct yy_trans_info
@@ -371,11 +371,11 @@ struct yy_trans_info
 	};
 static yyconst flex_int16_t yy_accept[198] =
     {   0,
-       41,   41,    0,    0,   63,   61,   60,   60,   61,   61,
-       46,   51,   52,   46,   45,   56,   45,   57,   46,   41,
-       59,   55,   44,   43,   44,   58,   40,   40,   53,   54,
+       41,   41,    0,    0,   64,   62,   61,   61,   62,   62,
+       46,   52,   53,   46,   45,   57,   45,   58,   46,   41,
+       60,   56,   44,   49,   44,   59,   40,   40,   54,   55,
        40,   40,   40,   40,   40,   40,   40,   40,   40,   40,
-       40,   40,   40,   40,   40,   49,   50,    5,    7,    4,
+       40,   40,   40,   40,   40,   50,   51,    5,    7,    4,
         6,   48,    0,   42,   43,   47,   41,    1,    0,   41,
         0,   44,   40,    0,   40,   40,   40,   40,   40,   40,
        40,   15,   40,   40,   40,   40,   40,   40,   23,   40,
@@ -1230,75 +1230,80 @@ YY_RULE_SETUP
 case 49:
 YY_RULE_SETUP
 #line 190 "lexical.l"
-{ return('{'); }
+{ return('='); }
 	YY_BREAK
 case 50:
 YY_RULE_SETUP
 #line 191 "lexical.l"
-{ return('}'); }
+{ return('{'); }
 	YY_BREAK
 case 51:
 YY_RULE_SETUP
 #line 192 "lexical.l"
-{ return('('); }
+{ return('}'); }
 	YY_BREAK
 case 52:
 YY_RULE_SETUP
 #line 193 "lexical.l"
-{ return(')'); }
+{ return('('); }
 	YY_BREAK
 case 53:
 YY_RULE_SETUP
 #line 194 "lexical.l"
-{ return('['); }
+{ return(')'); }
 	YY_BREAK
 case 54:
 YY_RULE_SETUP
 #line 195 "lexical.l"
-{ return(']'); }
+{ return('['); }
 	YY_BREAK
 case 55:
 YY_RULE_SETUP
 #line 196 "lexical.l"
-{ return(';'); }
+{ return(']'); }
 	YY_BREAK
 case 56:
 YY_RULE_SETUP
 #line 197 "lexical.l"
-{ return(','); }
+{ return(';'); }
 	YY_BREAK
 case 57:
 YY_RULE_SETUP
 #line 198 "lexical.l"
-{ return('.'); }
+{ return(','); }
 	YY_BREAK
 case 58:
 YY_RULE_SETUP
 #line 199 "lexical.l"
-{ return('?'); }
+{ return('.'); }
 	YY_BREAK
 case 59:
 YY_RULE_SETUP
 #line 200 "lexical.l"
-{ return(':'); }
+{ return('?'); }
 	YY_BREAK
 case 60:
-/* rule 60 can match eol */
 YY_RULE_SETUP
-#line 202 "lexical.l"
-;
+#line 201 "lexical.l"
+{ return(':'); }
 	YY_BREAK
 case 61:
+/* rule 61 can match eol */
 YY_RULE_SETUP
-#line 204 "lexical.l"
-{printf("ERROR - %s : invalid character at line [%d]\n",yytext,lineno);}
+#line 203 "lexical.l"
+;
 	YY_BREAK
 case 62:
 YY_RULE_SETUP
-#line 206 "lexical.l"
+#line 205 "lexical.l"
+{printf("ERROR - %s : invalid character at line [%d]\n",yytext,lineno);}
+	YY_BREAK
+case 63:
+YY_RULE_SETUP
+#line 207 "lexical.l"
 ECHO;
 	YY_BREAK
-#line 1302 "lex.yy.c"
+#line 1307 "lex.yy.c"
 case YY_STATE_EOF(INITIAL):
 case YY_STATE_EOF(SC_COMMENT):
 	yyterminate();
@@ -1444,7 +1449,7 @@ static int yy_get_next_buffer (void)
 {
     	char *dest = YY_CURRENT_BUFFER_LVALUE->yy_ch_buf;
 	char *source = (yytext_ptr);
-	yy_size_t number_to_move, i;
+	int number_to_move, i;
 	int ret_val;
 
 	if ( (yy_c_buf_p) > &YY_CURRENT_BUFFER_LVALUE->yy_ch_buf[(yy_n_chars) + 1] )
@@ -1473,7 +1478,7 @@ static int yy_get_next_buffer (void)
 	/* Try to read more data. */
 
 	/* First move last chars to start of buffer. */
-	number_to_move = (yy_size_t) ((yy_c_buf_p) - (yytext_ptr)) - 1;
+	number_to_move = (int) ((yy_c_buf_p) - (yytext_ptr) - 1);
 
 	for ( i = 0; i < number_to_move; ++i )
 		*(dest++) = *(source++);
@@ -1555,7 +1560,7 @@ static int yy_get_next_buffer (void)
 	else
 		ret_val = EOB_ACT_CONTINUE_SCAN;
 
-	if ((int) ((yy_n_chars) + number_to_move) > YY_CURRENT_BUFFER_LVALUE->yy_buf_size) {
+	if (((yy_n_chars) + number_to_move) > YY_CURRENT_BUFFER_LVALUE->yy_buf_size) {
 		/* Extend the array by 50%, plus the number we really need. */
 		int new_size = (yy_n_chars) + number_to_move + ((yy_n_chars) >> 1);
 		YY_CURRENT_BUFFER_LVALUE->yy_ch_buf = (char *) yyrealloc((void *) YY_CURRENT_BUFFER_LVALUE->yy_ch_buf,new_size  );
@@ -2068,10 +2073,10 @@ YY_BUFFER_STATE yy_scan_bytes  (yyconst char * yybytes, int  _yybytes_len )
 	YY_BUFFER_STATE b;
 	char *buf;
 	yy_size_t n;
-	yy_size_t i;
+	int i;
     
 	/* Get memory for full buffer, including space for trailing EOB's. */
-	n = (yy_size_t) _yybytes_len + 2;
+	n = (yy_size_t) (_yybytes_len + 2);
 	buf = (char *) yyalloc(n  );
 	if ( ! buf )
 		YY_FATAL_ERROR( "out of dynamic memory in yy_scan_bytes()" );
@@ -2300,7 +2305,7 @@ void yyfree (void * ptr )
 
 #define YYTABLES_NAME "yytables"
 
-#line 206 "lexical.l"
+#line 207 "lexical.l"
 
 
 

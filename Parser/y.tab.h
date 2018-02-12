@@ -45,17 +45,91 @@ extern int yydebug;
 # define YYTOKENTYPE
   enum yytokentype
   {
-    ID = 258,
-    NUM = 259,
-    op = 260,
-    spclsymb = 261
+    AUTO = 258,
+    BREAK = 259,
+    CASE = 260,
+    CHAR = 261,
+    CONST = 262,
+    CONTINUE = 263,
+    DEFAULT = 264,
+    DO = 265,
+    DOUBLE = 266,
+    ELSE = 267,
+    ENUM = 268,
+    EXTERN = 269,
+    FLOAT = 270,
+    FOR = 271,
+    GOTO = 272,
+    IF = 273,
+    INT = 274,
+    LONG = 275,
+    REGISTER = 276,
+    RETURN = 277,
+    SHORT = 278,
+    SIGNED = 279,
+    SIZEOF = 280,
+    STATIC = 281,
+    STRUCT = 282,
+    SWITCH = 283,
+    TYPEDEF = 284,
+    UNION = 285,
+    UNSIGNED = 286,
+    VOID = 287,
+    VOLATILE = 288,
+    WHILE = 289,
+    IDENTIFIER = 290,
+    CONSTANT = 291,
+    STRING_LITERAL = 292,
+    ASSIGN_OP = 293,
+    REL_OP = 294,
+    ADD_OP = 295,
+    MUL_OP = 296,
+    INCDEC_OP = 297,
+    EQU_OP = 298
   };
 #endif
 /* Tokens.  */
-#define ID 258
-#define NUM 259
-#define op 260
-#define spclsymb 261
+#define AUTO 258
+#define BREAK 259
+#define CASE 260
+#define CHAR 261
+#define CONST 262
+#define CONTINUE 263
+#define DEFAULT 264
+#define DO 265
+#define DOUBLE 266
+#define ELSE 267
+#define ENUM 268
+#define EXTERN 269
+#define FLOAT 270
+#define FOR 271
+#define GOTO 272
+#define IF 273
+#define INT 274
+#define LONG 275
+#define REGISTER 276
+#define RETURN 277
+#define SHORT 278
+#define SIGNED 279
+#define SIZEOF 280
+#define STATIC 281
+#define STRUCT 282
+#define SWITCH 283
+#define TYPEDEF 284
+#define UNION 285
+#define UNSIGNED 286
+#define VOID 287
+#define VOLATILE 288
+#define WHILE 289
+#define IDENTIFIER 290
+#define CONSTANT 291
+#define STRING_LITERAL 292
+#define ASSIGN_OP 293
+#define REL_OP 294
+#define ADD_OP 295
+#define MUL_OP 296
+#define INCDEC_OP 297
+#define EQU_OP 298
 
 /* Value type.  */
 #if ! defined YYSTYPE && ! defined YYSTYPE_IS_DECLARED
