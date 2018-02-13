@@ -372,12 +372,12 @@ struct yy_trans_info
 static yyconst flex_int16_t yy_accept[198] =
     {   0,
        41,   41,    0,    0,   64,   62,   61,   61,   62,   62,
-       46,   52,   53,   46,   45,   57,   45,   58,   46,   41,
-       60,   56,   44,   49,   44,   59,   40,   40,   54,   55,
+       47,   52,   53,   47,   46,   57,   46,   58,   47,   41,
+       60,   56,   45,   49,   45,   59,   40,   40,   54,   55,
        40,   40,   40,   40,   40,   40,   40,   40,   40,   40,
        40,   40,   40,   40,   40,   50,   51,    5,    7,    4,
-        6,   48,    0,   42,   43,   47,   41,    1,    0,   41,
-        0,   44,   40,    0,   40,   40,   40,   40,   40,   40,
+        6,   44,    0,   42,   43,   48,   41,    1,    0,   41,
+        0,   45,   40,    0,   40,   40,   40,   40,   40,   40,
        40,   15,   40,   40,   40,   40,   40,   40,   23,   40,
        40,   40,   40,   40,   40,   40,   40,   40,   40,   40,
         5,    4,    3,    2,   41,   40,   40,   40,   40,   40,
@@ -1205,27 +1205,27 @@ YY_RULE_SETUP
 case 44:
 YY_RULE_SETUP
 #line 185 "lexical.l"
-{ return(REL_OP); }
+{ return(EQU_OP); }
 	YY_BREAK
 case 45:
 YY_RULE_SETUP
 #line 186 "lexical.l"
-{ return(ADD_OP); }
+{ return(REL_OP); }
 	YY_BREAK
 case 46:
 YY_RULE_SETUP
 #line 187 "lexical.l"
-{ return(MUL_OP); }
+{ return(ADD_OP); }
 	YY_BREAK
 case 47:
 YY_RULE_SETUP
 #line 188 "lexical.l"
-{ return(INCDEC_OP); }
+{ return(MUL_OP); }
 	YY_BREAK
 case 48:
 YY_RULE_SETUP
 #line 189 "lexical.l"
-{ return(EQU_OP); }
+{ return(INCDEC_OP); }
 	YY_BREAK
 case 49:
 YY_RULE_SETUP
@@ -1449,7 +1449,7 @@ static int yy_get_next_buffer (void)
 {
     	char *dest = YY_CURRENT_BUFFER_LVALUE->yy_ch_buf;
 	char *source = (yytext_ptr);
-	int number_to_move, i;
+	yy_size_t number_to_move, i;
 	int ret_val;
 
 	if ( (yy_c_buf_p) > &YY_CURRENT_BUFFER_LVALUE->yy_ch_buf[(yy_n_chars) + 1] )
@@ -1478,7 +1478,7 @@ static int yy_get_next_buffer (void)
 	/* Try to read more data. */
 
 	/* First move last chars to start of buffer. */
-	number_to_move = (int) ((yy_c_buf_p) - (yytext_ptr) - 1);
+	number_to_move = (yy_size_t) ((yy_c_buf_p) - (yytext_ptr)) - 1;
 
 	for ( i = 0; i < number_to_move; ++i )
 		*(dest++) = *(source++);
@@ -1560,7 +1560,7 @@ static int yy_get_next_buffer (void)
 	else
 		ret_val = EOB_ACT_CONTINUE_SCAN;
 
-	if (((yy_n_chars) + number_to_move) > YY_CURRENT_BUFFER_LVALUE->yy_buf_size) {
+	if ((int) ((yy_n_chars) + number_to_move) > YY_CURRENT_BUFFER_LVALUE->yy_buf_size) {
 		/* Extend the array by 50%, plus the number we really need. */
 		int new_size = (yy_n_chars) + number_to_move + ((yy_n_chars) >> 1);
 		YY_CURRENT_BUFFER_LVALUE->yy_ch_buf = (char *) yyrealloc((void *) YY_CURRENT_BUFFER_LVALUE->yy_ch_buf,new_size  );
@@ -2073,10 +2073,10 @@ YY_BUFFER_STATE yy_scan_bytes  (yyconst char * yybytes, int  _yybytes_len )
 	YY_BUFFER_STATE b;
 	char *buf;
 	yy_size_t n;
-	int i;
+	yy_size_t i;
     
 	/* Get memory for full buffer, including space for trailing EOB's. */
-	n = (yy_size_t) (_yybytes_len + 2);
+	n = (yy_size_t) _yybytes_len + 2;
 	buf = (char *) yyalloc(n  );
 	if ( ! buf )
 		YY_FATAL_ERROR( "out of dynamic memory in yy_scan_bytes()" );
