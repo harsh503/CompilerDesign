@@ -65,9 +65,19 @@
 #line 4 "parser.yacc" /* yacc.c:339  */
 
 #include<stdio.h>
-extern lineno;
+extern int lineno;
+struct stable{
+	char name[100];
+	char type[50];
+};
+struct ctable{
+	char name[100];
+	char type[50];
+};
+extern struct stable symbol_table[1000];
+extern struct ctable constant_table[1000];
 
-#line 71 "y.tab.c" /* yacc.c:339  */
+#line 81 "y.tab.c" /* yacc.c:339  */
 
 # ifndef YY_NULLPTR
 #  if defined __cplusplus && 201103L <= __cplusplus
@@ -204,7 +214,7 @@ int yyparse (void);
 
 /* Copy the second part of user declarations.  */
 
-#line 208 "y.tab.c" /* yacc.c:358  */
+#line 218 "y.tab.c" /* yacc.c:358  */
 
 #ifdef short
 # undef short
@@ -505,14 +515,14 @@ static const yytype_uint8 yytranslate[] =
   /* YYRLINE[YYN] -- Source line where rule number YYN was defined.  */
 static const yytype_uint8 yyrline[] =
 {
-       0,    22,    22,    23,    27,    28,    32,    36,    37,    38,
-      39,    43,    44,    45,    46,    47,    51,    52,    53,    54,
-      55,    56,    57,    58,    59,    63,    64,    68,    69,    73,
-      74,    75,    79,    80,    84,    85,    90,    91,    96,    97,
-     100,   103,   104,   108,   109,   113,   114,   115,   116,   117,
-     118,   119,   123,   124,   128,   129,   133,   134,   135,   136,
-     137,   138,   139,   140,   141,   142,   143,   147,   148,   149,
-     153,   154,   155,   156,   160,   161,   162,   163
+       0,    32,    32,    33,    37,    38,    42,    46,    47,    48,
+      49,    53,    54,    55,    56,    57,    61,    62,    63,    64,
+      65,    66,    67,    68,    69,    73,    74,    78,    79,    83,
+      84,    85,    89,    90,    94,    95,   100,   101,   106,   107,
+     110,   113,   114,   118,   119,   123,   124,   125,   126,   127,
+     128,   129,   133,   134,   138,   139,   143,   144,   145,   146,
+     147,   148,   149,   150,   151,   152,   153,   157,   158,   159,
+     163,   164,   165,   166,   170,   171,   172,   173
 };
 #endif
 
@@ -1432,7 +1442,7 @@ yyreduce:
   switch (yyn)
     {
       
-#line 1436 "y.tab.c" /* yacc.c:1646  */
+#line 1446 "y.tab.c" /* yacc.c:1646  */
       default: break;
     }
   /* User semantic actions sometimes alter yychar, and that requires
@@ -1660,7 +1670,7 @@ yyreturn:
 #endif
   return yyresult;
 }
-#line 166 "parser.yacc" /* yacc.c:1906  */
+#line 176 "parser.yacc" /* yacc.c:1906  */
 
 int yyerror()
 {
@@ -1669,5 +1679,25 @@ int yyerror()
 }
 main()
 {
+   
     yyparse();
+    printf("\n*****Symbol Table******\n\n");
+    int i;
+	for(i=0;i<1000;i++)
+	{
+		if(symbol_table[i].name[0]!='\0')
+		{
+			printf("%s	%s\n",symbol_table[i].name,symbol_table[i].type);
+		}
+	}
+
+
+	printf("\n*****Constant Table******\n\n");
+	for(i=0;i<1000;i++)
+	{
+		if(constant_table[i].name[0]!='\0')
+		{
+			printf("%s	%s\n",constant_table[i].name,constant_table[i].type);
+		}
+	}
 }

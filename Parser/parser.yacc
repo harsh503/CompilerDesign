@@ -3,7 +3,17 @@
 
 %{
 #include<stdio.h>
-extern lineno;
+extern int lineno;
+struct stable{
+	char name[100];
+	char type[50];
+};
+struct ctable{
+	char name[100];
+	char type[50];
+};
+extern struct stable symbol_table[1000];
+extern struct ctable constant_table[1000];
 %}
 
 %left ','
@@ -30,6 +40,7 @@ EXTERNAL_DECLARATION
 
 DECLARATION 
     : DECLARATION_SPECIFIER INIT_DECLARATOR_LIST ';'
+    |';'
     ;
 
 DECLARATION_SPECIFIER
@@ -171,5 +182,25 @@ int yyerror()
 }
 main()
 {
+   
     yyparse();
+    printf("\n*****Symbol Table******\n\n");
+    int i;
+	for(i=0;i<1000;i++)
+	{
+		if(symbol_table[i].name[0]!='\0')
+		{
+			printf("%s	%s\n",symbol_table[i].name,symbol_table[i].type);
+		}
+	}
+
+
+	printf("\n*****Constant Table******\n\n");
+	for(i=0;i<1000;i++)
+	{
+		if(constant_table[i].name[0]!='\0')
+		{
+			printf("%s	%s\n",constant_table[i].name,constant_table[i].type);
+		}
+	}
 }
