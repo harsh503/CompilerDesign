@@ -8,9 +8,10 @@
 
 extern FILE *yyin;
 extern int lineno;
+extern int comment_nesting;
 
 int flag = 0;
-
+int errorFlag=0;
 struct stable{
 	char name[100];
 	char type[50];
@@ -94,7 +95,7 @@ DECLARATOR
 
 FUNCTION_DECLARATION
     : IDENTIFIER '(' DECLARATION_SPECIFIER_LIST ')'
-    |IDENTIFIER '('')'
+    | IDENTIFIER '(' ')'
     ;
 
 FUNCTION_DEFINITION 
@@ -127,14 +128,22 @@ STATEMENT_LIST
     ;
 
 STATEMENT
+    : IFS        
+    |   STATEMENT_WITH_ELSE 
+    ;
+
+STATEMENT_WITH_ELSE
     : LABELED_STATEMENT
     | COMPOUND_STATEMENT
     | EXPRESSION_STATEMENT
-    | SELECTION_STATEMENT
     | ITERATION_STATEMENT
+    | SELECTION_STATEMENT
     | JUMP_STATEMENT
     | DECLARATION
+    | error ';'
     ;
+
+
 
 LABELED_STATEMENT
     : CASE EXPRESSION ':' STATEMENT
@@ -156,19 +165,38 @@ EXPRESSION
     | EXPRESSION INCDEC_OP
     | INCDEC_OP EXPRESSION
     | '(' EXPRESSION ')'
+    | '('error')'
     | IDENTIFIER
     | CONSTANT
+    | FUNCTION_CALL
     ; 
 
+FUNCTION_CALL
+    : IDENTIFIER '(' ')' 
+    | IDENTIFIER '(' EXPRESSION_LIST ')'
+    ;
+
+EXPRESSION_LIST
+    : EXPRESSION_LIST ',' EXPRESSION
+    | EXPRESSION
+    ;
+
+
+
 SELECTION_STATEMENT 
-    : IF '(' EXPRESSION ')' STATEMENT
-    | IF '(' EXPRESSION ')' STATEMENT ELSE STATEMENT
+    : IF '(' EXPRESSION ')' STATEMENT_WITH_ELSE ELSE STATEMENT 
     | SWITCH '(' EXPRESSION ')' STATEMENT
+    ;
+
+
+
+IFS
+    : IF '(' EXPRESSION ')' STATEMENT
     ;
 
 ITERATION_STATEMENT
     : WHILE '(' EXPRESSION ')' STATEMENT
-    | DO STATEMENT WHILE '(' EXPRESSION ')' ;
+    | DO STATEMENT WHILE '(' EXPRESSION ')' ';'
     | FOR '(' EXPRESSION_STATEMENT EXPRESSION_STATEMENT ')' STATEMENT
     | FOR '(' EXPRESSION_STATEMENT EXPRESSION_STATEMENT EXPRESSION ')' STATEMENT
     ;
@@ -181,17 +209,39 @@ JUMP_STATEMENT
     ;
 
 %%
+
 int yyerror()
 {
     flag = 1;
     printf("PARSING ERROR at Line Number - %d\n",lineno);
     return (1);
 }
+
 main()
 {
 
     yyin=fopen("abc.txt","r");
+
+
+/*
+    int wordcount=0;
+    if ( yyin )
+   {
+	  
+       while ((ch=getc(yyin)) != EOF) {
+	   
+		   if (ch == ' ' || ch == '\n') { ++wordcount; }
+
+	   }
+        wordcount+=10;
+    }
+
+*/
+
     yyparse();
+
+    if(comment_nesting!=0)
+        printf("LEXICAL ERROR : Unterminated Comment\n");
 
     printf("\n*****Symbol Table******\n\n");
     int i;

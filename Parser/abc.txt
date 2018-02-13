@@ -1,7 +1,35 @@
+int fun(int a, int b)
+{
+    return a+b;
+}
+
 int main()
 {
-    int a=2;
-    a++;
-    (1+(2*3-(4!=4));
+    int count=1;
+    fun(a,b);
+    int d = 2;
+    while(a)
+    {
+        d++;
+    }
+    
+    if(a>0)
+    {
+
+    }
+    if(a>0)
+    {
+
+    }
+    else
+    {
+
+    }
+    
+
+    d++;
+    count = 2*(3+4);
     return 0;
+
 }
+

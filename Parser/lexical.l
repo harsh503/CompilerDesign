@@ -55,6 +55,8 @@ WHITESPACE " "|"	"|"\n"
   \n             { lineno++;}
 }
 
+\/\/[^\n]*[\n]? { lineno++; }
+
 "auto"			{ return(AUTO); }
 "break"			{ return(BREAK); }
 "case"			{ return(CASE); }
@@ -200,11 +202,13 @@ WHITESPACE " "|"	"|"\n"
 "?"			{ return('?'); }
 ":"			{ return(':'); }
 
-{WHITESPACE}	{ if(yytext[0]=='\n') {lineno++;} };
+{WHITESPACE}	{ if(yytext[0]=='\n') { lineno++; } };
 
-. {printf("ERROR - %s : invalid character at line [%d]\n",yytext,lineno);}
+. {printf("LEXICAL ERROR - %s : invalid character at line [%d]\n",yytext,lineno);}
 
 %%
+
+
 
 int yywrap()
 {
