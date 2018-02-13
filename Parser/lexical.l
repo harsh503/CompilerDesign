@@ -52,7 +52,7 @@ WHITESPACE " "|"	"|"\n"
   "*"+           ;
   [^/*\n]+       ;
   [/]            ;
-  \n             {lineno++;}
+  \n             { lineno++;}
 }
 
 "auto"			{ return(AUTO); }
@@ -200,7 +200,7 @@ WHITESPACE " "|"	"|"\n"
 "?"			{ return('?'); }
 ":"			{ return(':'); }
 
-{WHITESPACE} ;
+{WHITESPACE}	{ if(yytext[0]=='\n') {lineno++;} };
 
 . {printf("ERROR - %s : invalid character at line [%d]\n",yytext,lineno);}
 

@@ -3,7 +3,14 @@
 
 %{
 #include<stdio.h>
+#include<stdlib.h>
+#include<ctype.h>
+
+extern FILE *yyin;
 extern int lineno;
+
+int flag = 0;
+
 struct stable{
 	char name[100];
 	char type[50];
@@ -40,7 +47,6 @@ EXTERNAL_DECLARATION
 
 DECLARATION 
     : DECLARATION_SPECIFIER INIT_DECLARATOR_LIST ';'
-    |';'
     ;
 
 DECLARATION_SPECIFIER
@@ -177,13 +183,16 @@ JUMP_STATEMENT
 %%
 int yyerror()
 {
-    printf("parsing error %d",lineno);
+    flag = 1;
+    printf("PARSING ERROR at Line Number - %d\n",lineno);
     return (1);
 }
 main()
 {
-   
+
+    yyin=fopen("abc.txt","r");
     yyparse();
+
     printf("\n*****Symbol Table******\n\n");
     int i;
 	for(i=0;i<1000;i++)
@@ -203,4 +212,9 @@ main()
 			printf("%s	%s\n",constant_table[i].name,constant_table[i].type);
 		}
 	}
+
+    if(!flag)
+    {
+        printf("\nParsing SUCCESSFUL.\n");
+    }
 }

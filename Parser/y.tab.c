@@ -65,7 +65,14 @@
 #line 4 "parser.yacc" /* yacc.c:339  */
 
 #include<stdio.h>
+#include<stdlib.h>
+#include<ctype.h>
+
+extern FILE *yyin;
 extern int lineno;
+
+int flag = 0;
+
 struct stable{
 	char name[100];
 	char type[50];
@@ -77,7 +84,7 @@ struct ctable{
 extern struct stable symbol_table[1000];
 extern struct ctable constant_table[1000];
 
-#line 81 "y.tab.c" /* yacc.c:339  */
+#line 88 "y.tab.c" /* yacc.c:339  */
 
 # ifndef YY_NULLPTR
 #  if defined __cplusplus && 201103L <= __cplusplus
@@ -95,10 +102,7 @@ extern struct ctable constant_table[1000];
 # define YYERROR_VERBOSE 0
 #endif
 
-/* In a future release of Bison, this section will be replaced
-   by #include "y.tab.h".  */
-#ifndef YY_YY_Y_TAB_H_INCLUDED
-# define YY_YY_Y_TAB_H_INCLUDED
+
 /* Debug traces.  */
 #ifndef YYDEBUG
 # define YYDEBUG 0
@@ -210,11 +214,11 @@ extern YYSTYPE yylval;
 
 int yyparse (void);
 
-#endif /* !YY_YY_Y_TAB_H_INCLUDED  */
+
 
 /* Copy the second part of user declarations.  */
 
-#line 218 "y.tab.c" /* yacc.c:358  */
+#line 222 "y.tab.c" /* yacc.c:358  */
 
 #ifdef short
 # undef short
@@ -515,14 +519,14 @@ static const yytype_uint8 yytranslate[] =
   /* YYRLINE[YYN] -- Source line where rule number YYN was defined.  */
 static const yytype_uint8 yyrline[] =
 {
-       0,    32,    32,    33,    37,    38,    42,    46,    47,    48,
-      49,    53,    54,    55,    56,    57,    61,    62,    63,    64,
-      65,    66,    67,    68,    69,    73,    74,    78,    79,    83,
-      84,    85,    89,    90,    94,    95,   100,   101,   106,   107,
-     110,   113,   114,   118,   119,   123,   124,   125,   126,   127,
-     128,   129,   133,   134,   138,   139,   143,   144,   145,   146,
-     147,   148,   149,   150,   151,   152,   153,   157,   158,   159,
-     163,   164,   165,   166,   170,   171,   172,   173
+       0,    39,    39,    40,    44,    45,    49,    53,    54,    55,
+      56,    60,    61,    62,    63,    64,    68,    69,    70,    71,
+      72,    73,    74,    75,    76,    80,    81,    85,    86,    90,
+      91,    92,    96,    97,   101,   102,   107,   108,   113,   114,
+     117,   120,   121,   125,   126,   130,   131,   132,   133,   134,
+     135,   136,   140,   141,   145,   146,   150,   151,   152,   153,
+     154,   155,   156,   157,   158,   159,   160,   164,   165,   166,
+     170,   171,   172,   173,   177,   178,   179,   180
 };
 #endif
 
@@ -1442,7 +1446,7 @@ yyreduce:
   switch (yyn)
     {
       
-#line 1446 "y.tab.c" /* yacc.c:1646  */
+#line 1450 "y.tab.c" /* yacc.c:1646  */
       default: break;
     }
   /* User semantic actions sometimes alter yychar, and that requires
@@ -1670,17 +1674,20 @@ yyreturn:
 #endif
   return yyresult;
 }
-#line 176 "parser.yacc" /* yacc.c:1906  */
+#line 183 "parser.yacc" /* yacc.c:1906  */
 
 int yyerror()
 {
-    printf("parsing error %d",lineno);
+    flag = 1;
+    printf("PARSING ERROR at Line Number - %d\n",lineno);
     return (1);
 }
 main()
 {
-   
+
+    yyin=fopen("abc.txt","r");
     yyparse();
+
     printf("\n*****Symbol Table******\n\n");
     int i;
 	for(i=0;i<1000;i++)
@@ -1700,4 +1707,9 @@ main()
 			printf("%s	%s\n",constant_table[i].name,constant_table[i].type);
 		}
 	}
+
+    if(!flag)
+    {
+        printf("\nParsing SUCCESSFUL.\n");
+    }
 }
