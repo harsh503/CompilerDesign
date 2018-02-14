@@ -85,7 +85,14 @@ extern int yydebug;
     ADD_OP = 295,
     MUL_OP = 296,
     INCDEC_OP = 297,
-    EQU_OP = 298
+    EQU_OP = 298,
+    LAND = 299,
+    LOR = 300,
+    BAND = 301,
+    BXOR = 302,
+    BOR = 303,
+    NOT_OP = 304,
+    LOWER_THAN_ELSE = 305
   };
 #endif
 /* Tokens.  */
@@ -130,6 +137,13 @@ extern int yydebug;
 #define MUL_OP 296
 #define INCDEC_OP 297
 #define EQU_OP 298
+#define LAND 299
+#define LOR 300
+#define BAND 301
+#define BXOR 302
+#define BOR 303
+#define NOT_OP 304
+#define LOWER_THAN_ELSE 305
 
 /* Value type.  */
 #if ! defined YYSTYPE && ! defined YYSTYPE_IS_DECLARED

@@ -1,0 +1,2840 @@
+Terminals unused in grammar
+
+   CONST
+   ENUM
+   GOTO
+   SIZEOF
+   STRUCT
+   UNION
+   VOLATILE
+   STRING_LITERAL
+
+
+State 46 conflicts: 1 shift/reduce
+State 132 conflicts: 1 shift/reduce
+State 158 conflicts: 1 shift/reduce
+
+
+Grammar
+
+    0 $accept: PROGRAM $end
+
+    1 PROGRAM: EXTERNAL_DECLARATION
+    2        | PROGRAM EXTERNAL_DECLARATION
+
+    3 EXTERNAL_DECLARATION: FUNCTION_DEFINITION
+    4                     | DECLARATION
+
+    5 DECLARATION: DECLARATION_SPECIFIER INIT_DECLARATOR_LIST ';'
+
+    6 DECLARATION_SPECIFIER: STORAGE_CLASS_SPECIFIER
+    7                      | STORAGE_CLASS_SPECIFIER DECLARATION_SPECIFIER
+    8                      | TYPE_SPECIFIER
+    9                      | TYPE_SPECIFIER DECLARATION_SPECIFIER
+
+   10 STORAGE_CLASS_SPECIFIER: TYPEDEF
+   11                        | EXTERN
+   12                        | STATIC
+   13                        | AUTO
+   14                        | REGISTER
+
+   15 TYPE_SPECIFIER: VOID
+   16               | CHAR
+   17               | SHORT
+   18               | INT
+   19               | LONG
+   20               | FLOAT
+   21               | DOUBLE
+   22               | SIGNED
+   23               | UNSIGNED
+
+   24 INIT_DECLARATOR_LIST: INIT_DECLARATOR
+   25                     | INIT_DECLARATOR_LIST ',' INIT_DECLARATOR
+
+   26 INIT_DECLARATOR: DECLARATOR
+   27                | DECLARATOR '=' EXPRESSION
+
+   28 DECLARATOR: IDENTIFIER
+   29           | '(' DECLARATOR ')'
+   30           | FUNCTION_DECLARATION
+
+   31 FUNCTION_DECLARATION: IDENTIFIER '(' DECLARATION_SPECIFIER_LIST ')'
+   32                     | IDENTIFIER '(' ')'
+
+   33 FUNCTION_DEFINITION: DECLARATION_SPECIFIER IDENTIFIER '(' ')' COMPOUND_STATEMENT
+   34                    | DECLARATION_SPECIFIER IDENTIFIER '(' DEFINITION_SPECIFIER_LIST ')' COMPOUND_STATEMENT
+
+   35 DECLARATION_SPECIFIER_LIST: DECLARATION_SPECIFIER_LIST ',' DECLARATION_SPECIFIER
+   36                           | DECLARATION_SPECIFIER
+
+   37 DEFINITION_SPECIFIER_LIST: VARIABLE_DECLARATION
+   38                          | DEFINITION_SPECIFIER_LIST ',' VARIABLE_DECLARATION
+
+   39 VARIABLE_DECLARATION: DECLARATION_SPECIFIER IDENTIFIER
+
+   40 COMPOUND_STATEMENT: '{' STATEMENT_LIST '}'
+   41                   | '{' '}'
+
+   42 STATEMENT_LIST: STATEMENT_LIST STATEMENT
+   43               | STATEMENT
+
+   44 STATEMENT: IFS
+   45          | STATEMENT_WITH_ELSE
+
+   46 STATEMENT_WITH_ELSE: LABELED_STATEMENT
+   47                    | COMPOUND_STATEMENT
+   48                    | EXPRESSION_STATEMENT
+   49                    | ITERATION_STATEMENT
+   50                    | SELECTION_STATEMENT
+   51                    | JUMP_STATEMENT
+   52                    | DECLARATION
+   53                    | error ';'
+
+   54 LABELED_STATEMENT: CASE EXPRESSION ':' STATEMENT
+   55                  | DEFAULT ':' STATEMENT
+
+   56 EXPRESSION_STATEMENT: ';'
+   57                     | EXPRESSION ';'
+
+   58 EXPRESSION: IDENTIFIER ASSIGN_OP EXPRESSION
+   59           | IDENTIFIER '=' EXPRESSION
+   60           | EXPRESSION EQU_OP EXPRESSION
+   61           | EXPRESSION REL_OP EXPRESSION
+   62           | EXPRESSION ADD_OP EXPRESSION
+   63           | EXPRESSION MUL_OP EXPRESSION
+   64           | EXPRESSION LAND EXPRESSION
+   65           | EXPRESSION LOR EXPRESSION
+   66           | EXPRESSION BOR EXPRESSION
+   67           | EXPRESSION BAND EXPRESSION
+   68           | EXPRESSION BXOR EXPRESSION
+   69           | NOT_OP EXPRESSION
+   70           | EXPRESSION INCDEC_OP
+   71           | INCDEC_OP EXPRESSION
+   72           | '(' EXPRESSION ')'
+   73           | IDENTIFIER
+   74           | CONSTANT
+   75           | FUNCTION_CALL
+
+   76 FUNCTION_CALL: IDENTIFIER '(' ')'
+   77              | IDENTIFIER '(' EXPRESSION_LIST ')'
+
+   78 EXPRESSION_LIST: EXPRESSION_LIST ',' EXPRESSION
+   79                | EXPRESSION
+
+   80 SELECTION_STATEMENT: IF '(' EXPRESSION ')' STATEMENT_WITH_ELSE ELSE STATEMENT
+   81                    | SWITCH '(' EXPRESSION ')' STATEMENT
+
+   82 IFS: IF '(' EXPRESSION ')' STATEMENT
+
+   83 ITERATION_STATEMENT: WHILE '(' EXPRESSION ')' STATEMENT
+   84                    | DO STATEMENT WHILE '(' EXPRESSION ')' ';'
+   85                    | FOR '(' EXPRESSION_STATEMENT EXPRESSION_STATEMENT ')' STATEMENT
+   86                    | FOR '(' EXPRESSION_STATEMENT EXPRESSION_STATEMENT EXPRESSION ')' STATEMENT
+
+   87 JUMP_STATEMENT: CONTINUE ';'
+   88               | BREAK ';'
+   89               | RETURN ';'
+   90               | RETURN EXPRESSION
+
+
+Terminals, with rules where they appear
+
+$end (0) 0
+'(' (40) 29 31 32 33 34 72 76 77 80 81 82 83 84 85 86
+')' (41) 29 31 32 33 34 72 76 77 80 81 82 83 84 85 86
+',' (44) 25 35 38 78
+':' (58) 54 55
+';' (59) 5 53 56 57 84 87 88 89
+'=' (61) 27 59
+'{' (123) 40 41
+'}' (125) 40 41
+error (256) 53
+AUTO (258) 13
+BREAK (259) 88
+CASE (260) 54
+CHAR (261) 16
+CONST (262)
+CONTINUE (263) 87
+DEFAULT (264) 55
+DO (265) 84
+DOUBLE (266) 21
+ELSE (267) 80
+ENUM (268)
+EXTERN (269) 11
+FLOAT (270) 20
+FOR (271) 85 86
+GOTO (272)
+IF (273) 80 82
+INT (274) 18
+LONG (275) 19
+REGISTER (276) 14
+RETURN (277) 89 90
+SHORT (278) 17
+SIGNED (279) 22
+SIZEOF (280)
+STATIC (281) 12
+STRUCT (282)
+SWITCH (283) 81
+TYPEDEF (284) 10
+UNION (285)
+UNSIGNED (286) 23
+VOID (287) 15
+VOLATILE (288)
+WHILE (289) 83 84
+IDENTIFIER (290) 28 31 32 33 34 39 58 59 73 76 77
+CONSTANT (291) 74
+STRING_LITERAL (292)
+ASSIGN_OP (293) 58
+REL_OP (294) 61
+ADD_OP (295) 62
+MUL_OP (296) 63
+INCDEC_OP (297) 70 71
+EQU_OP (298) 60
+LAND (299) 64
+LOR (300) 65
+BAND (301) 67
+BXOR (302) 68
+BOR (303) 66
+NOT_OP (304) 69
+
+
+Nonterminals, with rules where they appear
+
+$accept (58)
+    on left: 0
+PROGRAM (59)
+    on left: 1 2, on right: 0 2
+EXTERNAL_DECLARATION (60)
+    on left: 3 4, on right: 1 2
+DECLARATION (61)
+    on left: 5, on right: 4 52
+DECLARATION_SPECIFIER (62)
+    on left: 6 7 8 9, on right: 5 7 9 33 34 35 36 39
+STORAGE_CLASS_SPECIFIER (63)
+    on left: 10 11 12 13 14, on right: 6 7
+TYPE_SPECIFIER (64)
+    on left: 15 16 17 18 19 20 21 22 23, on right: 8 9
+INIT_DECLARATOR_LIST (65)
+    on left: 24 25, on right: 5 25
+INIT_DECLARATOR (66)
+    on left: 26 27, on right: 24 25
+DECLARATOR (67)
+    on left: 28 29 30, on right: 26 27 29
+FUNCTION_DECLARATION (68)
+    on left: 31 32, on right: 30
+FUNCTION_DEFINITION (69)
+    on left: 33 34, on right: 3
+DECLARATION_SPECIFIER_LIST (70)
+    on left: 35 36, on right: 31 35
+DEFINITION_SPECIFIER_LIST (71)
+    on left: 37 38, on right: 34 38
+VARIABLE_DECLARATION (72)
+    on left: 39, on right: 37 38
+COMPOUND_STATEMENT (73)
+    on left: 40 41, on right: 33 34 47
+STATEMENT_LIST (74)
+    on left: 42 43, on right: 40 42
+STATEMENT (75)
+    on left: 44 45, on right: 42 43 54 55 80 81 82 83 84 85 86
+STATEMENT_WITH_ELSE (76)
+    on left: 46 47 48 49 50 51 52 53, on right: 45 80
+LABELED_STATEMENT (77)
+    on left: 54 55, on right: 46
+EXPRESSION_STATEMENT (78)
+    on left: 56 57, on right: 48 85 86
+EXPRESSION (79)
+    on left: 58 59 60 61 62 63 64 65 66 67 68 69 70 71 72 73 74 75,
+    on right: 27 54 57 58 59 60 61 62 63 64 65 66 67 68 69 70 71 72
+    78 79 80 81 82 83 84 86 90
+FUNCTION_CALL (80)
+    on left: 76 77, on right: 75
+EXPRESSION_LIST (81)
+    on left: 78 79, on right: 77 78
+SELECTION_STATEMENT (82)
+    on left: 80 81, on right: 50
+IFS (83)
+    on left: 82, on right: 44
+ITERATION_STATEMENT (84)
+    on left: 83 84 85 86, on right: 49
+JUMP_STATEMENT (85)
+    on left: 87 88 89 90, on right: 51
+
+
+State 0
+
+    0 $accept: . PROGRAM $end
+
+    AUTO      shift, and go to state 1
+    CHAR      shift, and go to state 2
+    DOUBLE    shift, and go to state 3
+    EXTERN    shift, and go to state 4
+    FLOAT     shift, and go to state 5
+    INT       shift, and go to state 6
+    LONG      shift, and go to state 7
+    REGISTER  shift, and go to state 8
+    SHORT     shift, and go to state 9
+    SIGNED    shift, and go to state 10
+    STATIC    shift, and go to state 11
+    TYPEDEF   shift, and go to state 12
+    UNSIGNED  shift, and go to state 13
+    VOID      shift, and go to state 14
+
+    PROGRAM                  go to state 15
+    EXTERNAL_DECLARATION     go to state 16
+    DECLARATION              go to state 17
+    DECLARATION_SPECIFIER    go to state 18
+    STORAGE_CLASS_SPECIFIER  go to state 19
+    TYPE_SPECIFIER           go to state 20
+    FUNCTION_DEFINITION      go to state 21
+
+
+State 1
+
+   13 STORAGE_CLASS_SPECIFIER: AUTO .
+
+    $default  reduce using rule 13 (STORAGE_CLASS_SPECIFIER)
+
+
+State 2
+
+   16 TYPE_SPECIFIER: CHAR .
+
+    $default  reduce using rule 16 (TYPE_SPECIFIER)
+
+
+State 3
+
+   21 TYPE_SPECIFIER: DOUBLE .
+
+    $default  reduce using rule 21 (TYPE_SPECIFIER)
+
+
+State 4
+
+   11 STORAGE_CLASS_SPECIFIER: EXTERN .
+
+    $default  reduce using rule 11 (STORAGE_CLASS_SPECIFIER)
+
+
+State 5
+
+   20 TYPE_SPECIFIER: FLOAT .
+
+    $default  reduce using rule 20 (TYPE_SPECIFIER)
+
+
+State 6
+
+   18 TYPE_SPECIFIER: INT .
+
+    $default  reduce using rule 18 (TYPE_SPECIFIER)
+
+
+State 7
+
+   19 TYPE_SPECIFIER: LONG .
+
+    $default  reduce using rule 19 (TYPE_SPECIFIER)
+
+
+State 8
+
+   14 STORAGE_CLASS_SPECIFIER: REGISTER .
+
+    $default  reduce using rule 14 (STORAGE_CLASS_SPECIFIER)
+
+
+State 9
+
+   17 TYPE_SPECIFIER: SHORT .
+
+    $default  reduce using rule 17 (TYPE_SPECIFIER)
+
+
+State 10
+
+   22 TYPE_SPECIFIER: SIGNED .
+
+    $default  reduce using rule 22 (TYPE_SPECIFIER)
+
+
+State 11
+
+   12 STORAGE_CLASS_SPECIFIER: STATIC .
+
+    $default  reduce using rule 12 (STORAGE_CLASS_SPECIFIER)
+
+
+State 12
+
+   10 STORAGE_CLASS_SPECIFIER: TYPEDEF .
+
+    $default  reduce using rule 10 (STORAGE_CLASS_SPECIFIER)
+
+
+State 13
+
+   23 TYPE_SPECIFIER: UNSIGNED .
+
+    $default  reduce using rule 23 (TYPE_SPECIFIER)
+
+
+State 14
+
+   15 TYPE_SPECIFIER: VOID .
+
+    $default  reduce using rule 15 (TYPE_SPECIFIER)
+
+
+State 15
+
+    0 $accept: PROGRAM . $end
+    2 PROGRAM: PROGRAM . EXTERNAL_DECLARATION
+
+    $end      shift, and go to state 22
+    AUTO      shift, and go to state 1
+    CHAR      shift, and go to state 2
+    DOUBLE    shift, and go to state 3
+    EXTERN    shift, and go to state 4
+    FLOAT     shift, and go to state 5
+    INT       shift, and go to state 6
+    LONG      shift, and go to state 7
+    REGISTER  shift, and go to state 8
+    SHORT     shift, and go to state 9
+    SIGNED    shift, and go to state 10
+    STATIC    shift, and go to state 11
+    TYPEDEF   shift, and go to state 12
+    UNSIGNED  shift, and go to state 13
+    VOID      shift, and go to state 14
+
+    EXTERNAL_DECLARATION     go to state 23
+    DECLARATION              go to state 17
+    DECLARATION_SPECIFIER    go to state 18
+    STORAGE_CLASS_SPECIFIER  go to state 19
+    TYPE_SPECIFIER           go to state 20
+    FUNCTION_DEFINITION      go to state 21
+
+
+State 16
+
+    1 PROGRAM: EXTERNAL_DECLARATION .
+
+    $default  reduce using rule 1 (PROGRAM)
+
+
+State 17
+
+    4 EXTERNAL_DECLARATION: DECLARATION .
+
+    $default  reduce using rule 4 (EXTERNAL_DECLARATION)
+
+
+State 18
+
+    5 DECLARATION: DECLARATION_SPECIFIER . INIT_DECLARATOR_LIST ';'
+   33 FUNCTION_DEFINITION: DECLARATION_SPECIFIER . IDENTIFIER '(' ')' COMPOUND_STATEMENT
+   34                    | DECLARATION_SPECIFIER . IDENTIFIER '(' DEFINITION_SPECIFIER_LIST ')' COMPOUND_STATEMENT
+
+    IDENTIFIER  shift, and go to state 24
+    '('         shift, and go to state 25
+
+    INIT_DECLARATOR_LIST  go to state 26
+    INIT_DECLARATOR       go to state 27
+    DECLARATOR            go to state 28
+    FUNCTION_DECLARATION  go to state 29
+
+
+State 19
+
+    6 DECLARATION_SPECIFIER: STORAGE_CLASS_SPECIFIER .
+    7                      | STORAGE_CLASS_SPECIFIER . DECLARATION_SPECIFIER
+
+    AUTO      shift, and go to state 1
+    CHAR      shift, and go to state 2
+    DOUBLE    shift, and go to state 3
+    EXTERN    shift, and go to state 4
+    FLOAT     shift, and go to state 5
+    INT       shift, and go to state 6
+    LONG      shift, and go to state 7
+    REGISTER  shift, and go to state 8
+    SHORT     shift, and go to state 9
+    SIGNED    shift, and go to state 10
+    STATIC    shift, and go to state 11
+    TYPEDEF   shift, and go to state 12
+    UNSIGNED  shift, and go to state 13
+    VOID      shift, and go to state 14
+
+    $default  reduce using rule 6 (DECLARATION_SPECIFIER)
+
+    DECLARATION_SPECIFIER    go to state 30
+    STORAGE_CLASS_SPECIFIER  go to state 19
+    TYPE_SPECIFIER           go to state 20
+
+
+State 20
+
+    8 DECLARATION_SPECIFIER: TYPE_SPECIFIER .
+    9                      | TYPE_SPECIFIER . DECLARATION_SPECIFIER
+
+    AUTO      shift, and go to state 1
+    CHAR      shift, and go to state 2
+    DOUBLE    shift, and go to state 3
+    EXTERN    shift, and go to state 4
+    FLOAT     shift, and go to state 5
+    INT       shift, and go to state 6
+    LONG      shift, and go to state 7
+    REGISTER  shift, and go to state 8
+    SHORT     shift, and go to state 9
+    SIGNED    shift, and go to state 10
+    STATIC    shift, and go to state 11
+    TYPEDEF   shift, and go to state 12
+    UNSIGNED  shift, and go to state 13
+    VOID      shift, and go to state 14
+
+    $default  reduce using rule 8 (DECLARATION_SPECIFIER)
+
+    DECLARATION_SPECIFIER    go to state 31
+    STORAGE_CLASS_SPECIFIER  go to state 19
+    TYPE_SPECIFIER           go to state 20
+
+
+State 21
+
+    3 EXTERNAL_DECLARATION: FUNCTION_DEFINITION .
+
+    $default  reduce using rule 3 (EXTERNAL_DECLARATION)
+
+
+State 22
+
+    0 $accept: PROGRAM $end .
+
+    $default  accept
+
+
+State 23
+
+    2 PROGRAM: PROGRAM EXTERNAL_DECLARATION .
+
+    $default  reduce using rule 2 (PROGRAM)
+
+
+State 24
+
+   28 DECLARATOR: IDENTIFIER .
+   31 FUNCTION_DECLARATION: IDENTIFIER . '(' DECLARATION_SPECIFIER_LIST ')'
+   32                     | IDENTIFIER . '(' ')'
+   33 FUNCTION_DEFINITION: DECLARATION_SPECIFIER IDENTIFIER . '(' ')' COMPOUND_STATEMENT
+   34                    | DECLARATION_SPECIFIER IDENTIFIER . '(' DEFINITION_SPECIFIER_LIST ')' COMPOUND_STATEMENT
+
+    '('  shift, and go to state 32
+
+    $default  reduce using rule 28 (DECLARATOR)
+
+
+State 25
+
+   29 DECLARATOR: '(' . DECLARATOR ')'
+
+    IDENTIFIER  shift, and go to state 33
+    '('         shift, and go to state 25
+
+    DECLARATOR            go to state 34
+    FUNCTION_DECLARATION  go to state 29
+
+
+State 26
+
+    5 DECLARATION: DECLARATION_SPECIFIER INIT_DECLARATOR_LIST . ';'
+   25 INIT_DECLARATOR_LIST: INIT_DECLARATOR_LIST . ',' INIT_DECLARATOR
+
+    ';'  shift, and go to state 35
+    ','  shift, and go to state 36
+
+
+State 27
+
+   24 INIT_DECLARATOR_LIST: INIT_DECLARATOR .
+
+    $default  reduce using rule 24 (INIT_DECLARATOR_LIST)
+
+
+State 28
+
+   26 INIT_DECLARATOR: DECLARATOR .
+   27                | DECLARATOR . '=' EXPRESSION
+
+    '='  shift, and go to state 37
+
+    $default  reduce using rule 26 (INIT_DECLARATOR)
+
+
+State 29
+
+   30 DECLARATOR: FUNCTION_DECLARATION .
+
+    $default  reduce using rule 30 (DECLARATOR)
+
+
+State 30
+
+    7 DECLARATION_SPECIFIER: STORAGE_CLASS_SPECIFIER DECLARATION_SPECIFIER .
+
+    $default  reduce using rule 7 (DECLARATION_SPECIFIER)
+
+
+State 31
+
+    9 DECLARATION_SPECIFIER: TYPE_SPECIFIER DECLARATION_SPECIFIER .
+
+    $default  reduce using rule 9 (DECLARATION_SPECIFIER)
+
+
+State 32
+
+   31 FUNCTION_DECLARATION: IDENTIFIER '(' . DECLARATION_SPECIFIER_LIST ')'
+   32                     | IDENTIFIER '(' . ')'
+   33 FUNCTION_DEFINITION: DECLARATION_SPECIFIER IDENTIFIER '(' . ')' COMPOUND_STATEMENT
+   34                    | DECLARATION_SPECIFIER IDENTIFIER '(' . DEFINITION_SPECIFIER_LIST ')' COMPOUND_STATEMENT
+
+    AUTO      shift, and go to state 1
+    CHAR      shift, and go to state 2
+    DOUBLE    shift, and go to state 3
+    EXTERN    shift, and go to state 4
+    FLOAT     shift, and go to state 5
+    INT       shift, and go to state 6
+    LONG      shift, and go to state 7
+    REGISTER  shift, and go to state 8
+    SHORT     shift, and go to state 9
+    SIGNED    shift, and go to state 10
+    STATIC    shift, and go to state 11
+    TYPEDEF   shift, and go to state 12
+    UNSIGNED  shift, and go to state 13
+    VOID      shift, and go to state 14
+    ')'       shift, and go to state 38
+
+    DECLARATION_SPECIFIER       go to state 39
+    STORAGE_CLASS_SPECIFIER     go to state 19
+    TYPE_SPECIFIER              go to state 20
+    DECLARATION_SPECIFIER_LIST  go to state 40
+    DEFINITION_SPECIFIER_LIST   go to state 41
+    VARIABLE_DECLARATION        go to state 42
+
+
+State 33
+
+   28 DECLARATOR: IDENTIFIER .
+   31 FUNCTION_DECLARATION: IDENTIFIER . '(' DECLARATION_SPECIFIER_LIST ')'
+   32                     | IDENTIFIER . '(' ')'
+
+    '('  shift, and go to state 43
+
+    $default  reduce using rule 28 (DECLARATOR)
+
+
+State 34
+
+   29 DECLARATOR: '(' DECLARATOR . ')'
+
+    ')'  shift, and go to state 44
+
+
+State 35
+
+    5 DECLARATION: DECLARATION_SPECIFIER INIT_DECLARATOR_LIST ';' .
+
+    $default  reduce using rule 5 (DECLARATION)
+
+
+State 36
+
+   25 INIT_DECLARATOR_LIST: INIT_DECLARATOR_LIST ',' . INIT_DECLARATOR
+
+    IDENTIFIER  shift, and go to state 33
+    '('         shift, and go to state 25
+
+    INIT_DECLARATOR       go to state 45
+    DECLARATOR            go to state 28
+    FUNCTION_DECLARATION  go to state 29
+
+
+State 37
+
+   27 INIT_DECLARATOR: DECLARATOR '=' . EXPRESSION
+
+    IDENTIFIER  shift, and go to state 46
+    CONSTANT    shift, and go to state 47
+    INCDEC_OP   shift, and go to state 48
+    NOT_OP      shift, and go to state 49
+    '('         shift, and go to state 50
+
+    EXPRESSION     go to state 51
+    FUNCTION_CALL  go to state 52
+
+
+State 38
+
+   32 FUNCTION_DECLARATION: IDENTIFIER '(' ')' .
+   33 FUNCTION_DEFINITION: DECLARATION_SPECIFIER IDENTIFIER '(' ')' . COMPOUND_STATEMENT
+
+    '{'  shift, and go to state 53
+
+    $default  reduce using rule 32 (FUNCTION_DECLARATION)
+
+    COMPOUND_STATEMENT  go to state 54
+
+
+State 39
+
+   36 DECLARATION_SPECIFIER_LIST: DECLARATION_SPECIFIER .
+   39 VARIABLE_DECLARATION: DECLARATION_SPECIFIER . IDENTIFIER
+
+    IDENTIFIER  shift, and go to state 55
+
+    $default  reduce using rule 36 (DECLARATION_SPECIFIER_LIST)
+
+
+State 40
+
+   31 FUNCTION_DECLARATION: IDENTIFIER '(' DECLARATION_SPECIFIER_LIST . ')'
+   35 DECLARATION_SPECIFIER_LIST: DECLARATION_SPECIFIER_LIST . ',' DECLARATION_SPECIFIER
+
+    ','  shift, and go to state 56
+    ')'  shift, and go to state 57
+
+
+State 41
+
+   34 FUNCTION_DEFINITION: DECLARATION_SPECIFIER IDENTIFIER '(' DEFINITION_SPECIFIER_LIST . ')' COMPOUND_STATEMENT
+   38 DEFINITION_SPECIFIER_LIST: DEFINITION_SPECIFIER_LIST . ',' VARIABLE_DECLARATION
+
+    ','  shift, and go to state 58
+    ')'  shift, and go to state 59
+
+
+State 42
+
+   37 DEFINITION_SPECIFIER_LIST: VARIABLE_DECLARATION .
+
+    $default  reduce using rule 37 (DEFINITION_SPECIFIER_LIST)
+
+
+State 43
+
+   31 FUNCTION_DECLARATION: IDENTIFIER '(' . DECLARATION_SPECIFIER_LIST ')'
+   32                     | IDENTIFIER '(' . ')'
+
+    AUTO      shift, and go to state 1
+    CHAR      shift, and go to state 2
+    DOUBLE    shift, and go to state 3
+    EXTERN    shift, and go to state 4
+    FLOAT     shift, and go to state 5
+    INT       shift, and go to state 6
+    LONG      shift, and go to state 7
+    REGISTER  shift, and go to state 8
+    SHORT     shift, and go to state 9
+    SIGNED    shift, and go to state 10
+    STATIC    shift, and go to state 11
+    TYPEDEF   shift, and go to state 12
+    UNSIGNED  shift, and go to state 13
+    VOID      shift, and go to state 14
+    ')'       shift, and go to state 60
+
+    DECLARATION_SPECIFIER       go to state 61
+    STORAGE_CLASS_SPECIFIER     go to state 19
+    TYPE_SPECIFIER              go to state 20
+    DECLARATION_SPECIFIER_LIST  go to state 40
+
+
+State 44
+
+   29 DECLARATOR: '(' DECLARATOR ')' .
+
+    $default  reduce using rule 29 (DECLARATOR)
+
+
+State 45
+
+   25 INIT_DECLARATOR_LIST: INIT_DECLARATOR_LIST ',' INIT_DECLARATOR .
+
+    $default  reduce using rule 25 (INIT_DECLARATOR_LIST)
+
+
+State 46
+
+   58 EXPRESSION: IDENTIFIER . ASSIGN_OP EXPRESSION
+   59           | IDENTIFIER . '=' EXPRESSION
+   73           | IDENTIFIER .
+   76 FUNCTION_CALL: IDENTIFIER . '(' ')'
+   77              | IDENTIFIER . '(' EXPRESSION_LIST ')'
+
+    ASSIGN_OP  shift, and go to state 62
+    '='        shift, and go to state 63
+    '('        shift, and go to state 64
+
+    '('       [reduce using rule 73 (EXPRESSION)]
+    $default  reduce using rule 73 (EXPRESSION)
+
+
+State 47
+
+   74 EXPRESSION: CONSTANT .
+
+    $default  reduce using rule 74 (EXPRESSION)
+
+
+State 48
+
+   71 EXPRESSION: INCDEC_OP . EXPRESSION
+
+    IDENTIFIER  shift, and go to state 46
+    CONSTANT    shift, and go to state 47
+    INCDEC_OP   shift, and go to state 48
+    NOT_OP      shift, and go to state 49
+    '('         shift, and go to state 50
+
+    EXPRESSION     go to state 65
+    FUNCTION_CALL  go to state 52
+
+
+State 49
+
+   69 EXPRESSION: NOT_OP . EXPRESSION
+
+    IDENTIFIER  shift, and go to state 46
+    CONSTANT    shift, and go to state 47
+    INCDEC_OP   shift, and go to state 48
+    NOT_OP      shift, and go to state 49
+    '('         shift, and go to state 50
+
+    EXPRESSION     go to state 66
+    FUNCTION_CALL  go to state 52
+
+
+State 50
+
+   72 EXPRESSION: '(' . EXPRESSION ')'
+
+    IDENTIFIER  shift, and go to state 46
+    CONSTANT    shift, and go to state 47
+    INCDEC_OP   shift, and go to state 48
+    NOT_OP      shift, and go to state 49
+    '('         shift, and go to state 50
+
+    EXPRESSION     go to state 67
+    FUNCTION_CALL  go to state 52
+
+
+State 51
+
+   27 INIT_DECLARATOR: DECLARATOR '=' EXPRESSION .
+   60 EXPRESSION: EXPRESSION . EQU_OP EXPRESSION
+   61           | EXPRESSION . REL_OP EXPRESSION
+   62           | EXPRESSION . ADD_OP EXPRESSION
+   63           | EXPRESSION . MUL_OP EXPRESSION
+   64           | EXPRESSION . LAND EXPRESSION
+   65           | EXPRESSION . LOR EXPRESSION
+   66           | EXPRESSION . BOR EXPRESSION
+   67           | EXPRESSION . BAND EXPRESSION
+   68           | EXPRESSION . BXOR EXPRESSION
+   70           | EXPRESSION . INCDEC_OP
+
+    REL_OP     shift, and go to state 68
+    ADD_OP     shift, and go to state 69
+    MUL_OP     shift, and go to state 70
+    INCDEC_OP  shift, and go to state 71
+    EQU_OP     shift, and go to state 72
+    LAND       shift, and go to state 73
+    LOR        shift, and go to state 74
+    BAND       shift, and go to state 75
+    BXOR       shift, and go to state 76
+    BOR        shift, and go to state 77
+
+    $default  reduce using rule 27 (INIT_DECLARATOR)
+
+
+State 52
+
+   75 EXPRESSION: FUNCTION_CALL .
+
+    $default  reduce using rule 75 (EXPRESSION)
+
+
+State 53
+
+   40 COMPOUND_STATEMENT: '{' . STATEMENT_LIST '}'
+   41                   | '{' . '}'
+
+    error       shift, and go to state 78
+    AUTO        shift, and go to state 1
+    BREAK       shift, and go to state 79
+    CASE        shift, and go to state 80
+    CHAR        shift, and go to state 2
+    CONTINUE    shift, and go to state 81
+    DEFAULT     shift, and go to state 82
+    DO          shift, and go to state 83
+    DOUBLE      shift, and go to state 3
+    EXTERN      shift, and go to state 4
+    FLOAT       shift, and go to state 5
+    FOR         shift, and go to state 84
+    IF          shift, and go to state 85
+    INT         shift, and go to state 6
+    LONG        shift, and go to state 7
+    REGISTER    shift, and go to state 8
+    RETURN      shift, and go to state 86
+    SHORT       shift, and go to state 9
+    SIGNED      shift, and go to state 10
+    STATIC      shift, and go to state 11
+    SWITCH      shift, and go to state 87
+    TYPEDEF     shift, and go to state 12
+    UNSIGNED    shift, and go to state 13
+    VOID        shift, and go to state 14
+    WHILE       shift, and go to state 88
+    IDENTIFIER  shift, and go to state 46
+    CONSTANT    shift, and go to state 47
+    INCDEC_OP   shift, and go to state 48
+    NOT_OP      shift, and go to state 49
+    ';'         shift, and go to state 89
+    '('         shift, and go to state 50
+    '{'         shift, and go to state 53
+    '}'         shift, and go to state 90
+
+    DECLARATION              go to state 91
+    DECLARATION_SPECIFIER    go to state 92
+    STORAGE_CLASS_SPECIFIER  go to state 19
+    TYPE_SPECIFIER           go to state 20
+    COMPOUND_STATEMENT       go to state 93
+    STATEMENT_LIST           go to state 94
+    STATEMENT                go to state 95
+    STATEMENT_WITH_ELSE      go to state 96
+    LABELED_STATEMENT        go to state 97
+    EXPRESSION_STATEMENT     go to state 98
+    EXPRESSION               go to state 99
+    FUNCTION_CALL            go to state 52
+    SELECTION_STATEMENT      go to state 100
+    IFS                      go to state 101
+    ITERATION_STATEMENT      go to state 102
+    JUMP_STATEMENT           go to state 103
+
+
+State 54
+
+   33 FUNCTION_DEFINITION: DECLARATION_SPECIFIER IDENTIFIER '(' ')' COMPOUND_STATEMENT .
+
+    $default  reduce using rule 33 (FUNCTION_DEFINITION)
+
+
+State 55
+
+   39 VARIABLE_DECLARATION: DECLARATION_SPECIFIER IDENTIFIER .
+
+    $default  reduce using rule 39 (VARIABLE_DECLARATION)
+
+
+State 56
+
+   35 DECLARATION_SPECIFIER_LIST: DECLARATION_SPECIFIER_LIST ',' . DECLARATION_SPECIFIER
+
+    AUTO      shift, and go to state 1
+    CHAR      shift, and go to state 2
+    DOUBLE    shift, and go to state 3
+    EXTERN    shift, and go to state 4
+    FLOAT     shift, and go to state 5
+    INT       shift, and go to state 6
+    LONG      shift, and go to state 7
+    REGISTER  shift, and go to state 8
+    SHORT     shift, and go to state 9
+    SIGNED    shift, and go to state 10
+    STATIC    shift, and go to state 11
+    TYPEDEF   shift, and go to state 12
+    UNSIGNED  shift, and go to state 13
+    VOID      shift, and go to state 14
+
+    DECLARATION_SPECIFIER    go to state 104
+    STORAGE_CLASS_SPECIFIER  go to state 19
+    TYPE_SPECIFIER           go to state 20
+
+
+State 57
+
+   31 FUNCTION_DECLARATION: IDENTIFIER '(' DECLARATION_SPECIFIER_LIST ')' .
+
+    $default  reduce using rule 31 (FUNCTION_DECLARATION)
+
+
+State 58
+
+   38 DEFINITION_SPECIFIER_LIST: DEFINITION_SPECIFIER_LIST ',' . VARIABLE_DECLARATION
+
+    AUTO      shift, and go to state 1
+    CHAR      shift, and go to state 2
+    DOUBLE    shift, and go to state 3
+    EXTERN    shift, and go to state 4
+    FLOAT     shift, and go to state 5
+    INT       shift, and go to state 6
+    LONG      shift, and go to state 7
+    REGISTER  shift, and go to state 8
+    SHORT     shift, and go to state 9
+    SIGNED    shift, and go to state 10
+    STATIC    shift, and go to state 11
+    TYPEDEF   shift, and go to state 12
+    UNSIGNED  shift, and go to state 13
+    VOID      shift, and go to state 14
+
+    DECLARATION_SPECIFIER    go to state 105
+    STORAGE_CLASS_SPECIFIER  go to state 19
+    TYPE_SPECIFIER           go to state 20
+    VARIABLE_DECLARATION     go to state 106
+
+
+State 59
+
+   34 FUNCTION_DEFINITION: DECLARATION_SPECIFIER IDENTIFIER '(' DEFINITION_SPECIFIER_LIST ')' . COMPOUND_STATEMENT
+
+    '{'  shift, and go to state 53
+
+    COMPOUND_STATEMENT  go to state 107
+
+
+State 60
+
+   32 FUNCTION_DECLARATION: IDENTIFIER '(' ')' .
+
+    $default  reduce using rule 32 (FUNCTION_DECLARATION)
+
+
+State 61
+
+   36 DECLARATION_SPECIFIER_LIST: DECLARATION_SPECIFIER .
+
+    $default  reduce using rule 36 (DECLARATION_SPECIFIER_LIST)
+
+
+State 62
+
+   58 EXPRESSION: IDENTIFIER ASSIGN_OP . EXPRESSION
+
+    IDENTIFIER  shift, and go to state 46
+    CONSTANT    shift, and go to state 47
+    INCDEC_OP   shift, and go to state 48
+    NOT_OP      shift, and go to state 49
+    '('         shift, and go to state 50
+
+    EXPRESSION     go to state 108
+    FUNCTION_CALL  go to state 52
+
+
+State 63
+
+   59 EXPRESSION: IDENTIFIER '=' . EXPRESSION
+
+    IDENTIFIER  shift, and go to state 46
+    CONSTANT    shift, and go to state 47
+    INCDEC_OP   shift, and go to state 48
+    NOT_OP      shift, and go to state 49
+    '('         shift, and go to state 50
+
+    EXPRESSION     go to state 109
+    FUNCTION_CALL  go to state 52
+
+
+State 64
+
+   76 FUNCTION_CALL: IDENTIFIER '(' . ')'
+   77              | IDENTIFIER '(' . EXPRESSION_LIST ')'
+
+    IDENTIFIER  shift, and go to state 46
+    CONSTANT    shift, and go to state 47
+    INCDEC_OP   shift, and go to state 48
+    NOT_OP      shift, and go to state 49
+    '('         shift, and go to state 50
+    ')'         shift, and go to state 110
+
+    EXPRESSION       go to state 111
+    FUNCTION_CALL    go to state 52
+    EXPRESSION_LIST  go to state 112
+
+
+State 65
+
+   60 EXPRESSION: EXPRESSION . EQU_OP EXPRESSION
+   61           | EXPRESSION . REL_OP EXPRESSION
+   62           | EXPRESSION . ADD_OP EXPRESSION
+   63           | EXPRESSION . MUL_OP EXPRESSION
+   64           | EXPRESSION . LAND EXPRESSION
+   65           | EXPRESSION . LOR EXPRESSION
+   66           | EXPRESSION . BOR EXPRESSION
+   67           | EXPRESSION . BAND EXPRESSION
+   68           | EXPRESSION . BXOR EXPRESSION
+   70           | EXPRESSION . INCDEC_OP
+   71           | INCDEC_OP EXPRESSION .
+
+    $default  reduce using rule 71 (EXPRESSION)
+
+
+State 66
+
+   60 EXPRESSION: EXPRESSION . EQU_OP EXPRESSION
+   61           | EXPRESSION . REL_OP EXPRESSION
+   62           | EXPRESSION . ADD_OP EXPRESSION
+   63           | EXPRESSION . MUL_OP EXPRESSION
+   64           | EXPRESSION . LAND EXPRESSION
+   65           | EXPRESSION . LOR EXPRESSION
+   66           | EXPRESSION . BOR EXPRESSION
+   67           | EXPRESSION . BAND EXPRESSION
+   68           | EXPRESSION . BXOR EXPRESSION
+   69           | NOT_OP EXPRESSION .
+   70           | EXPRESSION . INCDEC_OP
+
+    INCDEC_OP  shift, and go to state 71
+
+    $default  reduce using rule 69 (EXPRESSION)
+
+
+State 67
+
+   60 EXPRESSION: EXPRESSION . EQU_OP EXPRESSION
+   61           | EXPRESSION . REL_OP EXPRESSION
+   62           | EXPRESSION . ADD_OP EXPRESSION
+   63           | EXPRESSION . MUL_OP EXPRESSION
+   64           | EXPRESSION . LAND EXPRESSION
+   65           | EXPRESSION . LOR EXPRESSION
+   66           | EXPRESSION . BOR EXPRESSION
+   67           | EXPRESSION . BAND EXPRESSION
+   68           | EXPRESSION . BXOR EXPRESSION
+   70           | EXPRESSION . INCDEC_OP
+   72           | '(' EXPRESSION . ')'
+
+    REL_OP     shift, and go to state 68
+    ADD_OP     shift, and go to state 69
+    MUL_OP     shift, and go to state 70
+    INCDEC_OP  shift, and go to state 71
+    EQU_OP     shift, and go to state 72
+    LAND       shift, and go to state 73
+    LOR        shift, and go to state 74
+    BAND       shift, and go to state 75
+    BXOR       shift, and go to state 76
+    BOR        shift, and go to state 77
+    ')'        shift, and go to state 113
+
+
+State 68
+
+   61 EXPRESSION: EXPRESSION REL_OP . EXPRESSION
+
+    IDENTIFIER  shift, and go to state 46
+    CONSTANT    shift, and go to state 47
+    INCDEC_OP   shift, and go to state 48
+    NOT_OP      shift, and go to state 49
+    '('         shift, and go to state 50
+
+    EXPRESSION     go to state 114
+    FUNCTION_CALL  go to state 52
+
+
+State 69
+
+   62 EXPRESSION: EXPRESSION ADD_OP . EXPRESSION
+
+    IDENTIFIER  shift, and go to state 46
+    CONSTANT    shift, and go to state 47
+    INCDEC_OP   shift, and go to state 48
+    NOT_OP      shift, and go to state 49
+    '('         shift, and go to state 50
+
+    EXPRESSION     go to state 115
+    FUNCTION_CALL  go to state 52
+
+
+State 70
+
+   63 EXPRESSION: EXPRESSION MUL_OP . EXPRESSION
+
+    IDENTIFIER  shift, and go to state 46
+    CONSTANT    shift, and go to state 47
+    INCDEC_OP   shift, and go to state 48
+    NOT_OP      shift, and go to state 49
+    '('         shift, and go to state 50
+
+    EXPRESSION     go to state 116
+    FUNCTION_CALL  go to state 52
+
+
+State 71
+
+   70 EXPRESSION: EXPRESSION INCDEC_OP .
+
+    $default  reduce using rule 70 (EXPRESSION)
+
+
+State 72
+
+   60 EXPRESSION: EXPRESSION EQU_OP . EXPRESSION
+
+    IDENTIFIER  shift, and go to state 46
+    CONSTANT    shift, and go to state 47
+    INCDEC_OP   shift, and go to state 48
+    NOT_OP      shift, and go to state 49
+    '('         shift, and go to state 50
+
+    EXPRESSION     go to state 117
+    FUNCTION_CALL  go to state 52
+
+
+State 73
+
+   64 EXPRESSION: EXPRESSION LAND . EXPRESSION
+
+    IDENTIFIER  shift, and go to state 46
+    CONSTANT    shift, and go to state 47
+    INCDEC_OP   shift, and go to state 48
+    NOT_OP      shift, and go to state 49
+    '('         shift, and go to state 50
+
+    EXPRESSION     go to state 118
+    FUNCTION_CALL  go to state 52
+
+
+State 74
+
+   65 EXPRESSION: EXPRESSION LOR . EXPRESSION
+
+    IDENTIFIER  shift, and go to state 46
+    CONSTANT    shift, and go to state 47
+    INCDEC_OP   shift, and go to state 48
+    NOT_OP      shift, and go to state 49
+    '('         shift, and go to state 50
+
+    EXPRESSION     go to state 119
+    FUNCTION_CALL  go to state 52
+
+
+State 75
+
+   67 EXPRESSION: EXPRESSION BAND . EXPRESSION
+
+    IDENTIFIER  shift, and go to state 46
+    CONSTANT    shift, and go to state 47
+    INCDEC_OP   shift, and go to state 48
+    NOT_OP      shift, and go to state 49
+    '('         shift, and go to state 50
+
+    EXPRESSION     go to state 120
+    FUNCTION_CALL  go to state 52
+
+
+State 76
+
+   68 EXPRESSION: EXPRESSION BXOR . EXPRESSION
+
+    IDENTIFIER  shift, and go to state 46
+    CONSTANT    shift, and go to state 47
+    INCDEC_OP   shift, and go to state 48
+    NOT_OP      shift, and go to state 49
+    '('         shift, and go to state 50
+
+    EXPRESSION     go to state 121
+    FUNCTION_CALL  go to state 52
+
+
+State 77
+
+   66 EXPRESSION: EXPRESSION BOR . EXPRESSION
+
+    IDENTIFIER  shift, and go to state 46
+    CONSTANT    shift, and go to state 47
+    INCDEC_OP   shift, and go to state 48
+    NOT_OP      shift, and go to state 49
+    '('         shift, and go to state 50
+
+    EXPRESSION     go to state 122
+    FUNCTION_CALL  go to state 52
+
+
+State 78
+
+   53 STATEMENT_WITH_ELSE: error . ';'
+
+    ';'  shift, and go to state 123
+
+
+State 79
+
+   88 JUMP_STATEMENT: BREAK . ';'
+
+    ';'  shift, and go to state 124
+
+
+State 80
+
+   54 LABELED_STATEMENT: CASE . EXPRESSION ':' STATEMENT
+
+    IDENTIFIER  shift, and go to state 46
+    CONSTANT    shift, and go to state 47
+    INCDEC_OP   shift, and go to state 48
+    NOT_OP      shift, and go to state 49
+    '('         shift, and go to state 50
+
+    EXPRESSION     go to state 125
+    FUNCTION_CALL  go to state 52
+
+
+State 81
+
+   87 JUMP_STATEMENT: CONTINUE . ';'
+
+    ';'  shift, and go to state 126
+
+
+State 82
+
+   55 LABELED_STATEMENT: DEFAULT . ':' STATEMENT
+
+    ':'  shift, and go to state 127
+
+
+State 83
+
+   84 ITERATION_STATEMENT: DO . STATEMENT WHILE '(' EXPRESSION ')' ';'
+
+    error       shift, and go to state 78
+    AUTO        shift, and go to state 1
+    BREAK       shift, and go to state 79
+    CASE        shift, and go to state 80
+    CHAR        shift, and go to state 2
+    CONTINUE    shift, and go to state 81
+    DEFAULT     shift, and go to state 82
+    DO          shift, and go to state 83
+    DOUBLE      shift, and go to state 3
+    EXTERN      shift, and go to state 4
+    FLOAT       shift, and go to state 5
+    FOR         shift, and go to state 84
+    IF          shift, and go to state 85
+    INT         shift, and go to state 6
+    LONG        shift, and go to state 7
+    REGISTER    shift, and go to state 8
+    RETURN      shift, and go to state 86
+    SHORT       shift, and go to state 9
+    SIGNED      shift, and go to state 10
+    STATIC      shift, and go to state 11
+    SWITCH      shift, and go to state 87
+    TYPEDEF     shift, and go to state 12
+    UNSIGNED    shift, and go to state 13
+    VOID        shift, and go to state 14
+    WHILE       shift, and go to state 88
+    IDENTIFIER  shift, and go to state 46
+    CONSTANT    shift, and go to state 47
+    INCDEC_OP   shift, and go to state 48
+    NOT_OP      shift, and go to state 49
+    ';'         shift, and go to state 89
+    '('         shift, and go to state 50
+    '{'         shift, and go to state 53
+
+    DECLARATION              go to state 91
+    DECLARATION_SPECIFIER    go to state 92
+    STORAGE_CLASS_SPECIFIER  go to state 19
+    TYPE_SPECIFIER           go to state 20
+    COMPOUND_STATEMENT       go to state 93
+    STATEMENT                go to state 128
+    STATEMENT_WITH_ELSE      go to state 96
+    LABELED_STATEMENT        go to state 97
+    EXPRESSION_STATEMENT     go to state 98
+    EXPRESSION               go to state 99
+    FUNCTION_CALL            go to state 52
+    SELECTION_STATEMENT      go to state 100
+    IFS                      go to state 101
+    ITERATION_STATEMENT      go to state 102
+    JUMP_STATEMENT           go to state 103
+
+
+State 84
+
+   85 ITERATION_STATEMENT: FOR . '(' EXPRESSION_STATEMENT EXPRESSION_STATEMENT ')' STATEMENT
+   86                    | FOR . '(' EXPRESSION_STATEMENT EXPRESSION_STATEMENT EXPRESSION ')' STATEMENT
+
+    '('  shift, and go to state 129
+
+
+State 85
+
+   80 SELECTION_STATEMENT: IF . '(' EXPRESSION ')' STATEMENT_WITH_ELSE ELSE STATEMENT
+   82 IFS: IF . '(' EXPRESSION ')' STATEMENT
+
+    '('  shift, and go to state 130
+
+
+State 86
+
+   89 JUMP_STATEMENT: RETURN . ';'
+   90               | RETURN . EXPRESSION
+
+    IDENTIFIER  shift, and go to state 46
+    CONSTANT    shift, and go to state 47
+    INCDEC_OP   shift, and go to state 48
+    NOT_OP      shift, and go to state 49
+    ';'         shift, and go to state 131
+    '('         shift, and go to state 50
+
+    EXPRESSION     go to state 132
+    FUNCTION_CALL  go to state 52
+
+
+State 87
+
+   81 SELECTION_STATEMENT: SWITCH . '(' EXPRESSION ')' STATEMENT
+
+    '('  shift, and go to state 133
+
+
+State 88
+
+   83 ITERATION_STATEMENT: WHILE . '(' EXPRESSION ')' STATEMENT
+
+    '('  shift, and go to state 134
+
+
+State 89
+
+   56 EXPRESSION_STATEMENT: ';' .
+
+    $default  reduce using rule 56 (EXPRESSION_STATEMENT)
+
+
+State 90
+
+   41 COMPOUND_STATEMENT: '{' '}' .
+
+    $default  reduce using rule 41 (COMPOUND_STATEMENT)
+
+
+State 91
+
+   52 STATEMENT_WITH_ELSE: DECLARATION .
+
+    $default  reduce using rule 52 (STATEMENT_WITH_ELSE)
+
+
+State 92
+
+    5 DECLARATION: DECLARATION_SPECIFIER . INIT_DECLARATOR_LIST ';'
+
+    IDENTIFIER  shift, and go to state 33
+    '('         shift, and go to state 25
+
+    INIT_DECLARATOR_LIST  go to state 26
+    INIT_DECLARATOR       go to state 27
+    DECLARATOR            go to state 28
+    FUNCTION_DECLARATION  go to state 29
+
+
+State 93
+
+   47 STATEMENT_WITH_ELSE: COMPOUND_STATEMENT .
+
+    $default  reduce using rule 47 (STATEMENT_WITH_ELSE)
+
+
+State 94
+
+   40 COMPOUND_STATEMENT: '{' STATEMENT_LIST . '}'
+   42 STATEMENT_LIST: STATEMENT_LIST . STATEMENT
+
+    error       shift, and go to state 78
+    AUTO        shift, and go to state 1
+    BREAK       shift, and go to state 79
+    CASE        shift, and go to state 80
+    CHAR        shift, and go to state 2
+    CONTINUE    shift, and go to state 81
+    DEFAULT     shift, and go to state 82
+    DO          shift, and go to state 83
+    DOUBLE      shift, and go to state 3
+    EXTERN      shift, and go to state 4
+    FLOAT       shift, and go to state 5
+    FOR         shift, and go to state 84
+    IF          shift, and go to state 85
+    INT         shift, and go to state 6
+    LONG        shift, and go to state 7
+    REGISTER    shift, and go to state 8
+    RETURN      shift, and go to state 86
+    SHORT       shift, and go to state 9
+    SIGNED      shift, and go to state 10
+    STATIC      shift, and go to state 11
+    SWITCH      shift, and go to state 87
+    TYPEDEF     shift, and go to state 12
+    UNSIGNED    shift, and go to state 13
+    VOID        shift, and go to state 14
+    WHILE       shift, and go to state 88
+    IDENTIFIER  shift, and go to state 46
+    CONSTANT    shift, and go to state 47
+    INCDEC_OP   shift, and go to state 48
+    NOT_OP      shift, and go to state 49
+    ';'         shift, and go to state 89
+    '('         shift, and go to state 50
+    '{'         shift, and go to state 53
+    '}'         shift, and go to state 135
+
+    DECLARATION              go to state 91
+    DECLARATION_SPECIFIER    go to state 92
+    STORAGE_CLASS_SPECIFIER  go to state 19
+    TYPE_SPECIFIER           go to state 20
+    COMPOUND_STATEMENT       go to state 93
+    STATEMENT                go to state 136
+    STATEMENT_WITH_ELSE      go to state 96
+    LABELED_STATEMENT        go to state 97
+    EXPRESSION_STATEMENT     go to state 98
+    EXPRESSION               go to state 99
+    FUNCTION_CALL            go to state 52
+    SELECTION_STATEMENT      go to state 100
+    IFS                      go to state 101
+    ITERATION_STATEMENT      go to state 102
+    JUMP_STATEMENT           go to state 103
+
+
+State 95
+
+   43 STATEMENT_LIST: STATEMENT .
+
+    $default  reduce using rule 43 (STATEMENT_LIST)
+
+
+State 96
+
+   45 STATEMENT: STATEMENT_WITH_ELSE .
+
+    $default  reduce using rule 45 (STATEMENT)
+
+
+State 97
+
+   46 STATEMENT_WITH_ELSE: LABELED_STATEMENT .
+
+    $default  reduce using rule 46 (STATEMENT_WITH_ELSE)
+
+
+State 98
+
+   48 STATEMENT_WITH_ELSE: EXPRESSION_STATEMENT .
+
+    $default  reduce using rule 48 (STATEMENT_WITH_ELSE)
+
+
+State 99
+
+   57 EXPRESSION_STATEMENT: EXPRESSION . ';'
+   60 EXPRESSION: EXPRESSION . EQU_OP EXPRESSION
+   61           | EXPRESSION . REL_OP EXPRESSION
+   62           | EXPRESSION . ADD_OP EXPRESSION
+   63           | EXPRESSION . MUL_OP EXPRESSION
+   64           | EXPRESSION . LAND EXPRESSION
+   65           | EXPRESSION . LOR EXPRESSION
+   66           | EXPRESSION . BOR EXPRESSION
+   67           | EXPRESSION . BAND EXPRESSION
+   68           | EXPRESSION . BXOR EXPRESSION
+   70           | EXPRESSION . INCDEC_OP
+
+    REL_OP     shift, and go to state 68
+    ADD_OP     shift, and go to state 69
+    MUL_OP     shift, and go to state 70
+    INCDEC_OP  shift, and go to state 71
+    EQU_OP     shift, and go to state 72
+    LAND       shift, and go to state 73
+    LOR        shift, and go to state 74
+    BAND       shift, and go to state 75
+    BXOR       shift, and go to state 76
+    BOR        shift, and go to state 77
+    ';'        shift, and go to state 137
+
+
+State 100
+
+   50 STATEMENT_WITH_ELSE: SELECTION_STATEMENT .
+
+    $default  reduce using rule 50 (STATEMENT_WITH_ELSE)
+
+
+State 101
+
+   44 STATEMENT: IFS .
+
+    $default  reduce using rule 44 (STATEMENT)
+
+
+State 102
+
+   49 STATEMENT_WITH_ELSE: ITERATION_STATEMENT .
+
+    $default  reduce using rule 49 (STATEMENT_WITH_ELSE)
+
+
+State 103
+
+   51 STATEMENT_WITH_ELSE: JUMP_STATEMENT .
+
+    $default  reduce using rule 51 (STATEMENT_WITH_ELSE)
+
+
+State 104
+
+   35 DECLARATION_SPECIFIER_LIST: DECLARATION_SPECIFIER_LIST ',' DECLARATION_SPECIFIER .
+
+    $default  reduce using rule 35 (DECLARATION_SPECIFIER_LIST)
+
+
+State 105
+
+   39 VARIABLE_DECLARATION: DECLARATION_SPECIFIER . IDENTIFIER
+
+    IDENTIFIER  shift, and go to state 55
+
+
+State 106
+
+   38 DEFINITION_SPECIFIER_LIST: DEFINITION_SPECIFIER_LIST ',' VARIABLE_DECLARATION .
+
+    $default  reduce using rule 38 (DEFINITION_SPECIFIER_LIST)
+
+
+State 107
+
+   34 FUNCTION_DEFINITION: DECLARATION_SPECIFIER IDENTIFIER '(' DEFINITION_SPECIFIER_LIST ')' COMPOUND_STATEMENT .
+
+    $default  reduce using rule 34 (FUNCTION_DEFINITION)
+
+
+State 108
+
+   58 EXPRESSION: IDENTIFIER ASSIGN_OP EXPRESSION .
+   60           | EXPRESSION . EQU_OP EXPRESSION
+   61           | EXPRESSION . REL_OP EXPRESSION
+   62           | EXPRESSION . ADD_OP EXPRESSION
+   63           | EXPRESSION . MUL_OP EXPRESSION
+   64           | EXPRESSION . LAND EXPRESSION
+   65           | EXPRESSION . LOR EXPRESSION
+   66           | EXPRESSION . BOR EXPRESSION
+   67           | EXPRESSION . BAND EXPRESSION
+   68           | EXPRESSION . BXOR EXPRESSION
+   70           | EXPRESSION . INCDEC_OP
+
+    REL_OP     shift, and go to state 68
+    ADD_OP     shift, and go to state 69
+    MUL_OP     shift, and go to state 70
+    INCDEC_OP  shift, and go to state 71
+    EQU_OP     shift, and go to state 72
+    LAND       shift, and go to state 73
+    LOR        shift, and go to state 74
+    BAND       shift, and go to state 75
+    BXOR       shift, and go to state 76
+    BOR        shift, and go to state 77
+
+    $default  reduce using rule 58 (EXPRESSION)
+
+
+State 109
+
+   59 EXPRESSION: IDENTIFIER '=' EXPRESSION .
+   60           | EXPRESSION . EQU_OP EXPRESSION
+   61           | EXPRESSION . REL_OP EXPRESSION
+   62           | EXPRESSION . ADD_OP EXPRESSION
+   63           | EXPRESSION . MUL_OP EXPRESSION
+   64           | EXPRESSION . LAND EXPRESSION
+   65           | EXPRESSION . LOR EXPRESSION
+   66           | EXPRESSION . BOR EXPRESSION
+   67           | EXPRESSION . BAND EXPRESSION
+   68           | EXPRESSION . BXOR EXPRESSION
+   70           | EXPRESSION . INCDEC_OP
+
+    REL_OP     shift, and go to state 68
+    ADD_OP     shift, and go to state 69
+    MUL_OP     shift, and go to state 70
+    INCDEC_OP  shift, and go to state 71
+    EQU_OP     shift, and go to state 72
+    LAND       shift, and go to state 73
+    LOR        shift, and go to state 74
+    BAND       shift, and go to state 75
+    BXOR       shift, and go to state 76
+    BOR        shift, and go to state 77
+
+    $default  reduce using rule 59 (EXPRESSION)
+
+
+State 110
+
+   76 FUNCTION_CALL: IDENTIFIER '(' ')' .
+
+    $default  reduce using rule 76 (FUNCTION_CALL)
+
+
+State 111
+
+   60 EXPRESSION: EXPRESSION . EQU_OP EXPRESSION
+   61           | EXPRESSION . REL_OP EXPRESSION
+   62           | EXPRESSION . ADD_OP EXPRESSION
+   63           | EXPRESSION . MUL_OP EXPRESSION
+   64           | EXPRESSION . LAND EXPRESSION
+   65           | EXPRESSION . LOR EXPRESSION
+   66           | EXPRESSION . BOR EXPRESSION
+   67           | EXPRESSION . BAND EXPRESSION
+   68           | EXPRESSION . BXOR EXPRESSION
+   70           | EXPRESSION . INCDEC_OP
+   79 EXPRESSION_LIST: EXPRESSION .
+
+    REL_OP     shift, and go to state 68
+    ADD_OP     shift, and go to state 69
+    MUL_OP     shift, and go to state 70
+    INCDEC_OP  shift, and go to state 71
+    EQU_OP     shift, and go to state 72
+    LAND       shift, and go to state 73
+    LOR        shift, and go to state 74
+    BAND       shift, and go to state 75
+    BXOR       shift, and go to state 76
+    BOR        shift, and go to state 77
+
+    $default  reduce using rule 79 (EXPRESSION_LIST)
+
+
+State 112
+
+   77 FUNCTION_CALL: IDENTIFIER '(' EXPRESSION_LIST . ')'
+   78 EXPRESSION_LIST: EXPRESSION_LIST . ',' EXPRESSION
+
+    ','  shift, and go to state 138
+    ')'  shift, and go to state 139
+
+
+State 113
+
+   72 EXPRESSION: '(' EXPRESSION ')' .
+
+    $default  reduce using rule 72 (EXPRESSION)
+
+
+State 114
+
+   60 EXPRESSION: EXPRESSION . EQU_OP EXPRESSION
+   61           | EXPRESSION . REL_OP EXPRESSION
+   61           | EXPRESSION REL_OP EXPRESSION .
+   62           | EXPRESSION . ADD_OP EXPRESSION
+   63           | EXPRESSION . MUL_OP EXPRESSION
+   64           | EXPRESSION . LAND EXPRESSION
+   65           | EXPRESSION . LOR EXPRESSION
+   66           | EXPRESSION . BOR EXPRESSION
+   67           | EXPRESSION . BAND EXPRESSION
+   68           | EXPRESSION . BXOR EXPRESSION
+   70           | EXPRESSION . INCDEC_OP
+
+    ADD_OP     shift, and go to state 69
+    MUL_OP     shift, and go to state 70
+    INCDEC_OP  shift, and go to state 71
+
+    $default  reduce using rule 61 (EXPRESSION)
+
+
+State 115
+
+   60 EXPRESSION: EXPRESSION . EQU_OP EXPRESSION
+   61           | EXPRESSION . REL_OP EXPRESSION
+   62           | EXPRESSION . ADD_OP EXPRESSION
+   62           | EXPRESSION ADD_OP EXPRESSION .
+   63           | EXPRESSION . MUL_OP EXPRESSION
+   64           | EXPRESSION . LAND EXPRESSION
+   65           | EXPRESSION . LOR EXPRESSION
+   66           | EXPRESSION . BOR EXPRESSION
+   67           | EXPRESSION . BAND EXPRESSION
+   68           | EXPRESSION . BXOR EXPRESSION
+   70           | EXPRESSION . INCDEC_OP
+
+    MUL_OP     shift, and go to state 70
+    INCDEC_OP  shift, and go to state 71
+
+    $default  reduce using rule 62 (EXPRESSION)
+
+
+State 116
+
+   60 EXPRESSION: EXPRESSION . EQU_OP EXPRESSION
+   61           | EXPRESSION . REL_OP EXPRESSION
+   62           | EXPRESSION . ADD_OP EXPRESSION
+   63           | EXPRESSION . MUL_OP EXPRESSION
+   63           | EXPRESSION MUL_OP EXPRESSION .
+   64           | EXPRESSION . LAND EXPRESSION
+   65           | EXPRESSION . LOR EXPRESSION
+   66           | EXPRESSION . BOR EXPRESSION
+   67           | EXPRESSION . BAND EXPRESSION
+   68           | EXPRESSION . BXOR EXPRESSION
+   70           | EXPRESSION . INCDEC_OP
+
+    INCDEC_OP  shift, and go to state 71
+
+    $default  reduce using rule 63 (EXPRESSION)
+
+
+State 117
+
+   60 EXPRESSION: EXPRESSION . EQU_OP EXPRESSION
+   60           | EXPRESSION EQU_OP EXPRESSION .
+   61           | EXPRESSION . REL_OP EXPRESSION
+   62           | EXPRESSION . ADD_OP EXPRESSION
+   63           | EXPRESSION . MUL_OP EXPRESSION
+   64           | EXPRESSION . LAND EXPRESSION
+   65           | EXPRESSION . LOR EXPRESSION
+   66           | EXPRESSION . BOR EXPRESSION
+   67           | EXPRESSION . BAND EXPRESSION
+   68           | EXPRESSION . BXOR EXPRESSION
+   70           | EXPRESSION . INCDEC_OP
+
+    REL_OP     shift, and go to state 68
+    ADD_OP     shift, and go to state 69
+    MUL_OP     shift, and go to state 70
+    INCDEC_OP  shift, and go to state 71
+
+    $default  reduce using rule 60 (EXPRESSION)
+
+
+State 118
+
+   60 EXPRESSION: EXPRESSION . EQU_OP EXPRESSION
+   61           | EXPRESSION . REL_OP EXPRESSION
+   62           | EXPRESSION . ADD_OP EXPRESSION
+   63           | EXPRESSION . MUL_OP EXPRESSION
+   64           | EXPRESSION . LAND EXPRESSION
+   64           | EXPRESSION LAND EXPRESSION .
+   65           | EXPRESSION . LOR EXPRESSION
+   66           | EXPRESSION . BOR EXPRESSION
+   67           | EXPRESSION . BAND EXPRESSION
+   68           | EXPRESSION . BXOR EXPRESSION
+   70           | EXPRESSION . INCDEC_OP
+
+    REL_OP     shift, and go to state 68
+    ADD_OP     shift, and go to state 69
+    MUL_OP     shift, and go to state 70
+    INCDEC_OP  shift, and go to state 71
+    EQU_OP     shift, and go to state 72
+    BAND       shift, and go to state 75
+    BXOR       shift, and go to state 76
+    BOR        shift, and go to state 77
+
+    $default  reduce using rule 64 (EXPRESSION)
+
+
+State 119
+
+   60 EXPRESSION: EXPRESSION . EQU_OP EXPRESSION
+   61           | EXPRESSION . REL_OP EXPRESSION
+   62           | EXPRESSION . ADD_OP EXPRESSION
+   63           | EXPRESSION . MUL_OP EXPRESSION
+   64           | EXPRESSION . LAND EXPRESSION
+   65           | EXPRESSION . LOR EXPRESSION
+   65           | EXPRESSION LOR EXPRESSION .
+   66           | EXPRESSION . BOR EXPRESSION
+   67           | EXPRESSION . BAND EXPRESSION
+   68           | EXPRESSION . BXOR EXPRESSION
+   70           | EXPRESSION . INCDEC_OP
+
+    REL_OP     shift, and go to state 68
+    ADD_OP     shift, and go to state 69
+    MUL_OP     shift, and go to state 70
+    INCDEC_OP  shift, and go to state 71
+    EQU_OP     shift, and go to state 72
+    LAND       shift, and go to state 73
+    BAND       shift, and go to state 75
+    BXOR       shift, and go to state 76
+    BOR        shift, and go to state 77
+
+    $default  reduce using rule 65 (EXPRESSION)
+
+
+State 120
+
+   60 EXPRESSION: EXPRESSION . EQU_OP EXPRESSION
+   61           | EXPRESSION . REL_OP EXPRESSION
+   62           | EXPRESSION . ADD_OP EXPRESSION
+   63           | EXPRESSION . MUL_OP EXPRESSION
+   64           | EXPRESSION . LAND EXPRESSION
+   65           | EXPRESSION . LOR EXPRESSION
+   66           | EXPRESSION . BOR EXPRESSION
+   67           | EXPRESSION . BAND EXPRESSION
+   67           | EXPRESSION BAND EXPRESSION .
+   68           | EXPRESSION . BXOR EXPRESSION
+   70           | EXPRESSION . INCDEC_OP
+
+    REL_OP     shift, and go to state 68
+    ADD_OP     shift, and go to state 69
+    MUL_OP     shift, and go to state 70
+    INCDEC_OP  shift, and go to state 71
+    EQU_OP     shift, and go to state 72
+
+    $default  reduce using rule 67 (EXPRESSION)
+
+
+State 121
+
+   60 EXPRESSION: EXPRESSION . EQU_OP EXPRESSION
+   61           | EXPRESSION . REL_OP EXPRESSION
+   62           | EXPRESSION . ADD_OP EXPRESSION
+   63           | EXPRESSION . MUL_OP EXPRESSION
+   64           | EXPRESSION . LAND EXPRESSION
+   65           | EXPRESSION . LOR EXPRESSION
+   66           | EXPRESSION . BOR EXPRESSION
+   67           | EXPRESSION . BAND EXPRESSION
+   68           | EXPRESSION . BXOR EXPRESSION
+   68           | EXPRESSION BXOR EXPRESSION .
+   70           | EXPRESSION . INCDEC_OP
+
+    REL_OP     shift, and go to state 68
+    ADD_OP     shift, and go to state 69
+    MUL_OP     shift, and go to state 70
+    INCDEC_OP  shift, and go to state 71
+    EQU_OP     shift, and go to state 72
+    BAND       shift, and go to state 75
+
+    $default  reduce using rule 68 (EXPRESSION)
+
+
+State 122
+
+   60 EXPRESSION: EXPRESSION . EQU_OP EXPRESSION
+   61           | EXPRESSION . REL_OP EXPRESSION
+   62           | EXPRESSION . ADD_OP EXPRESSION
+   63           | EXPRESSION . MUL_OP EXPRESSION
+   64           | EXPRESSION . LAND EXPRESSION
+   65           | EXPRESSION . LOR EXPRESSION
+   66           | EXPRESSION . BOR EXPRESSION
+   66           | EXPRESSION BOR EXPRESSION .
+   67           | EXPRESSION . BAND EXPRESSION
+   68           | EXPRESSION . BXOR EXPRESSION
+   70           | EXPRESSION . INCDEC_OP
+
+    REL_OP     shift, and go to state 68
+    ADD_OP     shift, and go to state 69
+    MUL_OP     shift, and go to state 70
+    INCDEC_OP  shift, and go to state 71
+    EQU_OP     shift, and go to state 72
+    BAND       shift, and go to state 75
+    BXOR       shift, and go to state 76
+
+    $default  reduce using rule 66 (EXPRESSION)
+
+
+State 123
+
+   53 STATEMENT_WITH_ELSE: error ';' .
+
+    $default  reduce using rule 53 (STATEMENT_WITH_ELSE)
+
+
+State 124
+
+   88 JUMP_STATEMENT: BREAK ';' .
+
+    $default  reduce using rule 88 (JUMP_STATEMENT)
+
+
+State 125
+
+   54 LABELED_STATEMENT: CASE EXPRESSION . ':' STATEMENT
+   60 EXPRESSION: EXPRESSION . EQU_OP EXPRESSION
+   61           | EXPRESSION . REL_OP EXPRESSION
+   62           | EXPRESSION . ADD_OP EXPRESSION
+   63           | EXPRESSION . MUL_OP EXPRESSION
+   64           | EXPRESSION . LAND EXPRESSION
+   65           | EXPRESSION . LOR EXPRESSION
+   66           | EXPRESSION . BOR EXPRESSION
+   67           | EXPRESSION . BAND EXPRESSION
+   68           | EXPRESSION . BXOR EXPRESSION
+   70           | EXPRESSION . INCDEC_OP
+
+    REL_OP     shift, and go to state 68
+    ADD_OP     shift, and go to state 69
+    MUL_OP     shift, and go to state 70
+    INCDEC_OP  shift, and go to state 71
+    EQU_OP     shift, and go to state 72
+    LAND       shift, and go to state 73
+    LOR        shift, and go to state 74
+    BAND       shift, and go to state 75
+    BXOR       shift, and go to state 76
+    BOR        shift, and go to state 77
+    ':'        shift, and go to state 140
+
+
+State 126
+
+   87 JUMP_STATEMENT: CONTINUE ';' .
+
+    $default  reduce using rule 87 (JUMP_STATEMENT)
+
+
+State 127
+
+   55 LABELED_STATEMENT: DEFAULT ':' . STATEMENT
+
+    error       shift, and go to state 78
+    AUTO        shift, and go to state 1
+    BREAK       shift, and go to state 79
+    CASE        shift, and go to state 80
+    CHAR        shift, and go to state 2
+    CONTINUE    shift, and go to state 81
+    DEFAULT     shift, and go to state 82
+    DO          shift, and go to state 83
+    DOUBLE      shift, and go to state 3
+    EXTERN      shift, and go to state 4
+    FLOAT       shift, and go to state 5
+    FOR         shift, and go to state 84
+    IF          shift, and go to state 85
+    INT         shift, and go to state 6
+    LONG        shift, and go to state 7
+    REGISTER    shift, and go to state 8
+    RETURN      shift, and go to state 86
+    SHORT       shift, and go to state 9
+    SIGNED      shift, and go to state 10
+    STATIC      shift, and go to state 11
+    SWITCH      shift, and go to state 87
+    TYPEDEF     shift, and go to state 12
+    UNSIGNED    shift, and go to state 13
+    VOID        shift, and go to state 14
+    WHILE       shift, and go to state 88
+    IDENTIFIER  shift, and go to state 46
+    CONSTANT    shift, and go to state 47
+    INCDEC_OP   shift, and go to state 48
+    NOT_OP      shift, and go to state 49
+    ';'         shift, and go to state 89
+    '('         shift, and go to state 50
+    '{'         shift, and go to state 53
+
+    DECLARATION              go to state 91
+    DECLARATION_SPECIFIER    go to state 92
+    STORAGE_CLASS_SPECIFIER  go to state 19
+    TYPE_SPECIFIER           go to state 20
+    COMPOUND_STATEMENT       go to state 93
+    STATEMENT                go to state 141
+    STATEMENT_WITH_ELSE      go to state 96
+    LABELED_STATEMENT        go to state 97
+    EXPRESSION_STATEMENT     go to state 98
+    EXPRESSION               go to state 99
+    FUNCTION_CALL            go to state 52
+    SELECTION_STATEMENT      go to state 100
+    IFS                      go to state 101
+    ITERATION_STATEMENT      go to state 102
+    JUMP_STATEMENT           go to state 103
+
+
+State 128
+
+   84 ITERATION_STATEMENT: DO STATEMENT . WHILE '(' EXPRESSION ')' ';'
+
+    WHILE  shift, and go to state 142
+
+
+State 129
+
+   85 ITERATION_STATEMENT: FOR '(' . EXPRESSION_STATEMENT EXPRESSION_STATEMENT ')' STATEMENT
+   86                    | FOR '(' . EXPRESSION_STATEMENT EXPRESSION_STATEMENT EXPRESSION ')' STATEMENT
+
+    IDENTIFIER  shift, and go to state 46
+    CONSTANT    shift, and go to state 47
+    INCDEC_OP   shift, and go to state 48
+    NOT_OP      shift, and go to state 49
+    ';'         shift, and go to state 89
+    '('         shift, and go to state 50
+
+    EXPRESSION_STATEMENT  go to state 143
+    EXPRESSION            go to state 99
+    FUNCTION_CALL         go to state 52
+
+
+State 130
+
+   80 SELECTION_STATEMENT: IF '(' . EXPRESSION ')' STATEMENT_WITH_ELSE ELSE STATEMENT
+   82 IFS: IF '(' . EXPRESSION ')' STATEMENT
+
+    IDENTIFIER  shift, and go to state 46
+    CONSTANT    shift, and go to state 47
+    INCDEC_OP   shift, and go to state 48
+    NOT_OP      shift, and go to state 49
+    '('         shift, and go to state 50
+
+    EXPRESSION     go to state 144
+    FUNCTION_CALL  go to state 52
+
+
+State 131
+
+   89 JUMP_STATEMENT: RETURN ';' .
+
+    $default  reduce using rule 89 (JUMP_STATEMENT)
+
+
+State 132
+
+   60 EXPRESSION: EXPRESSION . EQU_OP EXPRESSION
+   61           | EXPRESSION . REL_OP EXPRESSION
+   62           | EXPRESSION . ADD_OP EXPRESSION
+   63           | EXPRESSION . MUL_OP EXPRESSION
+   64           | EXPRESSION . LAND EXPRESSION
+   65           | EXPRESSION . LOR EXPRESSION
+   66           | EXPRESSION . BOR EXPRESSION
+   67           | EXPRESSION . BAND EXPRESSION
+   68           | EXPRESSION . BXOR EXPRESSION
+   70           | EXPRESSION . INCDEC_OP
+   90 JUMP_STATEMENT: RETURN EXPRESSION .
+
+    REL_OP     shift, and go to state 68
+    ADD_OP     shift, and go to state 69
+    MUL_OP     shift, and go to state 70
+    INCDEC_OP  shift, and go to state 71
+    EQU_OP     shift, and go to state 72
+    LAND       shift, and go to state 73
+    LOR        shift, and go to state 74
+    BAND       shift, and go to state 75
+    BXOR       shift, and go to state 76
+    BOR        shift, and go to state 77
+
+    INCDEC_OP  [reduce using rule 90 (JUMP_STATEMENT)]
+    $default   reduce using rule 90 (JUMP_STATEMENT)
+
+
+State 133
+
+   81 SELECTION_STATEMENT: SWITCH '(' . EXPRESSION ')' STATEMENT
+
+    IDENTIFIER  shift, and go to state 46
+    CONSTANT    shift, and go to state 47
+    INCDEC_OP   shift, and go to state 48
+    NOT_OP      shift, and go to state 49
+    '('         shift, and go to state 50
+
+    EXPRESSION     go to state 145
+    FUNCTION_CALL  go to state 52
+
+
+State 134
+
+   83 ITERATION_STATEMENT: WHILE '(' . EXPRESSION ')' STATEMENT
+
+    IDENTIFIER  shift, and go to state 46
+    CONSTANT    shift, and go to state 47
+    INCDEC_OP   shift, and go to state 48
+    NOT_OP      shift, and go to state 49
+    '('         shift, and go to state 50
+
+    EXPRESSION     go to state 146
+    FUNCTION_CALL  go to state 52
+
+
+State 135
+
+   40 COMPOUND_STATEMENT: '{' STATEMENT_LIST '}' .
+
+    $default  reduce using rule 40 (COMPOUND_STATEMENT)
+
+
+State 136
+
+   42 STATEMENT_LIST: STATEMENT_LIST STATEMENT .
+
+    $default  reduce using rule 42 (STATEMENT_LIST)
+
+
+State 137
+
+   57 EXPRESSION_STATEMENT: EXPRESSION ';' .
+
+    $default  reduce using rule 57 (EXPRESSION_STATEMENT)
+
+
+State 138
+
+   78 EXPRESSION_LIST: EXPRESSION_LIST ',' . EXPRESSION
+
+    IDENTIFIER  shift, and go to state 46
+    CONSTANT    shift, and go to state 47
+    INCDEC_OP   shift, and go to state 48
+    NOT_OP      shift, and go to state 49
+    '('         shift, and go to state 50
+
+    EXPRESSION     go to state 147
+    FUNCTION_CALL  go to state 52
+
+
+State 139
+
+   77 FUNCTION_CALL: IDENTIFIER '(' EXPRESSION_LIST ')' .
+
+    $default  reduce using rule 77 (FUNCTION_CALL)
+
+
+State 140
+
+   54 LABELED_STATEMENT: CASE EXPRESSION ':' . STATEMENT
+
+    error       shift, and go to state 78
+    AUTO        shift, and go to state 1
+    BREAK       shift, and go to state 79
+    CASE        shift, and go to state 80
+    CHAR        shift, and go to state 2
+    CONTINUE    shift, and go to state 81
+    DEFAULT     shift, and go to state 82
+    DO          shift, and go to state 83
+    DOUBLE      shift, and go to state 3
+    EXTERN      shift, and go to state 4
+    FLOAT       shift, and go to state 5
+    FOR         shift, and go to state 84
+    IF          shift, and go to state 85
+    INT         shift, and go to state 6
+    LONG        shift, and go to state 7
+    REGISTER    shift, and go to state 8
+    RETURN      shift, and go to state 86
+    SHORT       shift, and go to state 9
+    SIGNED      shift, and go to state 10
+    STATIC      shift, and go to state 11
+    SWITCH      shift, and go to state 87
+    TYPEDEF     shift, and go to state 12
+    UNSIGNED    shift, and go to state 13
+    VOID        shift, and go to state 14
+    WHILE       shift, and go to state 88
+    IDENTIFIER  shift, and go to state 46
+    CONSTANT    shift, and go to state 47
+    INCDEC_OP   shift, and go to state 48
+    NOT_OP      shift, and go to state 49
+    ';'         shift, and go to state 89
+    '('         shift, and go to state 50
+    '{'         shift, and go to state 53
+
+    DECLARATION              go to state 91
+    DECLARATION_SPECIFIER    go to state 92
+    STORAGE_CLASS_SPECIFIER  go to state 19
+    TYPE_SPECIFIER           go to state 20
+    COMPOUND_STATEMENT       go to state 93
+    STATEMENT                go to state 148
+    STATEMENT_WITH_ELSE      go to state 96
+    LABELED_STATEMENT        go to state 97
+    EXPRESSION_STATEMENT     go to state 98
+    EXPRESSION               go to state 99
+    FUNCTION_CALL            go to state 52
+    SELECTION_STATEMENT      go to state 100
+    IFS                      go to state 101
+    ITERATION_STATEMENT      go to state 102
+    JUMP_STATEMENT           go to state 103
+
+
+State 141
+
+   55 LABELED_STATEMENT: DEFAULT ':' STATEMENT .
+
+    $default  reduce using rule 55 (LABELED_STATEMENT)
+
+
+State 142
+
+   84 ITERATION_STATEMENT: DO STATEMENT WHILE . '(' EXPRESSION ')' ';'
+
+    '('  shift, and go to state 149
+
+
+State 143
+
+   85 ITERATION_STATEMENT: FOR '(' EXPRESSION_STATEMENT . EXPRESSION_STATEMENT ')' STATEMENT
+   86                    | FOR '(' EXPRESSION_STATEMENT . EXPRESSION_STATEMENT EXPRESSION ')' STATEMENT
+
+    IDENTIFIER  shift, and go to state 46
+    CONSTANT    shift, and go to state 47
+    INCDEC_OP   shift, and go to state 48
+    NOT_OP      shift, and go to state 49
+    ';'         shift, and go to state 89
+    '('         shift, and go to state 50
+
+    EXPRESSION_STATEMENT  go to state 150
+    EXPRESSION            go to state 99
+    FUNCTION_CALL         go to state 52
+
+
+State 144
+
+   60 EXPRESSION: EXPRESSION . EQU_OP EXPRESSION
+   61           | EXPRESSION . REL_OP EXPRESSION
+   62           | EXPRESSION . ADD_OP EXPRESSION
+   63           | EXPRESSION . MUL_OP EXPRESSION
+   64           | EXPRESSION . LAND EXPRESSION
+   65           | EXPRESSION . LOR EXPRESSION
+   66           | EXPRESSION . BOR EXPRESSION
+   67           | EXPRESSION . BAND EXPRESSION
+   68           | EXPRESSION . BXOR EXPRESSION
+   70           | EXPRESSION . INCDEC_OP
+   80 SELECTION_STATEMENT: IF '(' EXPRESSION . ')' STATEMENT_WITH_ELSE ELSE STATEMENT
+   82 IFS: IF '(' EXPRESSION . ')' STATEMENT
+
+    REL_OP     shift, and go to state 68
+    ADD_OP     shift, and go to state 69
+    MUL_OP     shift, and go to state 70
+    INCDEC_OP  shift, and go to state 71
+    EQU_OP     shift, and go to state 72
+    LAND       shift, and go to state 73
+    LOR        shift, and go to state 74
+    BAND       shift, and go to state 75
+    BXOR       shift, and go to state 76
+    BOR        shift, and go to state 77
+    ')'        shift, and go to state 151
+
+
+State 145
+
+   60 EXPRESSION: EXPRESSION . EQU_OP EXPRESSION
+   61           | EXPRESSION . REL_OP EXPRESSION
+   62           | EXPRESSION . ADD_OP EXPRESSION
+   63           | EXPRESSION . MUL_OP EXPRESSION
+   64           | EXPRESSION . LAND EXPRESSION
+   65           | EXPRESSION . LOR EXPRESSION
+   66           | EXPRESSION . BOR EXPRESSION
+   67           | EXPRESSION . BAND EXPRESSION
+   68           | EXPRESSION . BXOR EXPRESSION
+   70           | EXPRESSION . INCDEC_OP
+   81 SELECTION_STATEMENT: SWITCH '(' EXPRESSION . ')' STATEMENT
+
+    REL_OP     shift, and go to state 68
+    ADD_OP     shift, and go to state 69
+    MUL_OP     shift, and go to state 70
+    INCDEC_OP  shift, and go to state 71
+    EQU_OP     shift, and go to state 72
+    LAND       shift, and go to state 73
+    LOR        shift, and go to state 74
+    BAND       shift, and go to state 75
+    BXOR       shift, and go to state 76
+    BOR        shift, and go to state 77
+    ')'        shift, and go to state 152
+
+
+State 146
+
+   60 EXPRESSION: EXPRESSION . EQU_OP EXPRESSION
+   61           | EXPRESSION . REL_OP EXPRESSION
+   62           | EXPRESSION . ADD_OP EXPRESSION
+   63           | EXPRESSION . MUL_OP EXPRESSION
+   64           | EXPRESSION . LAND EXPRESSION
+   65           | EXPRESSION . LOR EXPRESSION
+   66           | EXPRESSION . BOR EXPRESSION
+   67           | EXPRESSION . BAND EXPRESSION
+   68           | EXPRESSION . BXOR EXPRESSION
+   70           | EXPRESSION . INCDEC_OP
+   83 ITERATION_STATEMENT: WHILE '(' EXPRESSION . ')' STATEMENT
+
+    REL_OP     shift, and go to state 68
+    ADD_OP     shift, and go to state 69
+    MUL_OP     shift, and go to state 70
+    INCDEC_OP  shift, and go to state 71
+    EQU_OP     shift, and go to state 72
+    LAND       shift, and go to state 73
+    LOR        shift, and go to state 74
+    BAND       shift, and go to state 75
+    BXOR       shift, and go to state 76
+    BOR        shift, and go to state 77
+    ')'        shift, and go to state 153
+
+
+State 147
+
+   60 EXPRESSION: EXPRESSION . EQU_OP EXPRESSION
+   61           | EXPRESSION . REL_OP EXPRESSION
+   62           | EXPRESSION . ADD_OP EXPRESSION
+   63           | EXPRESSION . MUL_OP EXPRESSION
+   64           | EXPRESSION . LAND EXPRESSION
+   65           | EXPRESSION . LOR EXPRESSION
+   66           | EXPRESSION . BOR EXPRESSION
+   67           | EXPRESSION . BAND EXPRESSION
+   68           | EXPRESSION . BXOR EXPRESSION
+   70           | EXPRESSION . INCDEC_OP
+   78 EXPRESSION_LIST: EXPRESSION_LIST ',' EXPRESSION .
+
+    REL_OP     shift, and go to state 68
+    ADD_OP     shift, and go to state 69
+    MUL_OP     shift, and go to state 70
+    INCDEC_OP  shift, and go to state 71
+    EQU_OP     shift, and go to state 72
+    LAND       shift, and go to state 73
+    LOR        shift, and go to state 74
+    BAND       shift, and go to state 75
+    BXOR       shift, and go to state 76
+    BOR        shift, and go to state 77
+
+    $default  reduce using rule 78 (EXPRESSION_LIST)
+
+
+State 148
+
+   54 LABELED_STATEMENT: CASE EXPRESSION ':' STATEMENT .
+
+    $default  reduce using rule 54 (LABELED_STATEMENT)
+
+
+State 149
+
+   84 ITERATION_STATEMENT: DO STATEMENT WHILE '(' . EXPRESSION ')' ';'
+
+    IDENTIFIER  shift, and go to state 46
+    CONSTANT    shift, and go to state 47
+    INCDEC_OP   shift, and go to state 48
+    NOT_OP      shift, and go to state 49
+    '('         shift, and go to state 50
+
+    EXPRESSION     go to state 154
+    FUNCTION_CALL  go to state 52
+
+
+State 150
+
+   85 ITERATION_STATEMENT: FOR '(' EXPRESSION_STATEMENT EXPRESSION_STATEMENT . ')' STATEMENT
+   86                    | FOR '(' EXPRESSION_STATEMENT EXPRESSION_STATEMENT . EXPRESSION ')' STATEMENT
+
+    IDENTIFIER  shift, and go to state 46
+    CONSTANT    shift, and go to state 47
+    INCDEC_OP   shift, and go to state 48
+    NOT_OP      shift, and go to state 49
+    '('         shift, and go to state 50
+    ')'         shift, and go to state 155
+
+    EXPRESSION     go to state 156
+    FUNCTION_CALL  go to state 52
+
+
+State 151
+
+   80 SELECTION_STATEMENT: IF '(' EXPRESSION ')' . STATEMENT_WITH_ELSE ELSE STATEMENT
+   82 IFS: IF '(' EXPRESSION ')' . STATEMENT
+
+    error       shift, and go to state 78
+    AUTO        shift, and go to state 1
+    BREAK       shift, and go to state 79
+    CASE        shift, and go to state 80
+    CHAR        shift, and go to state 2
+    CONTINUE    shift, and go to state 81
+    DEFAULT     shift, and go to state 82
+    DO          shift, and go to state 83
+    DOUBLE      shift, and go to state 3
+    EXTERN      shift, and go to state 4
+    FLOAT       shift, and go to state 5
+    FOR         shift, and go to state 84
+    IF          shift, and go to state 85
+    INT         shift, and go to state 6
+    LONG        shift, and go to state 7
+    REGISTER    shift, and go to state 8
+    RETURN      shift, and go to state 86
+    SHORT       shift, and go to state 9
+    SIGNED      shift, and go to state 10
+    STATIC      shift, and go to state 11
+    SWITCH      shift, and go to state 87
+    TYPEDEF     shift, and go to state 12
+    UNSIGNED    shift, and go to state 13
+    VOID        shift, and go to state 14
+    WHILE       shift, and go to state 88
+    IDENTIFIER  shift, and go to state 46
+    CONSTANT    shift, and go to state 47
+    INCDEC_OP   shift, and go to state 48
+    NOT_OP      shift, and go to state 49
+    ';'         shift, and go to state 89
+    '('         shift, and go to state 50
+    '{'         shift, and go to state 53
+
+    DECLARATION              go to state 91
+    DECLARATION_SPECIFIER    go to state 92
+    STORAGE_CLASS_SPECIFIER  go to state 19
+    TYPE_SPECIFIER           go to state 20
+    COMPOUND_STATEMENT       go to state 93
+    STATEMENT                go to state 157
+    STATEMENT_WITH_ELSE      go to state 158
+    LABELED_STATEMENT        go to state 97
+    EXPRESSION_STATEMENT     go to state 98
+    EXPRESSION               go to state 99
+    FUNCTION_CALL            go to state 52
+    SELECTION_STATEMENT      go to state 100
+    IFS                      go to state 101
+    ITERATION_STATEMENT      go to state 102
+    JUMP_STATEMENT           go to state 103
+
+
+State 152
+
+   81 SELECTION_STATEMENT: SWITCH '(' EXPRESSION ')' . STATEMENT
+
+    error       shift, and go to state 78
+    AUTO        shift, and go to state 1
+    BREAK       shift, and go to state 79
+    CASE        shift, and go to state 80
+    CHAR        shift, and go to state 2
+    CONTINUE    shift, and go to state 81
+    DEFAULT     shift, and go to state 82
+    DO          shift, and go to state 83
+    DOUBLE      shift, and go to state 3
+    EXTERN      shift, and go to state 4
+    FLOAT       shift, and go to state 5
+    FOR         shift, and go to state 84
+    IF          shift, and go to state 85
+    INT         shift, and go to state 6
+    LONG        shift, and go to state 7
+    REGISTER    shift, and go to state 8
+    RETURN      shift, and go to state 86
+    SHORT       shift, and go to state 9
+    SIGNED      shift, and go to state 10
+    STATIC      shift, and go to state 11
+    SWITCH      shift, and go to state 87
+    TYPEDEF     shift, and go to state 12
+    UNSIGNED    shift, and go to state 13
+    VOID        shift, and go to state 14
+    WHILE       shift, and go to state 88
+    IDENTIFIER  shift, and go to state 46
+    CONSTANT    shift, and go to state 47
+    INCDEC_OP   shift, and go to state 48
+    NOT_OP      shift, and go to state 49
+    ';'         shift, and go to state 89
+    '('         shift, and go to state 50
+    '{'         shift, and go to state 53
+
+    DECLARATION              go to state 91
+    DECLARATION_SPECIFIER    go to state 92
+    STORAGE_CLASS_SPECIFIER  go to state 19
+    TYPE_SPECIFIER           go to state 20
+    COMPOUND_STATEMENT       go to state 93
+    STATEMENT                go to state 159
+    STATEMENT_WITH_ELSE      go to state 96
+    LABELED_STATEMENT        go to state 97
+    EXPRESSION_STATEMENT     go to state 98
+    EXPRESSION               go to state 99
+    FUNCTION_CALL            go to state 52
+    SELECTION_STATEMENT      go to state 100
+    IFS                      go to state 101
+    ITERATION_STATEMENT      go to state 102
+    JUMP_STATEMENT           go to state 103
+
+
+State 153
+
+   83 ITERATION_STATEMENT: WHILE '(' EXPRESSION ')' . STATEMENT
+
+    error       shift, and go to state 78
+    AUTO        shift, and go to state 1
+    BREAK       shift, and go to state 79
+    CASE        shift, and go to state 80
+    CHAR        shift, and go to state 2
+    CONTINUE    shift, and go to state 81
+    DEFAULT     shift, and go to state 82
+    DO          shift, and go to state 83
+    DOUBLE      shift, and go to state 3
+    EXTERN      shift, and go to state 4
+    FLOAT       shift, and go to state 5
+    FOR         shift, and go to state 84
+    IF          shift, and go to state 85
+    INT         shift, and go to state 6
+    LONG        shift, and go to state 7
+    REGISTER    shift, and go to state 8
+    RETURN      shift, and go to state 86
+    SHORT       shift, and go to state 9
+    SIGNED      shift, and go to state 10
+    STATIC      shift, and go to state 11
+    SWITCH      shift, and go to state 87
+    TYPEDEF     shift, and go to state 12
+    UNSIGNED    shift, and go to state 13
+    VOID        shift, and go to state 14
+    WHILE       shift, and go to state 88
+    IDENTIFIER  shift, and go to state 46
+    CONSTANT    shift, and go to state 47
+    INCDEC_OP   shift, and go to state 48
+    NOT_OP      shift, and go to state 49
+    ';'         shift, and go to state 89
+    '('         shift, and go to state 50
+    '{'         shift, and go to state 53
+
+    DECLARATION              go to state 91
+    DECLARATION_SPECIFIER    go to state 92
+    STORAGE_CLASS_SPECIFIER  go to state 19
+    TYPE_SPECIFIER           go to state 20
+    COMPOUND_STATEMENT       go to state 93
+    STATEMENT                go to state 160
+    STATEMENT_WITH_ELSE      go to state 96
+    LABELED_STATEMENT        go to state 97
+    EXPRESSION_STATEMENT     go to state 98
+    EXPRESSION               go to state 99
+    FUNCTION_CALL            go to state 52
+    SELECTION_STATEMENT      go to state 100
+    IFS                      go to state 101
+    ITERATION_STATEMENT      go to state 102
+    JUMP_STATEMENT           go to state 103
+
+
+State 154
+
+   60 EXPRESSION: EXPRESSION . EQU_OP EXPRESSION
+   61           | EXPRESSION . REL_OP EXPRESSION
+   62           | EXPRESSION . ADD_OP EXPRESSION
+   63           | EXPRESSION . MUL_OP EXPRESSION
+   64           | EXPRESSION . LAND EXPRESSION
+   65           | EXPRESSION . LOR EXPRESSION
+   66           | EXPRESSION . BOR EXPRESSION
+   67           | EXPRESSION . BAND EXPRESSION
+   68           | EXPRESSION . BXOR EXPRESSION
+   70           | EXPRESSION . INCDEC_OP
+   84 ITERATION_STATEMENT: DO STATEMENT WHILE '(' EXPRESSION . ')' ';'
+
+    REL_OP     shift, and go to state 68
+    ADD_OP     shift, and go to state 69
+    MUL_OP     shift, and go to state 70
+    INCDEC_OP  shift, and go to state 71
+    EQU_OP     shift, and go to state 72
+    LAND       shift, and go to state 73
+    LOR        shift, and go to state 74
+    BAND       shift, and go to state 75
+    BXOR       shift, and go to state 76
+    BOR        shift, and go to state 77
+    ')'        shift, and go to state 161
+
+
+State 155
+
+   85 ITERATION_STATEMENT: FOR '(' EXPRESSION_STATEMENT EXPRESSION_STATEMENT ')' . STATEMENT
+
+    error       shift, and go to state 78
+    AUTO        shift, and go to state 1
+    BREAK       shift, and go to state 79
+    CASE        shift, and go to state 80
+    CHAR        shift, and go to state 2
+    CONTINUE    shift, and go to state 81
+    DEFAULT     shift, and go to state 82
+    DO          shift, and go to state 83
+    DOUBLE      shift, and go to state 3
+    EXTERN      shift, and go to state 4
+    FLOAT       shift, and go to state 5
+    FOR         shift, and go to state 84
+    IF          shift, and go to state 85
+    INT         shift, and go to state 6
+    LONG        shift, and go to state 7
+    REGISTER    shift, and go to state 8
+    RETURN      shift, and go to state 86
+    SHORT       shift, and go to state 9
+    SIGNED      shift, and go to state 10
+    STATIC      shift, and go to state 11
+    SWITCH      shift, and go to state 87
+    TYPEDEF     shift, and go to state 12
+    UNSIGNED    shift, and go to state 13
+    VOID        shift, and go to state 14
+    WHILE       shift, and go to state 88
+    IDENTIFIER  shift, and go to state 46
+    CONSTANT    shift, and go to state 47
+    INCDEC_OP   shift, and go to state 48
+    NOT_OP      shift, and go to state 49
+    ';'         shift, and go to state 89
+    '('         shift, and go to state 50
+    '{'         shift, and go to state 53
+
+    DECLARATION              go to state 91
+    DECLARATION_SPECIFIER    go to state 92
+    STORAGE_CLASS_SPECIFIER  go to state 19
+    TYPE_SPECIFIER           go to state 20
+    COMPOUND_STATEMENT       go to state 93
+    STATEMENT                go to state 162
+    STATEMENT_WITH_ELSE      go to state 96
+    LABELED_STATEMENT        go to state 97
+    EXPRESSION_STATEMENT     go to state 98
+    EXPRESSION               go to state 99
+    FUNCTION_CALL            go to state 52
+    SELECTION_STATEMENT      go to state 100
+    IFS                      go to state 101
+    ITERATION_STATEMENT      go to state 102
+    JUMP_STATEMENT           go to state 103
+
+
+State 156
+
+   60 EXPRESSION: EXPRESSION . EQU_OP EXPRESSION
+   61           | EXPRESSION . REL_OP EXPRESSION
+   62           | EXPRESSION . ADD_OP EXPRESSION
+   63           | EXPRESSION . MUL_OP EXPRESSION
+   64           | EXPRESSION . LAND EXPRESSION
+   65           | EXPRESSION . LOR EXPRESSION
+   66           | EXPRESSION . BOR EXPRESSION
+   67           | EXPRESSION . BAND EXPRESSION
+   68           | EXPRESSION . BXOR EXPRESSION
+   70           | EXPRESSION . INCDEC_OP
+   86 ITERATION_STATEMENT: FOR '(' EXPRESSION_STATEMENT EXPRESSION_STATEMENT EXPRESSION . ')' STATEMENT
+
+    REL_OP     shift, and go to state 68
+    ADD_OP     shift, and go to state 69
+    MUL_OP     shift, and go to state 70
+    INCDEC_OP  shift, and go to state 71
+    EQU_OP     shift, and go to state 72
+    LAND       shift, and go to state 73
+    LOR        shift, and go to state 74
+    BAND       shift, and go to state 75
+    BXOR       shift, and go to state 76
+    BOR        shift, and go to state 77
+    ')'        shift, and go to state 163
+
+
+State 157
+
+   82 IFS: IF '(' EXPRESSION ')' STATEMENT .
+
+    $default  reduce using rule 82 (IFS)
+
+
+State 158
+
+   45 STATEMENT: STATEMENT_WITH_ELSE .
+   80 SELECTION_STATEMENT: IF '(' EXPRESSION ')' STATEMENT_WITH_ELSE . ELSE STATEMENT
+
+    ELSE  shift, and go to state 164
+
+    ELSE      [reduce using rule 45 (STATEMENT)]
+    $default  reduce using rule 45 (STATEMENT)
+
+
+State 159
+
+   81 SELECTION_STATEMENT: SWITCH '(' EXPRESSION ')' STATEMENT .
+
+    $default  reduce using rule 81 (SELECTION_STATEMENT)
+
+
+State 160
+
+   83 ITERATION_STATEMENT: WHILE '(' EXPRESSION ')' STATEMENT .
+
+    $default  reduce using rule 83 (ITERATION_STATEMENT)
+
+
+State 161
+
+   84 ITERATION_STATEMENT: DO STATEMENT WHILE '(' EXPRESSION ')' . ';'
+
+    ';'  shift, and go to state 165
+
+
+State 162
+
+   85 ITERATION_STATEMENT: FOR '(' EXPRESSION_STATEMENT EXPRESSION_STATEMENT ')' STATEMENT .
+
+    $default  reduce using rule 85 (ITERATION_STATEMENT)
+
+
+State 163
+
+   86 ITERATION_STATEMENT: FOR '(' EXPRESSION_STATEMENT EXPRESSION_STATEMENT EXPRESSION ')' . STATEMENT
+
+    error       shift, and go to state 78
+    AUTO        shift, and go to state 1
+    BREAK       shift, and go to state 79
+    CASE        shift, and go to state 80
+    CHAR        shift, and go to state 2
+    CONTINUE    shift, and go to state 81
+    DEFAULT     shift, and go to state 82
+    DO          shift, and go to state 83
+    DOUBLE      shift, and go to state 3
+    EXTERN      shift, and go to state 4
+    FLOAT       shift, and go to state 5
+    FOR         shift, and go to state 84
+    IF          shift, and go to state 85
+    INT         shift, and go to state 6
+    LONG        shift, and go to state 7
+    REGISTER    shift, and go to state 8
+    RETURN      shift, and go to state 86
+    SHORT       shift, and go to state 9
+    SIGNED      shift, and go to state 10
+    STATIC      shift, and go to state 11
+    SWITCH      shift, and go to state 87
+    TYPEDEF     shift, and go to state 12
+    UNSIGNED    shift, and go to state 13
+    VOID        shift, and go to state 14
+    WHILE       shift, and go to state 88
+    IDENTIFIER  shift, and go to state 46
+    CONSTANT    shift, and go to state 47
+    INCDEC_OP   shift, and go to state 48
+    NOT_OP      shift, and go to state 49
+    ';'         shift, and go to state 89
+    '('         shift, and go to state 50
+    '{'         shift, and go to state 53
+
+    DECLARATION              go to state 91
+    DECLARATION_SPECIFIER    go to state 92
+    STORAGE_CLASS_SPECIFIER  go to state 19
+    TYPE_SPECIFIER           go to state 20
+    COMPOUND_STATEMENT       go to state 93
+    STATEMENT                go to state 166
+    STATEMENT_WITH_ELSE      go to state 96
+    LABELED_STATEMENT        go to state 97
+    EXPRESSION_STATEMENT     go to state 98
+    EXPRESSION               go to state 99
+    FUNCTION_CALL            go to state 52
+    SELECTION_STATEMENT      go to state 100
+    IFS                      go to state 101
+    ITERATION_STATEMENT      go to state 102
+    JUMP_STATEMENT           go to state 103
+
+
+State 164
+
+   80 SELECTION_STATEMENT: IF '(' EXPRESSION ')' STATEMENT_WITH_ELSE ELSE . STATEMENT
+
+    error       shift, and go to state 78
+    AUTO        shift, and go to state 1
+    BREAK       shift, and go to state 79
+    CASE        shift, and go to state 80
+    CHAR        shift, and go to state 2
+    CONTINUE    shift, and go to state 81
+    DEFAULT     shift, and go to state 82
+    DO          shift, and go to state 83
+    DOUBLE      shift, and go to state 3
+    EXTERN      shift, and go to state 4
+    FLOAT       shift, and go to state 5
+    FOR         shift, and go to state 84
+    IF          shift, and go to state 85
+    INT         shift, and go to state 6
+    LONG        shift, and go to state 7
+    REGISTER    shift, and go to state 8
+    RETURN      shift, and go to state 86
+    SHORT       shift, and go to state 9
+    SIGNED      shift, and go to state 10
+    STATIC      shift, and go to state 11
+    SWITCH      shift, and go to state 87
+    TYPEDEF     shift, and go to state 12
+    UNSIGNED    shift, and go to state 13
+    VOID        shift, and go to state 14
+    WHILE       shift, and go to state 88
+    IDENTIFIER  shift, and go to state 46
+    CONSTANT    shift, and go to state 47
+    INCDEC_OP   shift, and go to state 48
+    NOT_OP      shift, and go to state 49
+    ';'         shift, and go to state 89
+    '('         shift, and go to state 50
+    '{'         shift, and go to state 53
+
+    DECLARATION              go to state 91
+    DECLARATION_SPECIFIER    go to state 92
+    STORAGE_CLASS_SPECIFIER  go to state 19
+    TYPE_SPECIFIER           go to state 20
+    COMPOUND_STATEMENT       go to state 93
+    STATEMENT                go to state 167
+    STATEMENT_WITH_ELSE      go to state 96
+    LABELED_STATEMENT        go to state 97
+    EXPRESSION_STATEMENT     go to state 98
+    EXPRESSION               go to state 99
+    FUNCTION_CALL            go to state 52
+    SELECTION_STATEMENT      go to state 100
+    IFS                      go to state 101
+    ITERATION_STATEMENT      go to state 102
+    JUMP_STATEMENT           go to state 103
+
+
+State 165
+
+   84 ITERATION_STATEMENT: DO STATEMENT WHILE '(' EXPRESSION ')' ';' .
+
+    $default  reduce using rule 84 (ITERATION_STATEMENT)
+
+
+State 166
+
+   86 ITERATION_STATEMENT: FOR '(' EXPRESSION_STATEMENT EXPRESSION_STATEMENT EXPRESSION ')' STATEMENT .
+
+    $default  reduce using rule 86 (ITERATION_STATEMENT)
+
+
+State 167
+
+   80 SELECTION_STATEMENT: IF '(' EXPRESSION ')' STATEMENT_WITH_ELSE ELSE STATEMENT .
+
+    $default  reduce using rule 80 (SELECTION_STATEMENT)

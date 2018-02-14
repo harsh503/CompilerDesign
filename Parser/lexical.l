@@ -189,6 +189,12 @@ WHITESPACE " "|"	"|"\n"
 "+"|"-"							{ return(ADD_OP); }
 "*"|"/"|"%"						{ return(MUL_OP); }
 "++"|"--"						{ return(INCDEC_OP); }
+"&&"        {return(LAND);}
+"||"        {return(LOR);}
+"&"        {return(BAND);}
+"|"        {return(BOR);}
+"^"        {return(BXOR);}
+"!"|"~"    {return(NOT_OP);}
 "=" 		{ return('='); }
 "{"			{ return('{'); }
 "}"			{ return('}'); }
