@@ -1,0 +1,13 @@
+int main()
+{
+    int a,b;
+    a=1;
+    b=3;
+
+    if(a==1)
+    if(b>5)
+        b++;
+    else
+        b--;
+        
+}

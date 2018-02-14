@@ -1,0 +1,9 @@
+int main()
+{
+    int a,b;
+    for(i=0;i++)
+    {
+        a++;
+    }
+    return 0;
+}
