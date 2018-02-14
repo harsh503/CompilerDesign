@@ -602,7 +602,9 @@ struct ctable{
 	char name[100];
 	char type[50];
 }constant_table[1000];
-
+char yyval[100];
+char yycons[100];
+char yystr[100];
 int hash_cal(char * str)
 {
 	int i;
@@ -622,7 +624,7 @@ int hash_cal(char * str)
 }
 
 
-#line 626 "lex.yy.c"
+#line 628 "lex.yy.c"
 
 #define INITIAL 0
 #define SC_COMMENT 1
@@ -841,10 +843,10 @@ YY_DECL
 		}
 
 	{
-#line 45 "lexical.l"
+#line 47 "lexical.l"
 
 
-#line 848 "lex.yy.c"
+#line 850 "lex.yy.c"
 
 	while ( /*CONSTCOND*/1 )		/* loops until end-of-file is reached */
 		{
@@ -903,448 +905,372 @@ do_action:	/* This label is used only to access EOF actions. */
 
 case 1:
 YY_RULE_SETUP
-#line 47 "lexical.l"
+#line 49 "lexical.l"
 { comment_nesting++; BEGIN(SC_COMMENT); }
 	YY_BREAK
 
 case 2:
 YY_RULE_SETUP
-#line 49 "lexical.l"
+#line 51 "lexical.l"
 { comment_nesting++; }
 	YY_BREAK
 case 3:
 YY_RULE_SETUP
-#line 50 "lexical.l"
+#line 52 "lexical.l"
 { comment_nesting=0;
                     BEGIN(INITIAL);  }
 	YY_BREAK
 case 4:
 YY_RULE_SETUP
-#line 52 "lexical.l"
+#line 54 "lexical.l"
 ;
 	YY_BREAK
 case 5:
 YY_RULE_SETUP
-#line 53 "lexical.l"
+#line 55 "lexical.l"
 ;
 	YY_BREAK
 case 6:
 YY_RULE_SETUP
-#line 54 "lexical.l"
+#line 56 "lexical.l"
 ;
 	YY_BREAK
 case 7:
 /* rule 7 can match eol */
 YY_RULE_SETUP
-#line 55 "lexical.l"
+#line 57 "lexical.l"
 { lineno++;}
 	YY_BREAK
 
 case 8:
 /* rule 8 can match eol */
 YY_RULE_SETUP
-#line 58 "lexical.l"
+#line 60 "lexical.l"
 { lineno++; }
 	YY_BREAK
 case 9:
 YY_RULE_SETUP
-#line 60 "lexical.l"
+#line 62 "lexical.l"
 { return(AUTO); }
 	YY_BREAK
 case 10:
 YY_RULE_SETUP
-#line 61 "lexical.l"
+#line 63 "lexical.l"
 { return(BREAK); }
 	YY_BREAK
 case 11:
 YY_RULE_SETUP
-#line 62 "lexical.l"
+#line 64 "lexical.l"
 { return(CASE); }
 	YY_BREAK
 case 12:
 YY_RULE_SETUP
-#line 63 "lexical.l"
+#line 65 "lexical.l"
 { return(CHAR); }
 	YY_BREAK
 case 13:
 YY_RULE_SETUP
-#line 64 "lexical.l"
+#line 66 "lexical.l"
 { return(CONST); }
 	YY_BREAK
 case 14:
 YY_RULE_SETUP
-#line 65 "lexical.l"
+#line 67 "lexical.l"
 { return(CONTINUE); }
 	YY_BREAK
 case 15:
 YY_RULE_SETUP
-#line 66 "lexical.l"
+#line 68 "lexical.l"
 { return(DEFAULT); }
 	YY_BREAK
 case 16:
 YY_RULE_SETUP
-#line 67 "lexical.l"
+#line 69 "lexical.l"
 { return(DO); }
 	YY_BREAK
 case 17:
 YY_RULE_SETUP
-#line 68 "lexical.l"
+#line 70 "lexical.l"
 { return(DOUBLE); }
 	YY_BREAK
 case 18:
 YY_RULE_SETUP
-#line 69 "lexical.l"
+#line 71 "lexical.l"
 { return(ELSE); }
 	YY_BREAK
 case 19:
 YY_RULE_SETUP
-#line 70 "lexical.l"
+#line 72 "lexical.l"
 { return(ENUM); }
 	YY_BREAK
 case 20:
 YY_RULE_SETUP
-#line 71 "lexical.l"
+#line 73 "lexical.l"
 { return(EXTERN); }
 	YY_BREAK
 case 21:
 YY_RULE_SETUP
-#line 72 "lexical.l"
+#line 74 "lexical.l"
 { return(FLOAT); }
 	YY_BREAK
 case 22:
 YY_RULE_SETUP
-#line 73 "lexical.l"
+#line 75 "lexical.l"
 { return(FOR); }
 	YY_BREAK
 case 23:
 YY_RULE_SETUP
-#line 74 "lexical.l"
+#line 76 "lexical.l"
 { return(GOTO); }
 	YY_BREAK
 case 24:
 YY_RULE_SETUP
-#line 75 "lexical.l"
+#line 77 "lexical.l"
 { return(IF); }
 	YY_BREAK
 case 25:
 YY_RULE_SETUP
-#line 76 "lexical.l"
+#line 78 "lexical.l"
 { return(INT); }
 	YY_BREAK
 case 26:
 YY_RULE_SETUP
-#line 77 "lexical.l"
+#line 79 "lexical.l"
 { return(LONG); }
 	YY_BREAK
 case 27:
 YY_RULE_SETUP
-#line 78 "lexical.l"
+#line 80 "lexical.l"
 { return(REGISTER); }
 	YY_BREAK
 case 28:
 YY_RULE_SETUP
-#line 79 "lexical.l"
+#line 81 "lexical.l"
 { return(RETURN); }
 	YY_BREAK
 case 29:
 YY_RULE_SETUP
-#line 80 "lexical.l"
+#line 82 "lexical.l"
 { return(SHORT); }
 	YY_BREAK
 case 30:
 YY_RULE_SETUP
-#line 81 "lexical.l"
+#line 83 "lexical.l"
 { return(SIGNED); }
 	YY_BREAK
 case 31:
 YY_RULE_SETUP
-#line 82 "lexical.l"
+#line 84 "lexical.l"
 { return(SIZEOF); }
 	YY_BREAK
 case 32:
 YY_RULE_SETUP
-#line 83 "lexical.l"
+#line 85 "lexical.l"
 { return(STATIC); }
 	YY_BREAK
 case 33:
 YY_RULE_SETUP
-#line 84 "lexical.l"
+#line 86 "lexical.l"
 { return(STRUCT); }
 	YY_BREAK
 case 34:
 YY_RULE_SETUP
-#line 85 "lexical.l"
+#line 87 "lexical.l"
 { return(SWITCH); }
 	YY_BREAK
 case 35:
 YY_RULE_SETUP
-#line 86 "lexical.l"
+#line 88 "lexical.l"
 { return(TYPEDEF); }
 	YY_BREAK
 case 36:
 YY_RULE_SETUP
-#line 87 "lexical.l"
+#line 89 "lexical.l"
 { return(UNION); }
 	YY_BREAK
 case 37:
 YY_RULE_SETUP
-#line 88 "lexical.l"
+#line 90 "lexical.l"
 { return(UNSIGNED); }
 	YY_BREAK
 case 38:
 YY_RULE_SETUP
-#line 89 "lexical.l"
+#line 91 "lexical.l"
 { return(VOID); }
 	YY_BREAK
 case 39:
 YY_RULE_SETUP
-#line 90 "lexical.l"
+#line 92 "lexical.l"
 { return(VOLATILE); }
 	YY_BREAK
 case 40:
 YY_RULE_SETUP
-#line 91 "lexical.l"
+#line 93 "lexical.l"
 { return(WHILE); }
 	YY_BREAK
 case 41:
 YY_RULE_SETUP
-#line 93 "lexical.l"
-{	printf("%s - identifier\n",yytext);
-					int k=hash_cal(yytext);
-					struct stable temp;
-					strcpy(temp.name,yytext);
-					strcpy(temp.type,"identifier");
-					int i=0;
-					int flag=0;
-					for(i=0;i<1000;i++)
-					{
-						if(symbol_table[k].name[0]=='\0')
-						{
-							break;
-						}
-						else
-						{
-							if(strcmp(yytext,symbol_table[k].name)==0)
-							{
-								flag=1;
-								break;
-							}
-							k=(k+1)%1000;
-						}
-					}
-					if(flag==0)
-					{
-						symbol_table[k]=temp;
-					}	
+#line 95 "lexical.l"
+{	//printf("%s - identifier\n",yytext);
+					strcpy(yyval,yytext);
                 	return (IDENTIFIER);
 				}
 	YY_BREAK
 case 42:
 YY_RULE_SETUP
-#line 123 "lexical.l"
-{printf("%s - constant\n",yytext);
-				int k=hash_cal(yytext);
-					struct ctable temp;
-					strcpy(temp.name,yytext);
-					strcpy(temp.type,"numeric constant");
-					int i=0;
-					int flag=0;
-					for(i=0;i<1000;i++)
-					{
-						if(constant_table[k].name[0]=='\0')
-						{
-							break;
-						}
-						else
-						{
-							if(strcmp(yytext,constant_table[k].name)==0)
-							{
-								flag=1;
-								break;
-							}
-							k=(k+1)%1000;
-						}
-					}
-					if(flag==0)
-					{
-						constant_table[k]=temp;
-					}
-
-                    return (CONSTANT);
+#line 100 "lexical.l"
+{//printf("%s - constant\n",yytext);
+					strcpy(yycons,yytext);
+					return (CONSTANT);
 			}
 	YY_BREAK
 case 43:
 YY_RULE_SETUP
-#line 154 "lexical.l"
-{printf("%s - string\n",yytext);
+#line 105 "lexical.l"
+{//printf("%s - string\n",yytext);
 
-				int k=hash_cal(yytext);
-					struct ctable temp;
-					strcpy(temp.name,yytext);
-					strcpy(temp.type,"string constant");
-					int i=0;
-					int flag=0;
-					for(i=0;i<1000;i++)
-					{
-						if(constant_table[k].name[0]=='\0')
-						{
-							break;
-						}
-						else
-						{
-							if(strcmp(yytext,constant_table[k].name)==0)
-							{
-								flag=1;
-								break;
-							}
-							k=(k+1)%1000;
-						}
-					}
-					if(flag==0)
-					{
-						constant_table[k]=temp;
-					}
+				strcpy(yystr,yytext);
 
 				return(STRING_LITERAL);
 			}
 	YY_BREAK
 case 44:
 YY_RULE_SETUP
-#line 186 "lexical.l"
+#line 112 "lexical.l"
 { return(ASSIGN_OP); }
 	YY_BREAK
 case 45:
 YY_RULE_SETUP
-#line 187 "lexical.l"
+#line 113 "lexical.l"
 { return(EQU_OP); }
 	YY_BREAK
 case 46:
 YY_RULE_SETUP
-#line 188 "lexical.l"
+#line 114 "lexical.l"
 { return(REL_OP); }
 	YY_BREAK
 case 47:
 YY_RULE_SETUP
-#line 189 "lexical.l"
+#line 115 "lexical.l"
 { return(ADD_OP); }
 	YY_BREAK
 case 48:
 YY_RULE_SETUP
-#line 190 "lexical.l"
+#line 116 "lexical.l"
 { return(MUL_OP); }
 	YY_BREAK
 case 49:
 YY_RULE_SETUP
-#line 191 "lexical.l"
+#line 117 "lexical.l"
 { return(INCDEC_OP); }
 	YY_BREAK
 case 50:
 YY_RULE_SETUP
-#line 192 "lexical.l"
+#line 118 "lexical.l"
 {return(LAND);}
 	YY_BREAK
 case 51:
 YY_RULE_SETUP
-#line 193 "lexical.l"
+#line 119 "lexical.l"
 {return(LOR);}
 	YY_BREAK
 case 52:
 YY_RULE_SETUP
-#line 194 "lexical.l"
+#line 120 "lexical.l"
 {return(BAND);}
 	YY_BREAK
 case 53:
 YY_RULE_SETUP
-#line 195 "lexical.l"
+#line 121 "lexical.l"
 {return(BOR);}
 	YY_BREAK
 case 54:
 YY_RULE_SETUP
-#line 196 "lexical.l"
+#line 122 "lexical.l"
 {return(BXOR);}
 	YY_BREAK
 case 55:
 YY_RULE_SETUP
-#line 197 "lexical.l"
+#line 123 "lexical.l"
 {return(NOT_OP);}
 	YY_BREAK
 case 56:
 YY_RULE_SETUP
-#line 198 "lexical.l"
+#line 124 "lexical.l"
 { return('='); }
 	YY_BREAK
 case 57:
 YY_RULE_SETUP
-#line 199 "lexical.l"
+#line 125 "lexical.l"
 { return('{'); }
 	YY_BREAK
 case 58:
 YY_RULE_SETUP
-#line 200 "lexical.l"
+#line 126 "lexical.l"
 { return('}'); }
 	YY_BREAK
 case 59:
 YY_RULE_SETUP
-#line 201 "lexical.l"
+#line 127 "lexical.l"
 { return('('); }
 	YY_BREAK
 case 60:
 YY_RULE_SETUP
-#line 202 "lexical.l"
+#line 128 "lexical.l"
 { return(')'); }
 	YY_BREAK
 case 61:
 YY_RULE_SETUP
-#line 203 "lexical.l"
+#line 129 "lexical.l"
 { return('['); }
 	YY_BREAK
 case 62:
 YY_RULE_SETUP
-#line 204 "lexical.l"
+#line 130 "lexical.l"
 { return(']'); }
 	YY_BREAK
 case 63:
 YY_RULE_SETUP
-#line 205 "lexical.l"
+#line 131 "lexical.l"
 { return(';'); }
 	YY_BREAK
 case 64:
 YY_RULE_SETUP
-#line 206 "lexical.l"
+#line 132 "lexical.l"
 { return(','); }
 	YY_BREAK
 case 65:
 YY_RULE_SETUP
-#line 207 "lexical.l"
+#line 133 "lexical.l"
 { return('.'); }
 	YY_BREAK
 case 66:
 YY_RULE_SETUP
-#line 208 "lexical.l"
+#line 134 "lexical.l"
 { return('?'); }
 	YY_BREAK
 case 67:
 YY_RULE_SETUP
-#line 209 "lexical.l"
+#line 135 "lexical.l"
 { return(':'); }
 	YY_BREAK
 case 68:
 /* rule 68 can match eol */
 YY_RULE_SETUP
-#line 211 "lexical.l"
+#line 137 "lexical.l"
 { if(yytext[0]=='\n') { lineno++; } };
 	YY_BREAK
 case 69:
 YY_RULE_SETUP
-#line 213 "lexical.l"
+#line 139 "lexical.l"
 {printf("LEXICAL ERROR - %s : invalid character at line [%d]\n",yytext,lineno);}
 	YY_BREAK
 case 70:
 YY_RULE_SETUP
-#line 215 "lexical.l"
+#line 141 "lexical.l"
 ECHO;
 	YY_BREAK
-#line 1348 "lex.yy.c"
+#line 1274 "lex.yy.c"
 case YY_STATE_EOF(INITIAL):
 case YY_STATE_EOF(SC_COMMENT):
 	yyterminate();
@@ -2346,7 +2272,7 @@ void yyfree (void * ptr )
 
 #define YYTABLES_NAME "yytables"
 
-#line 215 "lexical.l"
+#line 141 "lexical.l"
 
 
 

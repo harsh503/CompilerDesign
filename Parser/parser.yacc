@@ -22,6 +22,98 @@ struct ctable{
 };
 extern struct stable symbol_table[1000];
 extern struct ctable constant_table[1000];
+extern char yyval[100];
+extern char yycons[100];
+extern char yystr[100];
+void insert_symbol_table()
+{
+    int k=hash_cal(yyval);
+					struct stable temp;
+					strcpy(temp.name,yyval);
+					strcpy(temp.type,"identifier");
+					int i=0;
+					int flag=0;
+					for(i=0;i<1000;i++)
+					{
+						if(symbol_table[k].name[0]=='\0')
+						{
+							break;
+						}
+						else
+						{
+							if(strcmp(yyval,symbol_table[k].name)==0)
+							{
+								flag=1;
+								break;
+							}
+							k=(k+1)%1000;
+						}
+					}
+					if(flag==0)
+					{
+						symbol_table[k]=temp;
+					}	
+}
+
+void insert_constant_table()
+{
+                int k=hash_cal(yycons);
+					struct ctable temp;
+					strcpy(temp.name,yycons);
+					strcpy(temp.type,"numeric constant");
+					int i=0;
+					int flag=0;
+					for(i=0;i<1000;i++)
+					{
+						if(constant_table[k].name[0]=='\0')
+						{
+							break;
+						}
+						else
+						{
+							if(strcmp(yycons,constant_table[k].name)==0)
+							{
+								flag=1;
+								break;
+							}
+							k=(k+1)%1000;
+						}
+					}
+					if(flag==0)
+					{
+						constant_table[k]=temp;
+					}
+}
+void insert_constant_table_str()
+{
+    int k=hash_cal(yystr);
+					struct ctable temp;
+					strcpy(temp.name,yystr);
+					strcpy(temp.type,"string constant");
+					int i=0;
+					int flag=0;
+					for(i=0;i<1000;i++)
+					{
+						if(constant_table[k].name[0]=='\0')
+						{
+							break;
+						}
+						else
+						{
+							if(strcmp(yystr,constant_table[k].name)==0)
+							{
+								flag=1;
+								break;
+							}
+							k=(k+1)%1000;
+						}
+					}
+					if(flag==0)
+					{
+						constant_table[k]=temp;
+					}
+}             
+
 %}
 
 %nonassoc LOWER_THAN_ELSE
@@ -93,22 +185,23 @@ INIT_DECLARATOR_LIST
 INIT_DECLARATOR
     : DECLARATOR
     | DECLARATOR '=' EXPRESSION
+    | DECLARATOR '=' STRING_LITERAL
     ;   
 
 DECLARATOR
-    : IDENTIFIER
+    : IDENTIFIER {insert_symbol_table();}
     | '(' DECLARATOR ')'
     | FUNCTION_DECLARATION
     ;
 
 FUNCTION_DECLARATION
-    : IDENTIFIER '(' DECLARATION_SPECIFIER_LIST ')'
-    | IDENTIFIER '(' ')'
+    : IDENTIFIER '(' DECLARATION_SPECIFIER_LIST ')'  {insert_symbol_table();}
+    | IDENTIFIER '(' ')' {insert_symbol_table();}
     ;
 
 FUNCTION_DEFINITION 
-    : DECLARATION_SPECIFIER IDENTIFIER '('  ')' COMPOUND_STATEMENT
-    | DECLARATION_SPECIFIER IDENTIFIER '(' DEFINITION_SPECIFIER_LIST ')' COMPOUND_STATEMENT
+    : DECLARATION_SPECIFIER IDENTIFIER '('  ')' COMPOUND_STATEMENT {insert_symbol_table();}
+    | DECLARATION_SPECIFIER IDENTIFIER '(' DEFINITION_SPECIFIER_LIST ')' COMPOUND_STATEMENT {insert_symbol_table();}
     ;
 
 
@@ -117,13 +210,12 @@ DECLARATION_SPECIFIER_LIST
     | DECLARATION_SPECIFIER
     ;
 
-
 DEFINITION_SPECIFIER_LIST
     :VARIABLE_DECLARATION 
     | DEFINITION_SPECIFIER_LIST ',' VARIABLE_DECLARATION
     ;
 VARIABLE_DECLARATION
-    :DECLARATION_SPECIFIER IDENTIFIER
+    :DECLARATION_SPECIFIER IDENTIFIER {insert_symbol_table();}
     ;
 COMPOUND_STATEMENT
     :'{' STATEMENT_LIST '}'
@@ -161,8 +253,8 @@ EXPRESSION_STATEMENT
     ;
 
 EXPRESSION
-    : IDENTIFIER ASSIGN_OP EXPRESSION
-    | IDENTIFIER '=' EXPRESSION
+    : IDENTIFIER ASSIGN_OP EXPRESSION {insert_symbol_table();}
+    | IDENTIFIER '=' EXPRESSION {insert_symbol_table();}
     | EXPRESSION EQU_OP EXPRESSION
     | EXPRESSION REL_OP EXPRESSION
     | EXPRESSION ADD_OP EXPRESSION
@@ -176,14 +268,14 @@ EXPRESSION
     | EXPRESSION INCDEC_OP
     | INCDEC_OP EXPRESSION
     | '(' EXPRESSION ')'
-    | IDENTIFIER
-    | CONSTANT
+    | IDENTIFIER {insert_symbol_table();}
+    | CONSTANT {insert_constant_table();}
     | FUNCTION_CALL
     ; 
 
 FUNCTION_CALL
-    : IDENTIFIER '(' ')' 
-    | IDENTIFIER '(' EXPRESSION_LIST ')'
+    : IDENTIFIER '(' ')' {insert_symbol_table();}
+    | IDENTIFIER '(' EXPRESSION_LIST ')' {insert_symbol_table();}
     ;
 
 EXPRESSION_LIST
@@ -227,7 +319,7 @@ int yyerror()
 main()
 {
 
-    yyin=fopen("abc.txt","r");
+    yyin=fopen("test.txt","r");
 
 
 /*

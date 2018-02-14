@@ -15,7 +15,9 @@ struct ctable{
 	char name[100];
 	char type[50];
 }constant_table[1000];
-
+char yyval[100];
+char yycons[100];
+char yystr[100];
 int hash_cal(char * str)
 {
 	int i;
@@ -90,95 +92,19 @@ WHITESPACE " "|"	"|"\n"
 "volatile"		{ return(VOLATILE); }
 "while"			{ return(WHILE); }
 
-{IDENTIFIER} 	{	printf("%s - identifier\n",yytext);
-					int k=hash_cal(yytext);
-					struct stable temp;
-					strcpy(temp.name,yytext);
-					strcpy(temp.type,"identifier");
-					int i=0;
-					int flag=0;
-					for(i=0;i<1000;i++)
-					{
-						if(symbol_table[k].name[0]=='\0')
-						{
-							break;
-						}
-						else
-						{
-							if(strcmp(yytext,symbol_table[k].name)==0)
-							{
-								flag=1;
-								break;
-							}
-							k=(k+1)%1000;
-						}
-					}
-					if(flag==0)
-					{
-						symbol_table[k]=temp;
-					}	
+{IDENTIFIER} 	{	//printf("%s - identifier\n",yytext);
+					strcpy(yyval,yytext);
                 	return (IDENTIFIER);
 				}
 
-{CONSTANT} {printf("%s - constant\n",yytext);
-				int k=hash_cal(yytext);
-					struct ctable temp;
-					strcpy(temp.name,yytext);
-					strcpy(temp.type,"numeric constant");
-					int i=0;
-					int flag=0;
-					for(i=0;i<1000;i++)
-					{
-						if(constant_table[k].name[0]=='\0')
-						{
-							break;
-						}
-						else
-						{
-							if(strcmp(yytext,constant_table[k].name)==0)
-							{
-								flag=1;
-								break;
-							}
-							k=(k+1)%1000;
-						}
-					}
-					if(flag==0)
-					{
-						constant_table[k]=temp;
-					}
-
-                    return (CONSTANT);
+{CONSTANT} {//printf("%s - constant\n",yytext);
+					strcpy(yycons,yytext);
+					return (CONSTANT);
 			}
 
-\"[^\n]*\" {printf("%s - string\n",yytext);
+\"[^\n]*\" {//printf("%s - string\n",yytext);
 
-				int k=hash_cal(yytext);
-					struct ctable temp;
-					strcpy(temp.name,yytext);
-					strcpy(temp.type,"string constant");
-					int i=0;
-					int flag=0;
-					for(i=0;i<1000;i++)
-					{
-						if(constant_table[k].name[0]=='\0')
-						{
-							break;
-						}
-						else
-						{
-							if(strcmp(yytext,constant_table[k].name)==0)
-							{
-								flag=1;
-								break;
-							}
-							k=(k+1)%1000;
-						}
-					}
-					if(flag==0)
-					{
-						constant_table[k]=temp;
-					}
+				strcpy(yystr,yytext);
 
 				return(STRING_LITERAL);
 			}

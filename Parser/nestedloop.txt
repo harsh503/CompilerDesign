@@ -1,0 +1,11 @@
+int main()
+{
+    int a,b;
+    for(i=0;;i++)
+    {
+        while(a>0)
+        {
+            b++;
+        }
+    }
+}
