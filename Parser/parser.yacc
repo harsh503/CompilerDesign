@@ -185,12 +185,14 @@ INIT_DECLARATOR_LIST
 INIT_DECLARATOR
     : DECLARATOR
     | DECLARATOR '=' EXPRESSION
-    | DECLARATOR '=' STRING_LITERAL
+    | DECLARATOR '=' STRING_LITERAL {insert_constant_table_str();}
     ;   
 
 DECLARATOR
     : IDENTIFIER {insert_symbol_table();}
     | '(' DECLARATOR ')'
+    | DECLARATOR '[' CONSTANT ']' {insert_constant_table();}
+    | DECLARATOR '[' ']'
     | FUNCTION_DECLARATION
     ;
 
@@ -275,7 +277,7 @@ EXPRESSION
 
 FUNCTION_CALL
     : IDENTIFIER '(' ')' {insert_symbol_table();}
-    | IDENTIFIER '(' EXPRESSION_LIST ')' {insert_symbol_table();}
+    | IDENTIFIER '(' EXPRESSION_LIST ')' {insert_symbol_table();}      
     ;
 
 EXPRESSION_LIST

@@ -1,46 +1,11 @@
-int fun(int a, int b)
+int main()
 {
-    for(i=0;i<10;i++)
+    int a,b;
+    for(i=0;;i++)
     {
-        if(a%2==0)
-        {
-            a++;
-        }
-        else if(b%2==0)
+        while(a>0)
         {
             b++;
         }
-        else
-        {
-            a--;
-            b--;
-        }
     }
-    int z= a*b;
-    return z;
-}
-
-int main()
-{
-    int a,b,c;
-    int c = fun(a,b);
-    int x=100;
-    while(x>=0)
-    {
-        c/=2;
-        do
-        {
-            switch(c)
-            {
-                case 1 : c++;
-                        break;
-                case 2 : c+=2;
-                        break;
-                default : c=50;
-            }
-        }
-        while(c>0);
-    }
-    int d;
-    d = (~(5+3*2>=7!=1))&&6;
 }
