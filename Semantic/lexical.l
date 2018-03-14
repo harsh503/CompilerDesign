@@ -9,12 +9,13 @@ int lineno=1;
 struct stable{
 	char name[100];
 	char type[50];
-}symbol_table[1000];
+	long long int scope;
+}symbol_table[100000];
 
 struct ctable{
 	char name[100];
-	char type[50];
-}constant_table[1000];
+	char type[50]; 
+}constant_table[100000];
 char yyval[100];
 char yycons[100];
 char yystr[100];

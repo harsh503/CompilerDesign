@@ -1,118 +1,175 @@
 %token AUTO BREAK CASE CHAR CONST CONTINUE DEFAULT DO DOUBLE ELSE ENUM EXTERN FLOAT FOR GOTO IF INT LONG REGISTER RETURN SHORT SIGNED SIZEOF STATIC STRUCT SWITCH TYPEDEF UNION UNSIGNED VOID VOLATILE WHILE
 %token IDENTIFIER CONSTANT STRING_LITERAL ASSIGN_OP REL_OP ADD_OP MUL_OP INCDEC_OP EQU_OP  LAND LOR BAND BXOR BOR NOT_OP
-%expect 1
+%expect 2
+
 %{
-#include<stdio.h>
-#include<stdlib.h>
-#include<ctype.h>
+
+
+#include <stdio.h>
+#include <stdlib.h>
+#include <ctype.h>
+#include <limits.h>
 
 extern FILE *yyin;
 extern int lineno;
 extern int comment_nesting;
+int scope=0;
+//Stack
+
+struct Stack
+{
+    int top;
+    unsigned capacity;
+    int* array;
+};
+struct Stack* stack; 
+// function to create a stack of given capacity. It initializes size of
+// stack as 0
+struct Stack* createStack(unsigned capacity)
+{
+    struct Stack* stack = (struct Stack*) malloc(sizeof(struct Stack));
+    stack->capacity = capacity;
+    stack->top = -1;
+    stack->array = (int*) malloc(stack->capacity * sizeof(int));
+    return stack;
+}
+ 
+// Stack is full when top is equal to the last index
+int isFull(struct Stack* stack)
+{   return stack->top == stack->capacity - 1; }
+ 
+// Stack is empty when top is equal to -1
+int isEmpty(struct Stack* stack)
+{   return stack->top == -1;  }
+ 
+// Function to add an item to stack.  It increases top by 1
+void push(struct Stack* stack, int item)
+{
+    if (isFull(stack))
+        return;
+    stack->array[++stack->top] = item;
+    printf("%d pushed to stack\n", item);
+}
+ 
+// Function to remove an item from stack.  It decreases top by 1
+int pop(struct Stack* stack)
+{
+    if (isEmpty(stack))
+        return INT_MIN;
+    return stack->array[stack->top--];
+
+}
+
 
 int flag = 0;
 int errorFlag=0;
 struct stable{
 	char name[100];
 	char type[50];
+	long long int scope;
 };
 struct ctable{
 	char name[100];
 	char type[50];
 };
-extern struct stable symbol_table[1000];
-extern struct ctable constant_table[1000];
+extern struct stable symbol_table[100000];
+extern struct ctable constant_table[100000];
 extern char yyval[100];
 extern char yycons[100];
 extern char yystr[100];
-void insert_symbol_table()
-{
-    int k=hash_cal(yyval);
-					struct stable temp;
-					strcpy(temp.name,yyval);
-					strcpy(temp.type,"identifier");
-					int i=0;
-					int flag=0;
-					for(i=0;i<1000;i++)
+	void insert_symbol_table()
+	{
+	    int k=hash_cal(yyval);
+			struct stable temp;
+			strcpy(temp.name,yyval);
+			strcpy(temp.type,"identifier");
+			int tempscope=pop(stack);
+			push(stack,tempscope);
+			temp.scope=tempscope;
+			int i=0;
+			int flag=0;
+			for(i=0;i<1000;i++)
+			{
+				if(symbol_table[k].name[0]=='\0')
+				{
+					break;
+				}
+				else
+				{
+					
+					if(strcmp(yyval,symbol_table[k].name)==0 && temp.scope==symbol_table[k].scope)
 					{
-						if(symbol_table[k].name[0]=='\0')
-						{
-							break;
-						}
-						else
-						{
-							if(strcmp(yyval,symbol_table[k].name)==0)
-							{
-								flag=1;
-								break;
-							}
-							k=(k+1)%1000;
-						}
+						flag=1;
+						printf();
+						break;
 					}
-					if(flag==0)
-					{
-						symbol_table[k]=temp;
-					}	
-}
+					k=(k+1)%1000;
+				}
+			}
+			if(flag==0)
+			{
+				symbol_table[k]=temp;
+			}	
+	}
 
-void insert_constant_table()
-{
-                int k=hash_cal(yycons);
-					struct ctable temp;
-					strcpy(temp.name,yycons);
-					strcpy(temp.type,"numeric constant");
-					int i=0;
-					int flag=0;
-					for(i=0;i<1000;i++)
-					{
-						if(constant_table[k].name[0]=='\0')
-						{
-							break;
-						}
-						else
-						{
-							if(strcmp(yycons,constant_table[k].name)==0)
-							{
-								flag=1;
-								break;
-							}
-							k=(k+1)%1000;
-						}
-					}
-					if(flag==0)
-					{
-						constant_table[k]=temp;
-					}
-}
-void insert_constant_table_str()
-{
-    int k=hash_cal(yystr);
-					struct ctable temp;
-					strcpy(temp.name,yystr);
-					strcpy(temp.type,"string constant");
-					int i=0;
-					int flag=0;
-					for(i=0;i<1000;i++)
-					{
-						if(constant_table[k].name[0]=='\0')
-						{
-							break;
-						}
-						else
-						{
-							if(strcmp(yystr,constant_table[k].name)==0)
-							{
-								flag=1;
-								break;
-							}
-							k=(k+1)%1000;
-						}
-					}
-					if(flag==0)
-					{
-						constant_table[k]=temp;
-					}
-}             
+	void insert_constant_table()
+	{
+	    int k=hash_cal(yycons);
+		struct ctable temp;
+		strcpy(temp.name,yycons);
+		strcpy(temp.type,"numeric constant");
+		int i=0;
+		int flag=0;
+		for(i=0;i<1000;i++)
+		{
+			if(constant_table[k].name[0]=='\0')
+			{
+				break;
+			}
+			else
+			{
+				if(strcmp(yycons,constant_table[k].name)==0)
+				{
+					flag=1;
+					break;
+				}
+				k=(k+1)%1000;
+			}
+		}
+		if(flag==0)
+		{
+			constant_table[k]=temp;
+		}
+	}
+	void insert_constant_table_str()
+	{
+	    int k=hash_cal(yystr);
+		struct ctable temp;
+		strcpy(temp.name,yystr);
+		strcpy(temp.type,"string constant");
+		int i=0;
+		int flag=0;
+		for(i=0;i<1000;i++)
+		{
+			if(constant_table[k].name[0]=='\0')
+			{
+				break;
+			}
+			else
+			{
+				if(strcmp(yystr,constant_table[k].name)==0)
+				{
+					flag=1;
+					break;
+				}
+				k=(k+1)%1000;
+			}
+		}
+		if(flag==0)
+		{
+			constant_table[k]=temp;
+		}
+	}             
 
 %}
 
@@ -189,7 +246,7 @@ INIT_DECLARATOR
     ;   
 
 DECLARATOR
-    : IDENTIFIER {insert_symbol_table();}
+    : DECID 
     | '(' DECLARATOR ')'
     | DECLARATOR '[' CONSTANT ']' {insert_constant_table();}
     | DECLARATOR '[' ']'
@@ -197,13 +254,13 @@ DECLARATOR
     ;
 
 FUNCTION_DECLARATION
-    : IDENTIFIER '(' DECLARATION_SPECIFIER_LIST ')'  {insert_symbol_table();}
-    | IDENTIFIER '(' ')' {insert_symbol_table();}
+    : FUNDECID '(' DECLARATION_SPECIFIER_LIST ')'  
+    | FUNDECID '(' ')' 
     ;
 
 FUNCTION_DEFINITION 
-    : DECLARATION_SPECIFIER IDENTIFIER '('  ')' COMPOUND_STATEMENT {insert_symbol_table();}
-    | DECLARATION_SPECIFIER IDENTIFIER '(' DEFINITION_SPECIFIER_LIST ')' COMPOUND_STATEMENT {insert_symbol_table();}
+    : DECLARATION_SPECIFIER FUNDECID '('  ')' COMPOUND_STATEMENT 
+    | DECLARATION_SPECIFIER FUNDECID '(' DEFINITION_SPECIFIER_LIST ')' COMPOUND_STATEMENT 
     ;
 
 
@@ -220,8 +277,8 @@ VARIABLE_DECLARATION
     :DECLARATION_SPECIFIER IDENTIFIER {insert_symbol_table();}
     ;
 COMPOUND_STATEMENT
-    :'{' STATEMENT_LIST '}'
-    |'{''}'
+    :OP_BRACE  STATEMENT_LIST CL_BRACE
+    |OP_BRACE CL_BRACE
     ;
 
 STATEMENT_LIST
@@ -255,8 +312,8 @@ EXPRESSION_STATEMENT
     ;
 
 EXPRESSION
-    : IDENTIFIER ASSIGN_OP EXPRESSION {insert_symbol_table();}
-    | IDENTIFIER '=' EXPRESSION {insert_symbol_table();}
+    : EXPID ASSIGN_OP EXPRESSION 
+    | EXPID '=' EXPRESSION 
     | EXPRESSION EQU_OP EXPRESSION
     | EXPRESSION REL_OP EXPRESSION
     | EXPRESSION ADD_OP EXPRESSION
@@ -267,15 +324,17 @@ EXPRESSION
     | EXPRESSION BAND EXPRESSION
     | EXPRESSION BXOR EXPRESSION
     | NOT_OP EXPRESSION 
+    | INCDEC_OP EXPID
+    | EXPID INCDEC_OP
     | '(' EXPRESSION ')'
-    | IDENTIFIER  {insert_symbol_table();}
+    | EXPID  
     | CONSTANT {insert_constant_table();}
     | FUNCTION_CALL
     ; 
 
 FUNCTION_CALL
-    : IDENTIFIER '(' ')' {insert_symbol_table();}
-    | IDENTIFIER '(' EXPRESSION_LIST ')' {insert_symbol_table();}      
+    : EXPID '(' ')' 
+    | EXPID '(' EXPRESSION_LIST ')'      
     ;
 
 EXPRESSION_LIST
@@ -307,6 +366,29 @@ JUMP_STATEMENT
     | RETURN EXPRESSION 
     ;
 
+OP_BRACE
+	:'{' {scope++;push(stack,scope);}
+	;
+
+CL_BRACE
+	:'}' {pop(stack);}
+	;
+
+
+DECID
+	:IDENTIFIER {insert_symbol_table();}
+	;
+
+FUNDECID
+	:IDENTIFIER {insert_symbol_table();}
+	;
+EXPID
+	:IDENTIFIER
+	;
+
+
+
+
 %%
 
 int yyerror()
@@ -318,24 +400,11 @@ int yyerror()
 
 main()
 {
-
+	
+	stack = createStack(100);
+	push(stack,scope);
     yyin=fopen("test.txt","r");
 
-
-/*
-    int wordcount=0;
-    if ( yyin )
-   {
-	  
-       while ((ch=getc(yyin)) != EOF) {
-	   
-		   if (ch == ' ' || ch == '\n') { ++wordcount; }
-
-	   }
-        wordcount+=10;
-    }
-
-*/
 
     yyparse();
 
@@ -348,7 +417,7 @@ main()
 	{
 		if(symbol_table[i].name[0]!='\0')
 		{
-			printf("%s	%s\n",symbol_table[i].name,symbol_table[i].type);
+			printf("%s	%s %d \n",symbol_table[i].name,symbol_table[i].type,symbol_table[i].scope);
 		}
 	}
 
