@@ -74,53 +74,8 @@
 extern FILE *yyin;
 extern int lineno;
 extern int comment_nesting;
+int isfunction=0;
 int scope=0;
-//Stack
-
-struct Stack
-{
-    int top;
-    unsigned capacity;
-    int* array;
-};
-struct Stack* stack; 
-// function to create a stack of given capacity. It initializes size of
-// stack as 0
-struct Stack* createStack(unsigned capacity)
-{
-    struct Stack* stack = (struct Stack*) malloc(sizeof(struct Stack));
-    stack->capacity = capacity;
-    stack->top = -1;
-    stack->array = (int*) malloc(stack->capacity * sizeof(int));
-    return stack;
-}
- 
-// Stack is full when top is equal to the last index
-int isFull(struct Stack* stack)
-{   return stack->top == stack->capacity - 1; }
- 
-// Stack is empty when top is equal to -1
-int isEmpty(struct Stack* stack)
-{   return stack->top == -1;  }
- 
-// Function to add an item to stack.  It increases top by 1
-void push(struct Stack* stack, int item)
-{
-    if (isFull(stack))
-        return;
-    stack->array[++stack->top] = item;
-    printf("%d pushed to stack\n", item);
-}
- 
-// Function to remove an item from stack.  It decreases top by 1
-int pop(struct Stack* stack)
-{
-    if (isEmpty(stack))
-        return INT_MIN;
-    return stack->array[stack->top--];
-
-}
-
 
 int flag = 0;
 int errorFlag=0;
@@ -128,6 +83,7 @@ struct stable{
 	char name[100];
 	char type[50];
 	long long int scope;
+    int fundef;
 };
 struct ctable{
 	char name[100];
@@ -144,8 +100,15 @@ extern char yystr[100];
 			struct stable temp;
 			strcpy(temp.name,yyval);
 			strcpy(temp.type,"identifier");
-			int tempscope=pop(stack);
-			push(stack,tempscope);
+            if(isfunction==1)
+            {
+                temp.fundef=1;
+            }
+            else
+            {
+                temp.fundef=0;
+            }
+			int tempscope=scope;
 			temp.scope=tempscope;
 			int i=0;
 			int flag=0;
@@ -161,6 +124,7 @@ extern char yystr[100];
 					if(strcmp(yyval,symbol_table[k].name)==0 && temp.scope==symbol_table[k].scope)
 					{
 						flag=1;
+						printf("Error:redeclaration\n");
 						break;
 					}
 					k=(k+1)%1000;
@@ -171,7 +135,31 @@ extern char yystr[100];
 				symbol_table[k]=temp;
 			}	
 	}
+    int ck_symbol_table()
+	{
+	    int k=hash_cal(yyval);
+			struct stable temp;
+			strcpy(temp.name,yyval);
+			strcpy(temp.type,"identifier");
 
+			int tempscope=scope;
+			temp.scope=tempscope;
+			int i=0;
+			int flag=0;
+
+			for(i=0;i<1000;i++)
+			{
+				if(strcmp(yyval,symbol_table[i].name)==0)
+                {
+                    
+                    return(1);
+                }
+			}
+            printf("%s -->",yyval);
+              return(0);
+			
+	}
+    
 	void insert_constant_table()
 	{
 	    int k=hash_cal(yycons);
@@ -229,10 +217,25 @@ extern char yystr[100];
 		{
 			constant_table[k]=temp;
 		}
-	}             
+	}   
+
+    void delete_sym(int n)
+    {
+        int i;
+        for(i=0;i<1000;i++)
+        {
+            if(symbol_table[i].name[0]!='\0'&&symbol_table[i].scope==n)
+            {
+                printf("ENTRY DELETED::%s   %s  %d \n",symbol_table[i].name,symbol_table[i].type,symbol_table[i].scope);
+                symbol_table[i].name[0]='\0';
+                symbol_table[i].type[0]!='\0';
+
+            }
+        }
+    }          
 
 
-#line 236 "y.tab.c" /* yacc.c:339  */
+#line 239 "y.tab.c" /* yacc.c:339  */
 
 # ifndef YY_NULLPTR
 #  if defined __cplusplus && 201103L <= __cplusplus
@@ -380,7 +383,7 @@ int yyparse (void);
 
 /* Copy the second part of user declarations.  */
 
-#line 384 "y.tab.c" /* yacc.c:358  */
+#line 387 "y.tab.c" /* yacc.c:358  */
 
 #ifdef short
 # undef short
@@ -682,16 +685,16 @@ static const yytype_uint8 yytranslate[] =
   /* YYRLINE[YYN] -- Source line where rule number YYN was defined.  */
 static const yytype_uint16 yyrline[] =
 {
-       0,   196,   196,   197,   201,   202,   206,   210,   211,   212,
-     213,   217,   218,   219,   220,   221,   225,   226,   227,   228,
-     229,   230,   231,   232,   233,   237,   238,   242,   243,   244,
-     248,   249,   250,   251,   252,   256,   257,   261,   262,   267,
-     268,   272,   273,   276,   279,   280,   284,   285,   291,   292,
-     293,   294,   295,   296,   297,   298,   304,   305,   309,   310,
-     314,   315,   316,   317,   318,   319,   320,   321,   322,   323,
-     324,   325,   326,   327,   328,   329,   330,   331,   335,   336,
-     340,   341,   347,   348,   349,   355,   356,   357,   358,   362,
-     363,   364,   365,   369,   373,   378,   382,   385
+       0,   199,   199,   200,   204,   205,   209,   213,   214,   215,
+     216,   220,   221,   222,   223,   224,   228,   229,   230,   231,
+     232,   233,   234,   235,   236,   240,   241,   245,   246,   247,
+     251,   252,   253,   254,   255,   259,   260,   264,   265,   270,
+     271,   275,   276,   279,   282,   283,   287,   288,   294,   295,
+     296,   297,   298,   299,   300,   301,   307,   308,   312,   313,
+     317,   318,   319,   320,   321,   322,   323,   324,   325,   326,
+     327,   328,   329,   330,   331,   332,   333,   334,   338,   339,
+     343,   344,   350,   351,   352,   358,   359,   360,   361,   365,
+     366,   367,   368,   372,   376,   381,   385,   388
 };
 #endif
 
@@ -1642,55 +1645,67 @@ yyreduce:
   switch (yyn)
     {
         case 29:
-#line 244 "parser.yacc" /* yacc.c:1646  */
+#line 247 "parser.yacc" /* yacc.c:1646  */
     {insert_constant_table_str();}
-#line 1648 "y.tab.c" /* yacc.c:1646  */
+#line 1651 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 32:
-#line 250 "parser.yacc" /* yacc.c:1646  */
+#line 253 "parser.yacc" /* yacc.c:1646  */
     {insert_constant_table();}
-#line 1654 "y.tab.c" /* yacc.c:1646  */
+#line 1657 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 43:
-#line 276 "parser.yacc" /* yacc.c:1646  */
+#line 279 "parser.yacc" /* yacc.c:1646  */
     {insert_symbol_table();}
-#line 1660 "y.tab.c" /* yacc.c:1646  */
+#line 1663 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 76:
-#line 330 "parser.yacc" /* yacc.c:1646  */
+#line 333 "parser.yacc" /* yacc.c:1646  */
     {insert_constant_table();}
-#line 1666 "y.tab.c" /* yacc.c:1646  */
+#line 1669 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 93:
-#line 369 "parser.yacc" /* yacc.c:1646  */
-    {scope++;push(stack,scope);}
-#line 1672 "y.tab.c" /* yacc.c:1646  */
+#line 372 "parser.yacc" /* yacc.c:1646  */
+    {scope++;}
+#line 1675 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 94:
-#line 373 "parser.yacc" /* yacc.c:1646  */
-    {pop(stack);}
-#line 1678 "y.tab.c" /* yacc.c:1646  */
+#line 376 "parser.yacc" /* yacc.c:1646  */
+    {delete_sym(scope);scope--;}
+#line 1681 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 95:
-#line 378 "parser.yacc" /* yacc.c:1646  */
+#line 381 "parser.yacc" /* yacc.c:1646  */
     {insert_symbol_table();}
-#line 1684 "y.tab.c" /* yacc.c:1646  */
+#line 1687 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 96:
-#line 382 "parser.yacc" /* yacc.c:1646  */
-    {insert_symbol_table();}
-#line 1690 "y.tab.c" /* yacc.c:1646  */
+#line 385 "parser.yacc" /* yacc.c:1646  */
+    {isfunction=1;insert_symbol_table();isfunction=0;}
+#line 1693 "y.tab.c" /* yacc.c:1646  */
+    break;
+
+  case 97:
+#line 388 "parser.yacc" /* yacc.c:1646  */
+    {
+                
+                if(!ck_symbol_table())
+                {
+                    printf("ERROR:undeclared variable\n");
+                }
+                }
+#line 1705 "y.tab.c" /* yacc.c:1646  */
     break;
 
 
-#line 1694 "y.tab.c" /* yacc.c:1646  */
+#line 1709 "y.tab.c" /* yacc.c:1646  */
       default: break;
     }
   /* User semantic actions sometimes alter yychar, and that requires
@@ -1918,7 +1933,7 @@ yyreturn:
 #endif
   return yyresult;
 }
-#line 391 "parser.yacc" /* yacc.c:1906  */
+#line 400 "parser.yacc" /* yacc.c:1906  */
 
 
 int yyerror()
@@ -1930,9 +1945,8 @@ int yyerror()
 
 main()
 {
-
-	stack = createStack(100);
-	push(stack,scope);
+	
+	
     yyin=fopen("test.txt","r");
 
 

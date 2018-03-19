@@ -1,6 +1,9 @@
 int main()
 {
     int a,b;
+    a=5;
+    c ;
+	int i;
 	int i;
     for(i=0;;i++)
     {

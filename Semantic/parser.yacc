@@ -13,53 +13,8 @@
 extern FILE *yyin;
 extern int lineno;
 extern int comment_nesting;
+int isfunction=0;
 int scope=0;
-//Stack
-
-struct Stack
-{
-    int top;
-    unsigned capacity;
-    int* array;
-};
-struct Stack* stack; 
-// function to create a stack of given capacity. It initializes size of
-// stack as 0
-struct Stack* createStack(unsigned capacity)
-{
-    struct Stack* stack = (struct Stack*) malloc(sizeof(struct Stack));
-    stack->capacity = capacity;
-    stack->top = -1;
-    stack->array = (int*) malloc(stack->capacity * sizeof(int));
-    return stack;
-}
- 
-// Stack is full when top is equal to the last index
-int isFull(struct Stack* stack)
-{   return stack->top == stack->capacity - 1; }
- 
-// Stack is empty when top is equal to -1
-int isEmpty(struct Stack* stack)
-{   return stack->top == -1;  }
- 
-// Function to add an item to stack.  It increases top by 1
-void push(struct Stack* stack, int item)
-{
-    if (isFull(stack))
-        return;
-    stack->array[++stack->top] = item;
-    printf("%d pushed to stack\n", item);
-}
- 
-// Function to remove an item from stack.  It decreases top by 1
-int pop(struct Stack* stack)
-{
-    if (isEmpty(stack))
-        return INT_MIN;
-    return stack->array[stack->top--];
-
-}
-
 
 int flag = 0;
 int errorFlag=0;
@@ -67,6 +22,7 @@ struct stable{
 	char name[100];
 	char type[50];
 	long long int scope;
+    int fundef;
 };
 struct ctable{
 	char name[100];
@@ -83,8 +39,15 @@ extern char yystr[100];
 			struct stable temp;
 			strcpy(temp.name,yyval);
 			strcpy(temp.type,"identifier");
-			int tempscope=pop(stack);
-			push(stack,tempscope);
+            if(isfunction==1)
+            {
+                temp.fundef=1;
+            }
+            else
+            {
+                temp.fundef=0;
+            }
+			int tempscope=scope;
 			temp.scope=tempscope;
 			int i=0;
 			int flag=0;
@@ -100,7 +63,7 @@ extern char yystr[100];
 					if(strcmp(yyval,symbol_table[k].name)==0 && temp.scope==symbol_table[k].scope)
 					{
 						flag=1;
-						printf();
+						printf("Error:redeclaration\n");
 						break;
 					}
 					k=(k+1)%1000;
@@ -111,7 +74,31 @@ extern char yystr[100];
 				symbol_table[k]=temp;
 			}	
 	}
+    int ck_symbol_table()
+	{
+	    int k=hash_cal(yyval);
+			struct stable temp;
+			strcpy(temp.name,yyval);
+			strcpy(temp.type,"identifier");
 
+			int tempscope=scope;
+			temp.scope=tempscope;
+			int i=0;
+			int flag=0;
+
+			for(i=0;i<1000;i++)
+			{
+				if(strcmp(yyval,symbol_table[i].name)==0)
+                {
+                    
+                    return(1);
+                }
+			}
+            printf("%s -->",yyval);
+              return(0);
+			
+	}
+    
 	void insert_constant_table()
 	{
 	    int k=hash_cal(yycons);
@@ -169,7 +156,22 @@ extern char yystr[100];
 		{
 			constant_table[k]=temp;
 		}
-	}             
+	}   
+
+    void delete_sym(int n)
+    {
+        int i;
+        for(i=0;i<1000;i++)
+        {
+            if(symbol_table[i].name[0]!='\0'&&symbol_table[i].scope==n)
+            {
+                printf("ENTRY DELETED::%s   %s  %d \n",symbol_table[i].name,symbol_table[i].type,symbol_table[i].scope);
+                symbol_table[i].name[0]='\0';
+                symbol_table[i].type[0]!='\0';
+
+            }
+        }
+    }          
 
 %}
 
@@ -367,11 +369,11 @@ JUMP_STATEMENT
     ;
 
 OP_BRACE
-	:'{' {scope++;push(stack,scope);}
+	:'{' {scope++;}
 	;
 
 CL_BRACE
-	:'}' {pop(stack);}
+	:'}' {delete_sym(scope);scope--;}
 	;
 
 
@@ -380,10 +382,16 @@ DECID
 	;
 
 FUNDECID
-	:IDENTIFIER {insert_symbol_table();}
+	:IDENTIFIER {isfunction=1;insert_symbol_table();isfunction=0;}
 	;
 EXPID
-	:IDENTIFIER
+	:IDENTIFIER {
+                
+                if(!ck_symbol_table())
+                {
+                    printf("ERROR:undeclared variable\n");
+                }
+                }
 	;
 
 
@@ -401,8 +409,7 @@ int yyerror()
 main()
 {
 	
-	stack = createStack(100);
-	push(stack,scope);
+	
     yyin=fopen("test.txt","r");
 
 
