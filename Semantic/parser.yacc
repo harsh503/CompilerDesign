@@ -33,13 +33,22 @@ extern struct ctable constant_table[100000];
 extern char yyval[100];
 extern char yycons[100];
 extern char yystr[100];
+extern char currtype[100],prevtype[100],currid[100],previd[100];
+
+char* getcurrid();
+char* getcurrtype();
+char* getprevid();
+char* getprevtype();
+
+
 	void insert_symbol_table()
 	{
 	    int k=hash_cal(yyval);
 			struct stable temp;
 			strcpy(temp.name,yyval);
-			strcpy(temp.type,"identifier");
-            if(isfunction==1)
+            char* tmp = getcurrtype();
+            strcpy(temp.type,tmp);
+			if(isfunction==1)
             {
                 temp.fundef=1;
             }
@@ -210,30 +219,13 @@ DECLARATION
     ;
 
 DECLARATION_SPECIFIER
-    : STORAGE_CLASS_SPECIFIER 
-    | STORAGE_CLASS_SPECIFIER DECLARATION_SPECIFIER 
-    | TYPE_SPECIFIER 
-    | TYPE_SPECIFIER DECLARATION_SPECIFIER
-    ;
-
-STORAGE_CLASS_SPECIFIER
-    : TYPEDEF
-    | EXTERN
-    | STATIC
-    | AUTO
-    | REGISTER
+    : TYPE_SPECIFIER 
     ;
 
 TYPE_SPECIFIER
     : VOID
-    | CHAR
-    | SHORT
     | INT
-    | LONG
     | FLOAT
-    | DOUBLE
-    | SIGNED
-    | UNSIGNED
     ;
 
 INIT_DECLARATOR_LIST 
@@ -250,25 +242,11 @@ INIT_DECLARATOR
 DECLARATOR
     : DECID 
     | '(' DECLARATOR ')'
-    | DECLARATOR '[' CONSTANT ']' {insert_constant_table();}
-    | DECLARATOR '[' ']'
-    | FUNCTION_DECLARATION
-    ;
-
-FUNCTION_DECLARATION
-    : FUNDECID '(' DECLARATION_SPECIFIER_LIST ')'  
-    | FUNDECID '(' ')' 
     ;
 
 FUNCTION_DEFINITION 
     : DECLARATION_SPECIFIER FUNDECID '('  ')' COMPOUND_STATEMENT 
     | DECLARATION_SPECIFIER FUNDECID '(' DEFINITION_SPECIFIER_LIST ')' COMPOUND_STATEMENT 
-    ;
-
-
-DECLARATION_SPECIFIER_LIST
-    : DECLARATION_SPECIFIER_LIST ',' DECLARATION_SPECIFIER 
-    | DECLARATION_SPECIFIER
     ;
 
 DEFINITION_SPECIFIER_LIST
@@ -442,4 +420,24 @@ main()
     {
         printf("\nParsing SUCCESSFUL.\n");
     }
+}
+
+char* getcurrid()
+{
+    return currid;
+}
+
+char* getcurrtype()
+{
+    return currtype;
+}
+
+char* getprevid()
+{
+    return previd;
+}
+
+char* getprevtype()
+{
+    return prevtype;
 }

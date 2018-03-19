@@ -1,9 +1,13 @@
+void fun(int x, int y)
+{
+    return x+y;
+}
+
 int main()
 {
     int a,b;
     a=5;
-    c ;
-	int i;
+
 	int i;
     for(i=0;;i++)
     {
@@ -13,4 +17,5 @@ int main()
             b++;
         }
     }
+    fun(2,1);
 }

@@ -19,6 +19,9 @@ struct ctable{
 char yyval[100];
 char yycons[100];
 char yystr[100];
+
+char currtype[100],prevtype[100],currid[100],previd[100];
+
 int hash_cal(char * str)
 {
 	int i;
@@ -72,11 +75,11 @@ WHITESPACE " "|"	"|"\n"
 "else"			{ return(ELSE); }
 "enum"			{ return(ENUM); }
 "extern"		{ return(EXTERN); }
-"float"			{ return(FLOAT); }
+"float"			{ strcpy(prevtype, currtype); strcpy(currtype, yytext); return(FLOAT); }
 "for"			{ return(FOR); }
 "goto"			{ return(GOTO); }
 "if"			{ return(IF); }
-"int"			{ return(INT); }
+"int"			{ strcpy(prevtype, currtype); strcpy(currtype, yytext); return(INT); }
 "long"			{ return(LONG); }
 "register"		{ return(REGISTER); }
 "return"		{ return(RETURN); }
@@ -89,12 +92,14 @@ WHITESPACE " "|"	"|"\n"
 "typedef"		{ return(TYPEDEF); }
 "union"			{ return(UNION); }
 "unsigned"		{ return(UNSIGNED); }
-"void"			{ return(VOID); }
+"void"			{ strcpy(prevtype, currtype); strcpy(currtype, yytext); return(VOID); }
 "volatile"		{ return(VOLATILE); }
 "while"			{ return(WHILE); }
 
 {IDENTIFIER} 	{	//printf("%s - identifier\n",yytext);
 					strcpy(yyval,yytext);
+					strcpy(previd,currid);
+					strcpy(currid,yytext);
                 	return (IDENTIFIER);
 				}
 
