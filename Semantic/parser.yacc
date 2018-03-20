@@ -1,5 +1,6 @@
-%token AUTO BREAK CASE CHAR CONST CONTINUE DEFAULT DO DOUBLE ELSE ENUM EXTERN FLOAT FOR GOTO IF INT LONG REGISTER RETURN SHORT SIGNED SIZEOF STATIC STRUCT SWITCH TYPEDEF UNION UNSIGNED VOID VOLATILE WHILE
-%token IDENTIFIER CONSTANT STRING_LITERAL ASSIGN_OP REL_OP ADD_OP MUL_OP INCDEC_OP EQU_OP  LAND LOR BAND BXOR BOR NOT_OP
+%token AUTO BREAK CASE CHAR CONTINUE DEFAULT DO DOUBLE ELSE ENUM EXTERN FLOAT FOR GOTO IF INT LONG REGISTER RETURN SHORT SIGNED SIZEOF STATIC STRUCT SWITCH TYPEDEF UNION UNSIGNED VOID VOLATILE WHILE
+%token IDENTIFIER STRING_LITERAL ASSIGN_OP REL_OP ADD_OP MUL_OP INCDEC_OP EQU_OP  LAND LOR BAND BXOR BOR NOT_OP
+%token INTVALUE FLOATVALUE
 %expect 2
 
 %{
@@ -39,6 +40,7 @@ char* getcurrid();
 char* getcurrtype();
 char* getprevid();
 char* getprevtype();
+char gettype(char *name);
 
 
 	void insert_symbol_table()
@@ -235,8 +237,7 @@ INIT_DECLARATOR_LIST
 
 INIT_DECLARATOR
     : DECLARATOR
-    | DECLARATOR '=' EXPRESSION
-    | DECLARATOR '=' STRING_LITERAL {insert_constant_table_str();}
+    | DECLARATOR '=' EXPRESSION {if($3==-1) printf("Invalid Expression\n");}
     ;   
 
 DECLARATOR
@@ -282,34 +283,36 @@ STATEMENT
 
 
 LABELED_STATEMENT
-    : CASE EXPRESSION ':' STATEMENT
+    : CASE EXPRESSION ':' STATEMENT {if($2==-1) printf("Invalid Expression\n");}
     | DEFAULT ':' STATEMENT
     ;
 
 EXPRESSION_STATEMENT
     : ';'
-    | EXPRESSION ';'
+    | EXPRESSION ';' {if($1==-1) printf("Invalid Expression\n");}
     ;
 
 EXPRESSION
-    : EXPID ASSIGN_OP EXPRESSION 
-    | EXPID '=' EXPRESSION 
-    | EXPRESSION EQU_OP EXPRESSION
-    | EXPRESSION REL_OP EXPRESSION
-    | EXPRESSION ADD_OP EXPRESSION
-    | EXPRESSION MUL_OP EXPRESSION
-    | EXPRESSION LAND EXPRESSION
-    | EXPRESSION LOR EXPRESSION
-    | EXPRESSION BOR EXPRESSION
-    | EXPRESSION BAND EXPRESSION
-    | EXPRESSION BXOR EXPRESSION
-    | NOT_OP EXPRESSION 
-    | INCDEC_OP EXPID
-    | EXPID INCDEC_OP
-    | '(' EXPRESSION ')'
-    | EXPID  
-    | CONSTANT {insert_constant_table();}
-    | FUNCTION_CALL
+    : EXPID ASSIGN_OP EXPRESSION { if($3==1 && $1==$3)$$=1; else if($3==2 && $1==$3)$$=2; else $$=-1;}
+    | EXPID '=' EXPRESSION {if($3==1 && $1==$3)$$=1; else if($3==2 && $1==$3)$$=2; else $$=-1;}
+    | EXPRESSION EQU_OP EXPRESSION {if($1==1 && $3==1)$$=1; else if($1==2 && $3==2)$$=2; else $$=-1;}
+    | EXPRESSION REL_OP EXPRESSION {printf("chk%d\n",$1); if($1==1 && $3==1)$$=1; else if($1==2 && $3==2)$$=2; else $$=-1;}
+    | EXPRESSION ADD_OP EXPRESSION {if($1==1 && $3==1)$$=1; else if($1==2 && $3==2)$$=2; else $$=-1;}
+    | EXPRESSION MUL_OP EXPRESSION {if($1==1 && $3==1)$$=1; else if($1==2 && $3==2)$$=2; else $$=-1;}
+    | EXPRESSION LAND EXPRESSION {if($1==1 && $3==1)$$=1; else if($1==2 && $3==2)$$=2; else $$=-1;}
+    | EXPRESSION LOR EXPRESSION {if($1==1 && $3==1)$$=1; else if($1==2 && $3==2)$$=2; else $$=-1;}
+    | EXPRESSION BOR EXPRESSION {if($1==1 && $3==1)$$=1; else if($1==2 && $3==2)$$=2; else $$=-1;}
+    | EXPRESSION BAND EXPRESSION {if($1==1 && $3==1)$$=1; else if($1==2 && $3==2)$$=2; else $$=-1;}
+    | EXPRESSION BXOR EXPRESSION {if($1==1 && $3==1)$$=1; else if($1==2 && $3==2)$$=2; else $$=-1;}
+    | NOT_OP EXPRESSION {if($2==1)$$=1; else if($2==2)$$=2; else $$=-1;}
+    | INCDEC_OP EXPID {$$=$2;}
+    | EXPID INCDEC_OP {$$=$1;}
+    | '(' EXPRESSION ')' {if($2==1)$$=1; else $$=-1;}
+    | EXPID  {$$=$1;}
+    | INTVALUE {insert_constant_table(); $$=1;}
+    | FLOATVALUE {insert_constant_table(); $$=2;}
+    | FUNCTION_CALL {$$ = 1; }
+    | STRING_LITERAL {insert_constant_table_str(); $$=-1;}
     ; 
 
 FUNCTION_CALL
@@ -318,32 +321,32 @@ FUNCTION_CALL
     ;
 
 EXPRESSION_LIST
-    : EXPRESSION_LIST ',' EXPRESSION
-    | EXPRESSION
+    : EXPRESSION_LIST ',' EXPRESSION {if($3==-1) printf("Invalid Expression\n");}
+    | EXPRESSION {if($1==-1) printf("Invalid Expression\n");}
     ;
 
 
 
 SELECTION_STATEMENT 
-    : IF '(' EXPRESSION ')' STATEMENT  %prec LOWER_THAN_ELSE 
-    | IF '(' EXPRESSION ')' STATEMENT ELSE STATEMENT 
-    | SWITCH '(' EXPRESSION ')' STATEMENT
+    : IF '(' EXPRESSION ')' STATEMENT  %prec LOWER_THAN_ELSE {if($3==-1) printf("Invalid Expression\n");}
+    | IF '(' EXPRESSION ')' STATEMENT ELSE STATEMENT {if($3==-1) printf("Invalid Expression\n");}
+    | SWITCH '(' EXPRESSION ')' STATEMENT {if($3==-1) printf("Invalid Expression\n");}
     ;
 
 
 
 ITERATION_STATEMENT
-    : WHILE '(' EXPRESSION ')' STATEMENT
-    | DO STATEMENT WHILE '(' EXPRESSION ')' ';'
+    : WHILE '(' EXPRESSION ')' STATEMENT { printf("val%d\n",$3);if($3==-1) printf("Invalid Expression\n");}
+    | DO STATEMENT WHILE '(' EXPRESSION ')' ';' {if($5==-1) printf("Invalid Expression\n");}
     | FOR '(' EXPRESSION_STATEMENT EXPRESSION_STATEMENT ')' STATEMENT
-    | FOR '(' EXPRESSION_STATEMENT EXPRESSION_STATEMENT EXPRESSION ')' STATEMENT
+    | FOR '(' EXPRESSION_STATEMENT EXPRESSION_STATEMENT EXPRESSION ')' STATEMENT {if($5==-1) printf("Invalid Expression\n");}
     ;
 
 JUMP_STATEMENT
     : CONTINUE ';'
     | BREAK ';'
     | RETURN ';'
-    | RETURN EXPRESSION 
+    | RETURN EXPRESSION {if($2==-1) printf("Invalid Expression\n");}
     ;
 
 OP_BRACE
@@ -364,7 +367,14 @@ FUNDECID
 	;
 EXPID
 	:IDENTIFIER {
-                
+
+                if(gettype(getcurrid())=='i') 
+                    $$ = 1; 
+                else if(gettype(getcurrid())=='f') 
+                    $$=2; 
+                else 
+                    $$=-1;
+
                 if(!ck_symbol_table())
                 {
                     printf("ERROR:undeclared variable\n");
@@ -440,4 +450,16 @@ char* getprevid()
 char* getprevtype()
 {
     return prevtype;
+}
+
+char gettype(char *name)
+{
+    int i;
+    char t;
+	for (i=0;i<1001;i++){
+		if(strcmp(symbol_table[i].name,name) == 0 && symbol_table[i].scope <= scope){
+			t =  (symbol_table[i].type[0]);
+		}
+	}
+    return t;
 }

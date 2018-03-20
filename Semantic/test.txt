@@ -1,21 +1,20 @@
-void fun(int x, int y)
-{
-    return x+y;
-}
-
 int main()
 {
     int a,b;
-    a=5;
+    a=2;
+    b=5;
+    float c;
+    c=2.5;
+
+    
 
 	int i;
     for(i=0;;i++)
     {
-	int a;
-        while(a>0)
+	float a;
+        while(a>0.0)
         {
             b++;
         }
     }
-    fun(2,1);
 }

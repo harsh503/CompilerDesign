@@ -49,49 +49,49 @@ extern int yydebug;
     BREAK = 259,
     CASE = 260,
     CHAR = 261,
-    CONST = 262,
-    CONTINUE = 263,
-    DEFAULT = 264,
-    DO = 265,
-    DOUBLE = 266,
-    ELSE = 267,
-    ENUM = 268,
-    EXTERN = 269,
-    FLOAT = 270,
-    FOR = 271,
-    GOTO = 272,
-    IF = 273,
-    INT = 274,
-    LONG = 275,
-    REGISTER = 276,
-    RETURN = 277,
-    SHORT = 278,
-    SIGNED = 279,
-    SIZEOF = 280,
-    STATIC = 281,
-    STRUCT = 282,
-    SWITCH = 283,
-    TYPEDEF = 284,
-    UNION = 285,
-    UNSIGNED = 286,
-    VOID = 287,
-    VOLATILE = 288,
-    WHILE = 289,
-    IDENTIFIER = 290,
-    CONSTANT = 291,
-    STRING_LITERAL = 292,
-    ASSIGN_OP = 293,
-    REL_OP = 294,
-    ADD_OP = 295,
-    MUL_OP = 296,
-    INCDEC_OP = 297,
-    EQU_OP = 298,
-    LAND = 299,
-    LOR = 300,
-    BAND = 301,
-    BXOR = 302,
-    BOR = 303,
-    NOT_OP = 304,
+    CONTINUE = 262,
+    DEFAULT = 263,
+    DO = 264,
+    DOUBLE = 265,
+    ELSE = 266,
+    ENUM = 267,
+    EXTERN = 268,
+    FLOAT = 269,
+    FOR = 270,
+    GOTO = 271,
+    IF = 272,
+    INT = 273,
+    LONG = 274,
+    REGISTER = 275,
+    RETURN = 276,
+    SHORT = 277,
+    SIGNED = 278,
+    SIZEOF = 279,
+    STATIC = 280,
+    STRUCT = 281,
+    SWITCH = 282,
+    TYPEDEF = 283,
+    UNION = 284,
+    UNSIGNED = 285,
+    VOID = 286,
+    VOLATILE = 287,
+    WHILE = 288,
+    IDENTIFIER = 289,
+    STRING_LITERAL = 290,
+    ASSIGN_OP = 291,
+    REL_OP = 292,
+    ADD_OP = 293,
+    MUL_OP = 294,
+    INCDEC_OP = 295,
+    EQU_OP = 296,
+    LAND = 297,
+    LOR = 298,
+    BAND = 299,
+    BXOR = 300,
+    BOR = 301,
+    NOT_OP = 302,
+    INTVALUE = 303,
+    FLOATVALUE = 304,
     LOWER_THAN_ELSE = 305
   };
 #endif
@@ -100,49 +100,49 @@ extern int yydebug;
 #define BREAK 259
 #define CASE 260
 #define CHAR 261
-#define CONST 262
-#define CONTINUE 263
-#define DEFAULT 264
-#define DO 265
-#define DOUBLE 266
-#define ELSE 267
-#define ENUM 268
-#define EXTERN 269
-#define FLOAT 270
-#define FOR 271
-#define GOTO 272
-#define IF 273
-#define INT 274
-#define LONG 275
-#define REGISTER 276
-#define RETURN 277
-#define SHORT 278
-#define SIGNED 279
-#define SIZEOF 280
-#define STATIC 281
-#define STRUCT 282
-#define SWITCH 283
-#define TYPEDEF 284
-#define UNION 285
-#define UNSIGNED 286
-#define VOID 287
-#define VOLATILE 288
-#define WHILE 289
-#define IDENTIFIER 290
-#define CONSTANT 291
-#define STRING_LITERAL 292
-#define ASSIGN_OP 293
-#define REL_OP 294
-#define ADD_OP 295
-#define MUL_OP 296
-#define INCDEC_OP 297
-#define EQU_OP 298
-#define LAND 299
-#define LOR 300
-#define BAND 301
-#define BXOR 302
-#define BOR 303
-#define NOT_OP 304
+#define CONTINUE 262
+#define DEFAULT 263
+#define DO 264
+#define DOUBLE 265
+#define ELSE 266
+#define ENUM 267
+#define EXTERN 268
+#define FLOAT 269
+#define FOR 270
+#define GOTO 271
+#define IF 272
+#define INT 273
+#define LONG 274
+#define REGISTER 275
+#define RETURN 276
+#define SHORT 277
+#define SIGNED 278
+#define SIZEOF 279
+#define STATIC 280
+#define STRUCT 281
+#define SWITCH 282
+#define TYPEDEF 283
+#define UNION 284
+#define UNSIGNED 285
+#define VOID 286
+#define VOLATILE 287
+#define WHILE 288
+#define IDENTIFIER 289
+#define STRING_LITERAL 290
+#define ASSIGN_OP 291
+#define REL_OP 292
+#define ADD_OP 293
+#define MUL_OP 294
+#define INCDEC_OP 295
+#define EQU_OP 296
+#define LAND 297
+#define LOR 298
+#define BAND 299
+#define BXOR 300
+#define BOR 301
+#define NOT_OP 302
+#define INTVALUE 303
+#define FLOATVALUE 304
 #define LOWER_THAN_ELSE 305
 
 /* Value type.  */

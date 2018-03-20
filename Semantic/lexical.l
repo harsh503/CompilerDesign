@@ -43,7 +43,8 @@ int hash_cal(char * str)
 %}
 
 IDENTIFIER [A-Za-z_]([A-Za-z_]|[0-9])*
-CONSTANT (([0-9])*)(\.(([0-9])+))?(([eE])([\+\-]?)(([0-9])+))?
+INTVALUE [0-9]+
+FLOATVALUE [0-9]*[.][0-9]+
 WHITESPACE " "|"	"|"\n"
 
 %x SC_COMMENT
@@ -67,7 +68,6 @@ WHITESPACE " "|"	"|"\n"
 "break"			{ return(BREAK); }
 "case"			{ return(CASE); }
 "char"			{ return(CHAR); }
-"const"			{ return(CONST); }
 "continue"		{ return(CONTINUE); }
 "default"		{ return(DEFAULT); }
 "do"			{ return(DO); }
@@ -103,10 +103,16 @@ WHITESPACE " "|"	"|"\n"
                 	return (IDENTIFIER);
 				}
 
-{CONSTANT} {//printf("%s - constant\n",yytext);
+{INTVALUE} {//printf("%s - constant\n",yytext);
 					strcpy(yycons,yytext);
-					return (CONSTANT);
+					return (INTVALUE);
 			}
+
+{FLOATVALUE} {//printf("%s - constant\n",yytext);
+					strcpy(yycons,yytext);
+					return (FLOATVALUE);
+			}
+
 
 \"[^\n]*\" {//printf("%s - string\n",yytext);
 
