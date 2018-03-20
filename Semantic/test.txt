@@ -1,20 +1,28 @@
+int fun(int x, int y)
+{
+    return x+y;
+}
+
+void v()
+{
+	return ;
+}
 int main()
 {
     int a,b;
-    a=2;
-    b=5;
-    float c;
-    c=2.5;
-
-    
-
+    a=5;
+	
 	int i;
     for(i=0;;i++)
     {
-	float a;
-        while(a>0.0)
+	int a;
+        while(a>0)
         {
             b++;
         }
     }
+    v();
+    fun(a,1);
+    
+    
 }

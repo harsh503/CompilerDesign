@@ -24,6 +24,8 @@ struct stable{
 	char type[50];
 	long long int scope;
     int fundef;
+    int countargs;
+    char argslist[20];
 };
 struct ctable{
 	char name[100];
@@ -35,7 +37,12 @@ extern char yyval[100];
 extern char yycons[100];
 extern char yystr[100];
 extern char currtype[100],prevtype[100],currid[100],previd[100];
-
+char fnname[100];
+char fnlist[20];
+int fncount=0;
+char fncname[100];
+char fnclist[20];
+int fnccount=0;
 char* getcurrid();
 char* getcurrtype();
 char* getprevid();
@@ -109,7 +116,57 @@ char gettype(char *name);
               return(0);
 			
 	}
+
+    int sym_update_fundef()
+	{
+	  
+			int i=0;
+			int flag=0;
+
+			for(i=0;i<1000;i++)
+			{
+				if(strcmp(fnname,symbol_table[i].name)==0&&symbol_table[i].fundef==1)
+                {
+                    symbol_table[i].countargs=fncount;
+                    strcpy(symbol_table[i].argslist,fnlist);
+                    return(1);
+                }
+			}
+            return(0);
+            
+			
+	}
+    int sym_ck_funcall()
+	{
+	  
+			int i=0;
+			int flag=0;
+			for(i=0;i<1000;i++)
+			{
+				if(strcmp(fncname,symbol_table[i].name)==0&&symbol_table[i].fundef==1&&strcmp(fnclist,symbol_table[i].argslist)==0)
+                {
+                    return(1);
+                }
+			}
+            return(0);
+            
+			
+	}
+    void copyfnname()
+	{
+	    int k=hash_cal(yyval);
+			struct stable temp;
+			strcpy(fnname,yyval);
+						
+	}
     
+     void copyfncname()
+	{
+	    int k=hash_cal(yyval);
+			struct stable temp;
+			strcpy(fncname,yyval);
+						
+	}
 	void insert_constant_table()
 	{
 	    int k=hash_cal(yycons);
@@ -246,13 +303,21 @@ DECLARATOR
     ;
 
 FUNCTION_DEFINITION 
-    : DECLARATION_SPECIFIER FUNDECID '('  ')' COMPOUND_STATEMENT 
-    | DECLARATION_SPECIFIER FUNDECID '(' DEFINITION_SPECIFIER_LIST ')' COMPOUND_STATEMENT 
+    : DECLARATION_SPECIFIER FUNDECID FND_OPN  FND_CLS COMPOUND_STATEMENT    {sym_update_fundef();fncount=0;fnlist[0]='\0';}
+    | DECLARATION_SPECIFIER FUNDECID FND_OPN DEFINITION_SPECIFIER_LIST FND_CLS COMPOUND_STATEMENT   {sym_update_fundef();fncount=0;fnlist[0]='\0';}
+    ;
+
+FND_OPN
+    : '(' {scope++;}
+    ;
+
+FND_CLS
+    : ')' {scope--;}
     ;
 
 DEFINITION_SPECIFIER_LIST
-    :VARIABLE_DECLARATION 
-    | DEFINITION_SPECIFIER_LIST ',' VARIABLE_DECLARATION
+    :VARIABLE_DECLARATION  {fnlist[fncount++]=getcurrtype()[0];fnlist[fncount]='\0';if(getcurrtype()[0]=='v'){printf("ERROR:function argument cannot be void.\n");}}
+    | DEFINITION_SPECIFIER_LIST ',' VARIABLE_DECLARATION {fnlist[fncount++]=getcurrtype()[0];fnlist[fncount]='\0';if(getcurrtype()[0]=='v'){printf("ERROR:function argument cannot be void.\n");}}
     ;
 VARIABLE_DECLARATION
     :DECLARATION_SPECIFIER IDENTIFIER {insert_symbol_table();}
@@ -296,7 +361,7 @@ EXPRESSION
     : EXPID ASSIGN_OP EXPRESSION { if($3==1 && $1==$3)$$=1; else if($3==2 && $1==$3)$$=2; else $$=-1;}
     | EXPID '=' EXPRESSION {if($3==1 && $1==$3)$$=1; else if($3==2 && $1==$3)$$=2; else $$=-1;}
     | EXPRESSION EQU_OP EXPRESSION {if($1==1 && $3==1)$$=1; else if($1==2 && $3==2)$$=2; else $$=-1;}
-    | EXPRESSION REL_OP EXPRESSION {printf("chk%d\n",$1); if($1==1 && $3==1)$$=1; else if($1==2 && $3==2)$$=2; else $$=-1;}
+    | EXPRESSION REL_OP EXPRESSION {if($1==1 && $3==1)$$=1; else if($1==2 && $3==2)$$=2; else $$=-1;}
     | EXPRESSION ADD_OP EXPRESSION {if($1==1 && $3==1)$$=1; else if($1==2 && $3==2)$$=2; else $$=-1;}
     | EXPRESSION MUL_OP EXPRESSION {if($1==1 && $3==1)$$=1; else if($1==2 && $3==2)$$=2; else $$=-1;}
     | EXPRESSION LAND EXPRESSION {if($1==1 && $3==1)$$=1; else if($1==2 && $3==2)$$=2; else $$=-1;}
@@ -307,7 +372,7 @@ EXPRESSION
     | NOT_OP EXPRESSION {if($2==1)$$=1; else if($2==2)$$=2; else $$=-1;}
     | INCDEC_OP EXPID {$$=$2;}
     | EXPID INCDEC_OP {$$=$1;}
-    | '(' EXPRESSION ')' {if($2==1)$$=1; else $$=-1;}
+    | '(' EXPRESSION ')' {$$=$2;}
     | EXPID  {$$=$1;}
     | INTVALUE {insert_constant_table(); $$=1;}
     | FLOATVALUE {insert_constant_table(); $$=2;}
@@ -316,13 +381,18 @@ EXPRESSION
     ; 
 
 FUNCTION_CALL
-    : EXPID '(' ')' 
-    | EXPID '(' EXPRESSION_LIST ')'      
+    : EXPID FNC_OPN  FUNCTION_CALL_CONTD  {$$=$1;if(!sym_ck_funcall()){printf("Error:function defination does not match any existing function definations\n");}fnccount=0;fnclist[0]='\0';} 
     ;
-
+FNC_OPN
+    : '('   {copyfncname();}
+    ;
+FUNCTION_CALL_CONTD
+    : ')' 
+    |  EXPRESSION_LIST ')' 
+    ;
 EXPRESSION_LIST
-    : EXPRESSION_LIST ',' EXPRESSION {if($3==-1) printf("Invalid Expression\n");}
-    | EXPRESSION {if($1==-1) printf("Invalid Expression\n");}
+    : EXPRESSION_LIST ',' EXPRESSION {if($3==-1) printf("Invalid Expression\n");else if($1==1){fnclist[fnccount++]='i';fnclist[fnccount]='\0';}else if($1==2){fnclist[fnccount++]='f';fnclist[fnccount]='\0';}}
+    | EXPRESSION {if($1==-1) printf("Invalid Expression\n");else if($1==1){fnclist[fnccount++]='i';fnclist[fnccount]='\0';}else if($1==2){fnclist[fnccount++]='f';fnclist[fnccount]='\0';}}
     ;
 
 
@@ -336,7 +406,7 @@ SELECTION_STATEMENT
 
 
 ITERATION_STATEMENT
-    : WHILE '(' EXPRESSION ')' STATEMENT { printf("val%d\n",$3);if($3==-1) printf("Invalid Expression\n");}
+    : WHILE '(' EXPRESSION ')' STATEMENT { if($3==-1) printf("Invalid Expression\n");}
     | DO STATEMENT WHILE '(' EXPRESSION ')' ';' {if($5==-1) printf("Invalid Expression\n");}
     | FOR '(' EXPRESSION_STATEMENT EXPRESSION_STATEMENT ')' STATEMENT
     | FOR '(' EXPRESSION_STATEMENT EXPRESSION_STATEMENT EXPRESSION ')' STATEMENT {if($5==-1) printf("Invalid Expression\n");}
@@ -345,8 +415,8 @@ ITERATION_STATEMENT
 JUMP_STATEMENT
     : CONTINUE ';'
     | BREAK ';'
-    | RETURN ';'
-    | RETURN EXPRESSION {if($2==-1) printf("Invalid Expression\n");}
+    | RETURN ';'    {if(gettype(fnname)!='v'){printf("Error Return type wrong.\n");}}
+    | RETURN EXPRESSION {if($2==-1) printf("Invalid Expression\n");else if(($2==1&& gettype(fnname)!='i') || ($2==2 && gettype(fnname)!='f') ){printf("Error Return type wrong.\n");}}
     ;
 
 OP_BRACE
@@ -363,7 +433,7 @@ DECID
 	;
 
 FUNDECID
-	:IDENTIFIER {isfunction=1;insert_symbol_table();isfunction=0;}
+	:IDENTIFIER {isfunction=1;copyfnname();insert_symbol_table();isfunction=0;}
 	;
 EXPID
 	:IDENTIFIER {
@@ -394,7 +464,7 @@ int yyerror()
     return (1);
 }
 
-main()
+int main()
 {
 	
 	
@@ -456,9 +526,11 @@ char gettype(char *name)
 {
     int i;
     char t;
+    int scp=-1;
 	for (i=0;i<1001;i++){
-		if(strcmp(symbol_table[i].name,name) == 0 && symbol_table[i].scope <= scope){
+		if(strcmp(symbol_table[i].name,name) == 0 && symbol_table[i].scope >scp){
 			t =  (symbol_table[i].type[0]);
+            scp=symbol_table[i].scope;
 		}
 	}
     return t;
