@@ -198,7 +198,7 @@ char gettype(char *name);
 	}
     int sym_ck_funcall()
 	{
-	  
+           // printf("Checking %s %s ",fncname,fnclist);
 			int i=0;
 			int flag=0;
 			for(i=0;i<1000;i++)
@@ -1861,7 +1861,7 @@ yyreduce:
 
   case 58:
 #line 379 "parser.yacc" /* yacc.c:1646  */
-    {(yyval) = 1; }
+    {(yyval) = (yyvsp[0]); if((yyvsp[0])==-1)(yyval)=3;}
 #line 1866 "y.tab.c" /* yacc.c:1646  */
     break;
 
@@ -1885,7 +1885,7 @@ yyreduce:
 
   case 64:
 #line 394 "parser.yacc" /* yacc.c:1646  */
-    {if((yyvsp[0])==-1) printf("Invalid Expression\n");else if((yyvsp[-2])==1){fnclist[fnccount++]='i';fnclist[fnccount]='\0';}else if((yyvsp[-2])==2){fnclist[fnccount++]='f';fnclist[fnccount]='\0';}}
+    {if((yyvsp[0])==-1) printf("Invalid Expression\n");else if((yyvsp[0])==1){fnclist[fnccount++]='i';fnclist[fnccount]='\0';}else if((yyvsp[0])==2){fnclist[fnccount++]='f';fnclist[fnccount]='\0';}}
 #line 1890 "y.tab.c" /* yacc.c:1646  */
     break;
 

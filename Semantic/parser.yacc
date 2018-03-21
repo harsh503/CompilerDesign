@@ -138,7 +138,7 @@ char gettype(char *name);
 	}
     int sym_ck_funcall()
 	{
-	  
+           // printf("Checking %s %s ",fncname,fnclist);
 			int i=0;
 			int flag=0;
 			for(i=0;i<1000;i++)
@@ -376,7 +376,7 @@ EXPRESSION
     | EXPID  {$$=$1;}
     | INTVALUE {insert_constant_table(); $$=1;}
     | FLOATVALUE {insert_constant_table(); $$=2;}
-    | FUNCTION_CALL {$$ = 1; }
+    | FUNCTION_CALL {$$ = $1; if($1==-1)$$=3;}
     | STRING_LITERAL {insert_constant_table_str(); $$=-1;}
     ; 
 
@@ -391,7 +391,7 @@ FUNCTION_CALL_CONTD
     |  EXPRESSION_LIST ')' 
     ;
 EXPRESSION_LIST
-    : EXPRESSION_LIST ',' EXPRESSION {if($3==-1) printf("Invalid Expression\n");else if($1==1){fnclist[fnccount++]='i';fnclist[fnccount]='\0';}else if($1==2){fnclist[fnccount++]='f';fnclist[fnccount]='\0';}}
+    : EXPRESSION_LIST ',' EXPRESSION {if($3==-1) printf("Invalid Expression\n");else if($3==1){fnclist[fnccount++]='i';fnclist[fnccount]='\0';}else if($3==2){fnclist[fnccount++]='f';fnclist[fnccount]='\0';}}
     | EXPRESSION {if($1==-1) printf("Invalid Expression\n");else if($1==1){fnclist[fnccount++]='i';fnclist[fnccount]='\0';}else if($1==2){fnclist[fnccount++]='f';fnclist[fnccount]='\0';}}
     ;
 
