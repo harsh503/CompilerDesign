@@ -2243,7 +2243,7 @@ int main()
 {
 	
 	
-    yyin=fopen("test.txt","r");
+    yyin=fopen("test 2.txt","r");
 
 
     yyparse();
@@ -2253,11 +2253,12 @@ int main()
 
     printf("\n*****Symbol Table******\n\n");
     int i;
+    printf("Name\t\tType\t\tSize\t\tScope\t\tIsFunction\tNoOfArgs\n");
 	for(i=0;i<1000;i++)
 	{
 		if(symbol_table[i].name[0]!='\0')
 		{
-			printf("Var:%s Type:%s Size:%d Scope:%d  Isfunction:%d args:%d\n",symbol_table[i].name,symbol_table[i].type,symbol_table[i].storage,symbol_table[i].scope,symbol_table[i].fundef,symbol_table[i].countargs);
+			printf("%s\t\t%s\t\t%d\t\t%d\t\t%d\t\t%d\n",symbol_table[i].name,symbol_table[i].type,symbol_table[i].storage,symbol_table[i].scope,symbol_table[i].fundef,symbol_table[i].countargs);
 		}
 	}
 
