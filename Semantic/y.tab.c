@@ -86,6 +86,7 @@ struct stable{
     int fundef;
     int countargs;
     char argslist[20];
+    int storage;
 };
 struct ctable{
 	char name[100];
@@ -115,8 +116,21 @@ char gettype(char *name);
 	    int k=hash_cal(yyval);
 			struct stable temp;
 			strcpy(temp.name,yyval);
+            temp.countargs=0;
             char* tmp = getcurrtype();
             strcpy(temp.type,tmp);
+            if(tmp[0]=='i')
+            {
+            	temp.storage=4;
+            }
+            else if(tmp[0]=='f')
+            {
+            	temp.storage=8;
+            }
+            else
+            {
+            	temp.storage=0;
+            }
 			if(isfunction==1)
             {
                 temp.fundef=1;
@@ -302,7 +316,7 @@ char gettype(char *name);
     }          
 
 
-#line 306 "y.tab.c" /* yacc.c:339  */
+#line 320 "y.tab.c" /* yacc.c:339  */
 
 # ifndef YY_NULLPTR
 #  if defined __cplusplus && 201103L <= __cplusplus
@@ -453,7 +467,7 @@ int yyparse (void);
 
 /* Copy the second part of user declarations.  */
 
-#line 457 "y.tab.c" /* yacc.c:358  */
+#line 471 "y.tab.c" /* yacc.c:358  */
 
 #ifdef short
 # undef short
@@ -755,15 +769,15 @@ static const yytype_uint8 yytranslate[] =
   /* YYRLINE[YYN] -- Source line where rule number YYN was defined.  */
 static const yytype_uint16 yyrline[] =
 {
-       0,   267,   267,   268,   272,   273,   277,   281,   285,   286,
-     287,   291,   292,   296,   297,   301,   302,   306,   307,   311,
-     315,   319,   320,   323,   326,   327,   331,   332,   338,   339,
-     340,   341,   342,   343,   344,   345,   351,   352,   356,   357,
-     361,   362,   363,   364,   365,   366,   367,   368,   369,   370,
-     371,   372,   373,   374,   375,   376,   377,   378,   379,   380,
-     384,   387,   390,   391,   394,   395,   401,   402,   403,   409,
-     410,   411,   412,   416,   417,   418,   419,   423,   427,   432,
-     436,   439
+       0,   281,   281,   282,   286,   287,   291,   295,   299,   300,
+     301,   305,   306,   310,   311,   315,   316,   320,   321,   325,
+     329,   333,   334,   337,   340,   341,   345,   346,   352,   353,
+     354,   355,   356,   357,   358,   359,   365,   366,   370,   371,
+     375,   376,   377,   378,   379,   380,   381,   382,   383,   384,
+     385,   386,   387,   388,   389,   390,   391,   392,   393,   394,
+     398,   401,   404,   405,   408,   409,   415,   416,   417,   423,
+     424,   425,   426,   430,   431,   432,   433,   437,   441,   446,
+     450,   453
 };
 #endif
 
@@ -1692,283 +1706,283 @@ yyreduce:
   switch (yyn)
     {
         case 14:
-#line 297 "parser.yacc" /* yacc.c:1646  */
+#line 311 "parser.yacc" /* yacc.c:1646  */
     {if((yyvsp[0])==-1) printf("Invalid Expression\n");}
-#line 1698 "y.tab.c" /* yacc.c:1646  */
+#line 1712 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 17:
-#line 306 "parser.yacc" /* yacc.c:1646  */
+#line 320 "parser.yacc" /* yacc.c:1646  */
     {sym_update_fundef();fncount=0;fnlist[0]='\0';}
-#line 1704 "y.tab.c" /* yacc.c:1646  */
+#line 1718 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 18:
-#line 307 "parser.yacc" /* yacc.c:1646  */
+#line 321 "parser.yacc" /* yacc.c:1646  */
     {sym_update_fundef();fncount=0;fnlist[0]='\0';}
-#line 1710 "y.tab.c" /* yacc.c:1646  */
+#line 1724 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 19:
-#line 311 "parser.yacc" /* yacc.c:1646  */
+#line 325 "parser.yacc" /* yacc.c:1646  */
     {scope++;}
-#line 1716 "y.tab.c" /* yacc.c:1646  */
+#line 1730 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 20:
-#line 315 "parser.yacc" /* yacc.c:1646  */
+#line 329 "parser.yacc" /* yacc.c:1646  */
     {scope--;}
-#line 1722 "y.tab.c" /* yacc.c:1646  */
+#line 1736 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 21:
-#line 319 "parser.yacc" /* yacc.c:1646  */
+#line 333 "parser.yacc" /* yacc.c:1646  */
     {fnlist[fncount++]=getcurrtype()[0];fnlist[fncount]='\0';if(getcurrtype()[0]=='v'){printf("ERROR:function argument cannot be void.\n");}}
-#line 1728 "y.tab.c" /* yacc.c:1646  */
+#line 1742 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 22:
-#line 320 "parser.yacc" /* yacc.c:1646  */
+#line 334 "parser.yacc" /* yacc.c:1646  */
     {fnlist[fncount++]=getcurrtype()[0];fnlist[fncount]='\0';if(getcurrtype()[0]=='v'){printf("ERROR:function argument cannot be void.\n");}}
-#line 1734 "y.tab.c" /* yacc.c:1646  */
+#line 1748 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 23:
-#line 323 "parser.yacc" /* yacc.c:1646  */
+#line 337 "parser.yacc" /* yacc.c:1646  */
     {insert_symbol_table();}
-#line 1740 "y.tab.c" /* yacc.c:1646  */
+#line 1754 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 36:
-#line 351 "parser.yacc" /* yacc.c:1646  */
+#line 365 "parser.yacc" /* yacc.c:1646  */
     {if((yyvsp[-2])==-1) printf("Invalid Expression\n");}
-#line 1746 "y.tab.c" /* yacc.c:1646  */
+#line 1760 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 39:
-#line 357 "parser.yacc" /* yacc.c:1646  */
+#line 371 "parser.yacc" /* yacc.c:1646  */
     {if((yyvsp[-1])==-1) printf("Invalid Expression\n");}
-#line 1752 "y.tab.c" /* yacc.c:1646  */
+#line 1766 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 40:
-#line 361 "parser.yacc" /* yacc.c:1646  */
+#line 375 "parser.yacc" /* yacc.c:1646  */
     { if((yyvsp[0])==1 && (yyvsp[-2])==(yyvsp[0]))(yyval)=1; else if((yyvsp[0])==2 && (yyvsp[-2])==(yyvsp[0]))(yyval)=2; else (yyval)=-1;}
-#line 1758 "y.tab.c" /* yacc.c:1646  */
+#line 1772 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 41:
-#line 362 "parser.yacc" /* yacc.c:1646  */
+#line 376 "parser.yacc" /* yacc.c:1646  */
     {if((yyvsp[0])==1 && (yyvsp[-2])==(yyvsp[0]))(yyval)=1; else if((yyvsp[0])==2 && (yyvsp[-2])==(yyvsp[0]))(yyval)=2; else (yyval)=-1;}
-#line 1764 "y.tab.c" /* yacc.c:1646  */
+#line 1778 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 42:
-#line 363 "parser.yacc" /* yacc.c:1646  */
+#line 377 "parser.yacc" /* yacc.c:1646  */
     {if((yyvsp[-2])==1 && (yyvsp[0])==1)(yyval)=1; else if((yyvsp[-2])==2 && (yyvsp[0])==2)(yyval)=2; else (yyval)=-1;}
-#line 1770 "y.tab.c" /* yacc.c:1646  */
+#line 1784 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 43:
-#line 364 "parser.yacc" /* yacc.c:1646  */
+#line 378 "parser.yacc" /* yacc.c:1646  */
     {if((yyvsp[-2])==1 && (yyvsp[0])==1)(yyval)=1; else if((yyvsp[-2])==2 && (yyvsp[0])==2)(yyval)=2; else (yyval)=-1;}
-#line 1776 "y.tab.c" /* yacc.c:1646  */
+#line 1790 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 44:
-#line 365 "parser.yacc" /* yacc.c:1646  */
+#line 379 "parser.yacc" /* yacc.c:1646  */
     {if((yyvsp[-2])==1 && (yyvsp[0])==1)(yyval)=1; else if((yyvsp[-2])==2 && (yyvsp[0])==2)(yyval)=2; else (yyval)=-1;}
-#line 1782 "y.tab.c" /* yacc.c:1646  */
+#line 1796 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 45:
-#line 366 "parser.yacc" /* yacc.c:1646  */
+#line 380 "parser.yacc" /* yacc.c:1646  */
     {if((yyvsp[-2])==1 && (yyvsp[0])==1)(yyval)=1; else if((yyvsp[-2])==2 && (yyvsp[0])==2)(yyval)=2; else (yyval)=-1;}
-#line 1788 "y.tab.c" /* yacc.c:1646  */
+#line 1802 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 46:
-#line 367 "parser.yacc" /* yacc.c:1646  */
+#line 381 "parser.yacc" /* yacc.c:1646  */
     {if((yyvsp[-2])==1 && (yyvsp[0])==1)(yyval)=1; else if((yyvsp[-2])==2 && (yyvsp[0])==2)(yyval)=2; else (yyval)=-1;}
-#line 1794 "y.tab.c" /* yacc.c:1646  */
+#line 1808 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 47:
-#line 368 "parser.yacc" /* yacc.c:1646  */
+#line 382 "parser.yacc" /* yacc.c:1646  */
     {if((yyvsp[-2])==1 && (yyvsp[0])==1)(yyval)=1; else if((yyvsp[-2])==2 && (yyvsp[0])==2)(yyval)=2; else (yyval)=-1;}
-#line 1800 "y.tab.c" /* yacc.c:1646  */
+#line 1814 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 48:
-#line 369 "parser.yacc" /* yacc.c:1646  */
+#line 383 "parser.yacc" /* yacc.c:1646  */
     {if((yyvsp[-2])==1 && (yyvsp[0])==1)(yyval)=1; else if((yyvsp[-2])==2 && (yyvsp[0])==2)(yyval)=2; else (yyval)=-1;}
-#line 1806 "y.tab.c" /* yacc.c:1646  */
+#line 1820 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 49:
-#line 370 "parser.yacc" /* yacc.c:1646  */
+#line 384 "parser.yacc" /* yacc.c:1646  */
     {if((yyvsp[-2])==1 && (yyvsp[0])==1)(yyval)=1; else if((yyvsp[-2])==2 && (yyvsp[0])==2)(yyval)=2; else (yyval)=-1;}
-#line 1812 "y.tab.c" /* yacc.c:1646  */
+#line 1826 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 50:
-#line 371 "parser.yacc" /* yacc.c:1646  */
+#line 385 "parser.yacc" /* yacc.c:1646  */
     {if((yyvsp[-2])==1 && (yyvsp[0])==1)(yyval)=1; else if((yyvsp[-2])==2 && (yyvsp[0])==2)(yyval)=2; else (yyval)=-1;}
-#line 1818 "y.tab.c" /* yacc.c:1646  */
+#line 1832 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 51:
-#line 372 "parser.yacc" /* yacc.c:1646  */
+#line 386 "parser.yacc" /* yacc.c:1646  */
     {if((yyvsp[0])==1)(yyval)=1; else if((yyvsp[0])==2)(yyval)=2; else (yyval)=-1;}
-#line 1824 "y.tab.c" /* yacc.c:1646  */
+#line 1838 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 52:
-#line 373 "parser.yacc" /* yacc.c:1646  */
+#line 387 "parser.yacc" /* yacc.c:1646  */
     {(yyval)=(yyvsp[0]);}
-#line 1830 "y.tab.c" /* yacc.c:1646  */
+#line 1844 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 53:
-#line 374 "parser.yacc" /* yacc.c:1646  */
+#line 388 "parser.yacc" /* yacc.c:1646  */
     {(yyval)=(yyvsp[-1]);}
-#line 1836 "y.tab.c" /* yacc.c:1646  */
+#line 1850 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 54:
-#line 375 "parser.yacc" /* yacc.c:1646  */
+#line 389 "parser.yacc" /* yacc.c:1646  */
     {(yyval)=(yyvsp[-1]);}
-#line 1842 "y.tab.c" /* yacc.c:1646  */
+#line 1856 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 55:
-#line 376 "parser.yacc" /* yacc.c:1646  */
+#line 390 "parser.yacc" /* yacc.c:1646  */
     {(yyval)=(yyvsp[0]);}
-#line 1848 "y.tab.c" /* yacc.c:1646  */
+#line 1862 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 56:
-#line 377 "parser.yacc" /* yacc.c:1646  */
+#line 391 "parser.yacc" /* yacc.c:1646  */
     {insert_constant_table(); (yyval)=1;}
-#line 1854 "y.tab.c" /* yacc.c:1646  */
+#line 1868 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 57:
-#line 378 "parser.yacc" /* yacc.c:1646  */
+#line 392 "parser.yacc" /* yacc.c:1646  */
     {insert_constant_table(); (yyval)=2;}
-#line 1860 "y.tab.c" /* yacc.c:1646  */
+#line 1874 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 58:
-#line 379 "parser.yacc" /* yacc.c:1646  */
+#line 393 "parser.yacc" /* yacc.c:1646  */
     {(yyval) = (yyvsp[0]); if((yyvsp[0])==-1)(yyval)=3;}
-#line 1866 "y.tab.c" /* yacc.c:1646  */
+#line 1880 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 59:
-#line 380 "parser.yacc" /* yacc.c:1646  */
+#line 394 "parser.yacc" /* yacc.c:1646  */
     {insert_constant_table_str(); (yyval)=-1;}
-#line 1872 "y.tab.c" /* yacc.c:1646  */
+#line 1886 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 60:
-#line 384 "parser.yacc" /* yacc.c:1646  */
+#line 398 "parser.yacc" /* yacc.c:1646  */
     {(yyval)=(yyvsp[-2]);if(!sym_ck_funcall()){printf("Error:function defination does not match any existing function definations\n");}fnccount=0;fnclist[0]='\0';}
-#line 1878 "y.tab.c" /* yacc.c:1646  */
+#line 1892 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 61:
-#line 387 "parser.yacc" /* yacc.c:1646  */
+#line 401 "parser.yacc" /* yacc.c:1646  */
     {copyfncname();}
-#line 1884 "y.tab.c" /* yacc.c:1646  */
+#line 1898 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 64:
-#line 394 "parser.yacc" /* yacc.c:1646  */
+#line 408 "parser.yacc" /* yacc.c:1646  */
     {if((yyvsp[0])==-1) printf("Invalid Expression\n");else if((yyvsp[0])==1){fnclist[fnccount++]='i';fnclist[fnccount]='\0';}else if((yyvsp[0])==2){fnclist[fnccount++]='f';fnclist[fnccount]='\0';}}
-#line 1890 "y.tab.c" /* yacc.c:1646  */
+#line 1904 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 65:
-#line 395 "parser.yacc" /* yacc.c:1646  */
+#line 409 "parser.yacc" /* yacc.c:1646  */
     {if((yyvsp[0])==-1) printf("Invalid Expression\n");else if((yyvsp[0])==1){fnclist[fnccount++]='i';fnclist[fnccount]='\0';}else if((yyvsp[0])==2){fnclist[fnccount++]='f';fnclist[fnccount]='\0';}}
-#line 1896 "y.tab.c" /* yacc.c:1646  */
+#line 1910 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 66:
-#line 401 "parser.yacc" /* yacc.c:1646  */
+#line 415 "parser.yacc" /* yacc.c:1646  */
     {if((yyvsp[-2])==-1) printf("Invalid Expression\n");}
-#line 1902 "y.tab.c" /* yacc.c:1646  */
+#line 1916 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 67:
-#line 402 "parser.yacc" /* yacc.c:1646  */
+#line 416 "parser.yacc" /* yacc.c:1646  */
     {if((yyvsp[-4])==-1) printf("Invalid Expression\n");}
-#line 1908 "y.tab.c" /* yacc.c:1646  */
+#line 1922 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 68:
-#line 403 "parser.yacc" /* yacc.c:1646  */
+#line 417 "parser.yacc" /* yacc.c:1646  */
     {if((yyvsp[-2])==-1) printf("Invalid Expression\n");}
-#line 1914 "y.tab.c" /* yacc.c:1646  */
+#line 1928 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 69:
-#line 409 "parser.yacc" /* yacc.c:1646  */
-    { if((yyvsp[-2])==-1) printf("Invalid Expression\n");}
-#line 1920 "y.tab.c" /* yacc.c:1646  */
+#line 423 "parser.yacc" /* yacc.c:1646  */
+    { if((yyvsp[-2])==-1) printf("Invalid Expression\n");else if((yyvsp[-2])!=1){printf("While should have a interger expression\n");}}
+#line 1934 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 70:
-#line 410 "parser.yacc" /* yacc.c:1646  */
+#line 424 "parser.yacc" /* yacc.c:1646  */
     {if((yyvsp[-2])==-1) printf("Invalid Expression\n");}
-#line 1926 "y.tab.c" /* yacc.c:1646  */
+#line 1940 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 72:
-#line 412 "parser.yacc" /* yacc.c:1646  */
+#line 426 "parser.yacc" /* yacc.c:1646  */
     {if((yyvsp[-2])==-1) printf("Invalid Expression\n");}
-#line 1932 "y.tab.c" /* yacc.c:1646  */
+#line 1946 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 75:
-#line 418 "parser.yacc" /* yacc.c:1646  */
+#line 432 "parser.yacc" /* yacc.c:1646  */
     {if(gettype(fnname)!='v'){printf("Error Return type wrong.\n");}}
-#line 1938 "y.tab.c" /* yacc.c:1646  */
+#line 1952 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 76:
-#line 419 "parser.yacc" /* yacc.c:1646  */
+#line 433 "parser.yacc" /* yacc.c:1646  */
     {if((yyvsp[0])==-1) printf("Invalid Expression\n");else if(((yyvsp[0])==1&& gettype(fnname)!='i') || ((yyvsp[0])==2 && gettype(fnname)!='f') ){printf("Error Return type wrong.\n");}}
-#line 1944 "y.tab.c" /* yacc.c:1646  */
+#line 1958 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 77:
-#line 423 "parser.yacc" /* yacc.c:1646  */
+#line 437 "parser.yacc" /* yacc.c:1646  */
     {scope++;}
-#line 1950 "y.tab.c" /* yacc.c:1646  */
+#line 1964 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 78:
-#line 427 "parser.yacc" /* yacc.c:1646  */
+#line 441 "parser.yacc" /* yacc.c:1646  */
     {delete_sym(scope);scope--;}
-#line 1956 "y.tab.c" /* yacc.c:1646  */
+#line 1970 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 79:
-#line 432 "parser.yacc" /* yacc.c:1646  */
+#line 446 "parser.yacc" /* yacc.c:1646  */
     {insert_symbol_table();}
-#line 1962 "y.tab.c" /* yacc.c:1646  */
+#line 1976 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 80:
-#line 436 "parser.yacc" /* yacc.c:1646  */
+#line 450 "parser.yacc" /* yacc.c:1646  */
     {isfunction=1;copyfnname();insert_symbol_table();isfunction=0;}
-#line 1968 "y.tab.c" /* yacc.c:1646  */
+#line 1982 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 81:
-#line 439 "parser.yacc" /* yacc.c:1646  */
+#line 453 "parser.yacc" /* yacc.c:1646  */
     {
 
                 if(gettype(getcurrid())=='i') 
@@ -1983,11 +1997,11 @@ yyreduce:
                     printf("ERROR:undeclared variable\n");
                 }
                 }
-#line 1987 "y.tab.c" /* yacc.c:1646  */
+#line 2001 "y.tab.c" /* yacc.c:1646  */
     break;
 
 
-#line 1991 "y.tab.c" /* yacc.c:1646  */
+#line 2005 "y.tab.c" /* yacc.c:1646  */
       default: break;
     }
   /* User semantic actions sometimes alter yychar, and that requires
@@ -2215,7 +2229,7 @@ yyreturn:
 #endif
   return yyresult;
 }
-#line 458 "parser.yacc" /* yacc.c:1906  */
+#line 472 "parser.yacc" /* yacc.c:1906  */
 
 
 int yyerror()
@@ -2243,7 +2257,7 @@ int main()
 	{
 		if(symbol_table[i].name[0]!='\0')
 		{
-			printf("%s	%s %d \n",symbol_table[i].name,symbol_table[i].type,symbol_table[i].scope);
+			printf("Var:%s Type:%s Size:%d Scope:%d  Isfunction:%d args:%d\n",symbol_table[i].name,symbol_table[i].type,symbol_table[i].storage,symbol_table[i].scope,symbol_table[i].fundef,symbol_table[i].countargs);
 		}
 	}
 

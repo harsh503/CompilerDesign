@@ -1,21 +1,16 @@
 float fun(float x, int y)
 {
-    float w;
-    
     return x;
 }
-int z;
-void v( )
+
+void v()
 {
-	return ;
-}
-int small()
-{
-    //w=5;
+	return 0;
 }
 int main()
 {
     int a,b;
+	int a;
     a=5;
 	
 	int i;
@@ -30,6 +25,6 @@ int main()
     v();
         {
         float a;
-            1.0+fun(a,2);   
+            1.0+fun(a,1);   
         }  
 }

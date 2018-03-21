@@ -26,6 +26,7 @@ struct stable{
     int fundef;
     int countargs;
     char argslist[20];
+    int storage;
 };
 struct ctable{
 	char name[100];
@@ -55,8 +56,21 @@ char gettype(char *name);
 	    int k=hash_cal(yyval);
 			struct stable temp;
 			strcpy(temp.name,yyval);
+            temp.countargs=0;
             char* tmp = getcurrtype();
             strcpy(temp.type,tmp);
+            if(tmp[0]=='i')
+            {
+            	temp.storage=4;
+            }
+            else if(tmp[0]=='f')
+            {
+            	temp.storage=8;
+            }
+            else
+            {
+            	temp.storage=0;
+            }
 			if(isfunction==1)
             {
                 temp.fundef=1;
@@ -406,7 +420,7 @@ SELECTION_STATEMENT
 
 
 ITERATION_STATEMENT
-    : WHILE '(' EXPRESSION ')' STATEMENT { if($3==-1) printf("Invalid Expression\n");}
+    : WHILE '(' EXPRESSION ')' STATEMENT { if($3==-1) printf("Invalid Expression\n");else if($3!=1){printf("While should have a interger expression\n");}}
     | DO STATEMENT WHILE '(' EXPRESSION ')' ';' {if($5==-1) printf("Invalid Expression\n");}
     | FOR '(' EXPRESSION_STATEMENT EXPRESSION_STATEMENT ')' STATEMENT
     | FOR '(' EXPRESSION_STATEMENT EXPRESSION_STATEMENT EXPRESSION ')' STATEMENT {if($5==-1) printf("Invalid Expression\n");}
@@ -482,7 +496,7 @@ int main()
 	{
 		if(symbol_table[i].name[0]!='\0')
 		{
-			printf("%s	%s %d \n",symbol_table[i].name,symbol_table[i].type,symbol_table[i].scope);
+			printf("Var:%s Type:%s Size:%d Scope:%d  Isfunction:%d args:%d\n",symbol_table[i].name,symbol_table[i].type,symbol_table[i].storage,symbol_table[i].scope,symbol_table[i].fundef,symbol_table[i].countargs);
 		}
 	}
 
