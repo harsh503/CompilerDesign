@@ -1,35 +1,19 @@
-float fun(float x, int y)
-{
-    float w;
-    
-    return x;
-}
-int z;
-void v( )
-{
-	return ;
-}
-int small()
-{
-    //w=5;
-}
+
 int main()
 {
     int a,b;
     a=5;
 	
 	int i;
-    for(i=0;;i++)
-    {
+    
 	int a;
         while(a>0)
         {
             b++;
         }
-    }
-    v();
+    
         {
         float a;
-            1.0+fun(a,2);   
+               
         }  
 }

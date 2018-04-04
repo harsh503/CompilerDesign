@@ -328,6 +328,13 @@ void label5()
     ltop -= 2;
 }
 
+void label6()
+{
+    printf("goto L%d \n",label[ltop-1]);
+    printf("L%d: \n",label[ltop]);
+    ltop -= 2;
+}
+
 void push(char* item)
 {
     strcpy(s[++top].value, item);
@@ -553,7 +560,7 @@ EXPRESSION_LIST
 
 
 SELECTION_STATEMENT 
-    : IF '(' EXPRESSION {label1();}')' STATEMENT {label2();} IF_CONTD     {if($3==-1) printf("Invalid Expression\n");}
+    : IF '(' EXPRESSION {label1();} ')' STATEMENT {label2();} IF_CONTD     {if($3==-1) printf("Invalid Expression\n");}
     | SWITCH '(' EXPRESSION ')' STATEMENT {if($3==-1) printf("Invalid Expression\n");}
     ;
 
@@ -565,8 +572,16 @@ IF_CONTD
 ITERATION_STATEMENT
     :  WHILE {label4();} '(' EXPRESSION ')' {label1();} STATEMENT { label5(); if($4==-1) printf("Invalid Expression\n");else if($4!=1){printf("While should have a interger expression\n");}}
     | DO {label4();} STATEMENT WHILE '(' EXPRESSION ')' {label1();} ';' { label5();if($5==-1) printf("Invalid Expression\n");}
-    | FOR '(' EXPRESSION_STATEMENT EXPRESSION_STATEMENT ')' STATEMENT
-    | FOR '(' EXPRESSION_STATEMENT EXPRESSION_STATEMENT EXPRESSION ')' STATEMENT {if($5==-1) printf("Invalid Expression\n");}
+    | FOR '(' EXPRESSION_STATEMENT ACTION1 EXPRESSION_STATEMENT ACTION2 ')' STATEMENT {label6();}
+    | FOR '(' EXPRESSION_STATEMENT ACTION1 EXPRESSION_STATEMENT ACTION2 EXPRESSION ')' STATEMENT {label6(); if($5==-1) printf("Invalid Expression\n");}
+    ;
+
+ACTION1
+    : {label4();}
+    ;
+
+ACTION2
+    : {label1();}
     ;
 
 JUMP_STATEMENT
