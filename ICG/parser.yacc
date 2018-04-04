@@ -465,10 +465,13 @@ DECLARATOR
     ;
 
 FUNCTION_DEFINITION 
-    : DECLARATION_SPECIFIER FUNDECID FND_OPN  FND_CLS COMPOUND_STATEMENT    {sym_update_fundef();fncount=0;fnlist[0]='\0';}
-    | DECLARATION_SPECIFIER FUNDECID FND_OPN DEFINITION_SPECIFIER_LIST FND_CLS COMPOUND_STATEMENT   {sym_update_fundef();fncount=0;fnlist[0]='\0';}
+    : DECLARATION_SPECIFIER FUNDECID FND_OPN {printf("%s:\n",fnname);} FUNDEF_CONTD  {printf("return default\n");}  {sym_update_fundef();fncount=0;fnlist[0]='\0';}
     ;
 
+FUNDEF_CONTD
+	:	FND_CLS COMPOUND_STATEMENT
+	|	DEFINITION_SPECIFIER_LIST FND_CLS COMPOUND_STATEMENT
+	;
 FND_OPN
     : '(' {scope++;}
     ;
@@ -543,7 +546,7 @@ EXPRESSION
     ; 
 
 FUNCTION_CALL
-    : EXPID FNC_OPN  FUNCTION_CALL_CONTD  {$$=$1;if(!sym_ck_funcall()){printf("Error:function defination does not match any existing function definations\n");}fnccount=0;fnclist[0]='\0';} 
+    : EXPID FNC_OPN  FUNCTION_CALL_CONTD  {$$=$1;if(!sym_ck_funcall()){printf("Error:function defination does not match any existing function definations\n");}fnccount=0;fnclist[0]='\0';;printf("call: %s\n",fncname);} 
     ;
 FNC_OPN
     : '('   {copyfncname();}
@@ -553,8 +556,8 @@ FUNCTION_CALL_CONTD
     |  EXPRESSION_LIST ')' 
     ;
 EXPRESSION_LIST
-    : EXPRESSION_LIST ',' EXPRESSION {if($3==-1) printf("Invalid Expression\n");else if($3==1){fnclist[fnccount++]='i';fnclist[fnccount]='\0';}else if($3==2){fnclist[fnccount++]='f';fnclist[fnccount]='\0';}}
-    | EXPRESSION {if($1==-1) printf("Invalid Expression\n");else if($1==1){fnclist[fnccount++]='i';fnclist[fnccount]='\0';}else if($1==2){fnclist[fnccount++]='f';fnclist[fnccount]='\0';}}
+    : EXPRESSION_LIST ',' EXPRESSION {printf("ref %s\n",s[top].value);} {if($3==-1) printf("Invalid Expression\n");else if($3==1){fnclist[fnccount++]='i';fnclist[fnccount]='\0';}else if($3==2){fnclist[fnccount++]='f';fnclist[fnccount]='\0';}}
+    | EXPRESSION {printf("ref %s\n",s[top].value);}{if($1==-1) printf("Invalid Expression\n");else if($1==1){fnclist[fnccount++]='i';fnclist[fnccount]='\0';}else if($1==2){fnclist[fnccount++]='f';fnclist[fnccount]='\0';}}
     ;
 
 
@@ -587,8 +590,8 @@ ACTION2
 JUMP_STATEMENT
     : CONTINUE ';'
     | BREAK ';'
-    | RETURN ';'    {if(gettype(fnname)!='v'){printf("Error Return type wrong.\n");}}
-    | RETURN EXPRESSION {if($2==-1) printf("Invalid Expression\n");else if(($2==1&& gettype(fnname)!='i') || ($2==2 && gettype(fnname)!='f') ){printf("Error Return type wrong.\n");}}
+    | RETURN ';'    {printf("return\n");}{if(gettype(fnname)!='v'){printf("Error Return type wrong.\n");}}
+    | RETURN EXPRESSION {printf("return %s\n",s[top].value);}{if($2==-1) printf("Invalid Expression\n");else if(($2==1&& gettype(fnname)!='i') || ($2==2 && gettype(fnname)!='f') ){printf("Error Return type wrong.\n");}}
     ;
 
 OP_BRACE
